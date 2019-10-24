@@ -13,6 +13,7 @@
 		6B2B6DD3236180A700913E66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B2B6DD2236180A700913E66 /* Assets.xcassets */; };
 		6B2B6DD6236180A700913E66 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B2B6DD4236180A700913E66 /* LaunchScreen.storyboard */; };
 		6B2B6DE1236180A700913E66 /* SwiftDSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2B6DE0236180A700913E66 /* SwiftDSATests.swift */; };
+		6B2B6DED236181E200913E66 /* QuickSortUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2B6DEC236181E200913E66 /* QuickSortUtility.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		6B2B6DDC236180A700913E66 /* SwiftDSATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftDSATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B2B6DE0236180A700913E66 /* SwiftDSATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDSATests.swift; sourceTree = "<group>"; };
 		6B2B6DE2236180A700913E66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6B2B6DEC236181E200913E66 /* QuickSortUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSortUtility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		6B2B6DCA236180A600913E66 /* SwiftDSA */ = {
 			isa = PBXGroup;
 			children = (
+				6B2B6DEB2361815E00913E66 /* Sorting */,
 				6B2B6DCB236180A600913E66 /* AppDelegate.swift */,
 				6B2B6DCD236180A600913E66 /* ViewController.swift */,
 				6B2B6DCF236180A600913E66 /* Main.storyboard */,
@@ -94,6 +97,14 @@
 				6B2B6DE2236180A700913E66 /* Info.plist */,
 			);
 			path = SwiftDSATests;
+			sourceTree = "<group>";
+		};
+		6B2B6DEB2361815E00913E66 /* Sorting */ = {
+			isa = PBXGroup;
+			children = (
+				6B2B6DEC236181E200913E66 /* QuickSortUtility.swift */,
+			);
+			path = Sorting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,6 +209,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B2B6DCE236180A600913E66 /* ViewController.swift in Sources */,
+				6B2B6DED236181E200913E66 /* QuickSortUtility.swift in Sources */,
 				6B2B6DCC236180A600913E66 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
