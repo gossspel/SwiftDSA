@@ -54,7 +54,11 @@ class QuickSortUtility {
 		items = leftHalf + [pivotValue] + rightHalf
 	}
 	
-	static func getMarkStops<T: Comparable>(items: [T], leftMark: Int, rightMark: Int, pivotValue: T) -> (Int, Int) {
+	private static func getMarkStops<T: Comparable>(items: [T],
+													leftMark: Int,
+													rightMark: Int,
+													pivotValue: T) -> (Int, Int)
+	{
 		var leftMarkStop: Int = leftMark
 		var rightMarkStop: Int = rightMark
 		
@@ -71,7 +75,7 @@ class QuickSortUtility {
 		return (leftMarkStop, rightMarkStop)
 	}
 	
-	static func swapValueAtIndices<T: Comparable>(items: inout [T], firstIndex: Int, secondIndex: Int) {
+	private static func swapValueAtIndices<T: Comparable>(items: inout [T], firstIndex: Int, secondIndex: Int) {
 		let newLeftMarkValue: T = items[secondIndex]
 		let newRightMarkValue: T = items[firstIndex]
 		items[firstIndex] = newLeftMarkValue
