@@ -16,6 +16,7 @@
 		6B2B6DD6236180A700913E66 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B2B6DD4236180A700913E66 /* LaunchScreen.storyboard */; };
 		6B2B6DED236181E200913E66 /* QuickSortUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2B6DEC236181E200913E66 /* QuickSortUtility.swift */; };
 		6B374808241B5B910023A299 /* CH1ArraysAndStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B374807241B5B910023A299 /* CH1ArraysAndStrings.swift */; };
+		6B37480B241B6A840023A299 /* CH1ArraysAndStringsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B37480A241B6A840023A299 /* CH1ArraysAndStringsTests.swift */; };
 		6B85DCAB23C7E1C700B28CEC /* MergeSortUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B85DCAA23C7E1C700B28CEC /* MergeSortUtilityTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		6B2B6DE2236180A700913E66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B2B6DEC236181E200913E66 /* QuickSortUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSortUtility.swift; sourceTree = "<group>"; };
 		6B374807241B5B910023A299 /* CH1ArraysAndStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CH1ArraysAndStrings.swift; sourceTree = "<group>"; };
+		6B37480A241B6A840023A299 /* CH1ArraysAndStringsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CH1ArraysAndStringsTests.swift; sourceTree = "<group>"; };
 		6B85DCAA23C7E1C700B28CEC /* MergeSortUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeSortUtilityTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,6 +111,7 @@
 		6B2B6DDF236180A700913E66 /* SwiftDSATests */ = {
 			isa = PBXGroup;
 			children = (
+				6B374809241B6A6D0023A299 /* CTCI */,
 				6B1AC7E723C665D6006CDABD /* Sorting */,
 				6B2B6DE2236180A700913E66 /* Info.plist */,
 			);
@@ -128,6 +131,14 @@
 			isa = PBXGroup;
 			children = (
 				6B374807241B5B910023A299 /* CH1ArraysAndStrings.swift */,
+			);
+			path = CTCI;
+			sourceTree = "<group>";
+		};
+		6B374809241B6A6D0023A299 /* CTCI */ = {
+			isa = PBXGroup;
+			children = (
+				6B37480A241B6A840023A299 /* CH1ArraysAndStringsTests.swift */,
 			);
 			path = CTCI;
 			sourceTree = "<group>";
@@ -247,6 +258,7 @@
 			files = (
 				6B85DCAB23C7E1C700B28CEC /* MergeSortUtilityTests.swift in Sources */,
 				6B1AC7E923C66814006CDABD /* QuickSortUtilityTests.swift in Sources */,
+				6B37480B241B6A840023A299 /* CH1ArraysAndStringsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
