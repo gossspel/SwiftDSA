@@ -80,3 +80,37 @@ extension CH1ArraysAndStrings {
 // pair with odd value, and the rest of them have even value; else if the string length is odd, we will make sure all of
 // the keyValue pairs have even value.
 
+// MARK: - 1.5
+// One Away: There are three types of edits that can be performed on strings: insert a character, remove a character,
+// or replace a character. Given two strings, write a function to check if they are one edit (or zero edits) away.
+// Strategy1: - If the lengthDiff between two strings are > 1, return false immediately; else if lengthDiff is 1, loop
+// through the longer string by each character, and try to insert that character in each index of the shorter str.
+// Compare the str with the inserted character with the longer str, if they match, return true immediately, else
+// move to the next iteration, once all iteration exhaust, return false. If lengthDiff is 0, loop through string1 by
+// each character, and replace that character with every character of string2. Compare the string2 with te string with
+// the replaced character, if they match return true immediately, else move to the next iteration, once all iteration
+// exhaust, return false. This is O(N^2)
+// Strategy2 - If the lengthDiff between two strings are > 1, return false immediately; else if lengthDiff is 1, loop
+// through both string together and check to see if their characters are the same in each iteration. Keep going until
+// the characters aren't the same. Stop and insert the last looped character from the longer string to the shorter
+// string at the last looped index. Now that both strings are at equal length again, loop both strings to see if
+// characters from each iteration are the same, return false immediately if one of them are not the same, else return
+// true after the iterations are exhausted. If the lengthDiff is 0, loop through both string together and check to see
+// if their chracters are the same in each iteration. Keep going until the characters aren't the same. Stop and replace
+// the last looped chracter from one of the string with the last looped chracter of the other string. Now loop both the
+// replaced str and the other string together, check to see if their characters are the same in each iteration, return
+// false immediately if one of them are not the same, else return true after all iterations have been exhausted. This is
+// O(N).
+
+// MARK: - 1.6
+// String Compression - Implement a method to perform basic string compression using the counts of repeated characters.
+// For example, the string aabcccccaaa would become a2b1c5a3. If the "compressed" string would not become smaller than
+// the original string, your method should return the original string. You can assume the string has only uppercase and
+// lowercase letters (a - z).
+// Strategy1: Make a method that loop through the whole string. It needs a few variables to do the job:
+// iterationChar (String), iterationCharCompressionCount (Int), and compressedStr (String). For each iteration, mark
+// if loopedChar != iterationChar, append iterationChar and iterationCharCompressionCount to
+// compressedStr and then reset them with iterationChar = loopedChar and iterationCharCompressionCount = 1, else if
+// loopedChar == iterationChar, increment the iterationCharCompressionCount and go to the next iteration. In the end,
+// check if length of compressedStr is less than originalStr, if true return the compressedStr, else return the
+// originalStr. This is O(N).
