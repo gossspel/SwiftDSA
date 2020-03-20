@@ -56,6 +56,33 @@ extension CH1ArraysAndStrings {
 // Strategy2: - check to make sure both strings have the same length, and then insert all chars from string1 to the set,
 // and then remove all chars in string2 from the set, check to see if the set is empty afterwards.
 
+extension CH1ArraysAndStrings {
+    static func isPermutation(string1: String, string2: String) -> Bool {
+        let sortedString1 = string1.sorted()
+        let sortedString2 = string2.sorted()
+        let isPermutation: Bool = sortedString1 == sortedString2
+        return isPermutation
+    }
+    
+    static func isPermutationWithoutSort(string1: String, string2: String) -> Bool {
+        guard string1.count == string2.count else {
+            return false
+        }
+        
+        var charSet: Set<Character> = []
+        
+        for char in string1 {
+            charSet.insert(char)
+        }
+        
+        for char in string2 {
+            charSet.remove(char)
+        }
+        
+        return charSet.isEmpty
+    }
+}
+
 // MARK: - 1.3
 // URLify: Write a method to replace all spaces in a string with '%20'. You may assume that the string has sufficient
 // space at the end to hold the additional characters, and that you are given the "true" length of the string.
