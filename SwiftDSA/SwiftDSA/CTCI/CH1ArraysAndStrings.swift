@@ -95,6 +95,71 @@ extension CH1ArraysAndStrings {
 // through the string backward starting from index = trueLength - 1, and start populating the element at newIndex =
 // (trueLength + 2 * numberOfWhiteSpaces - 1)
 
+extension CH1ArraysAndStrings {
+	static func getURLCompatibleStr(str: String) -> String {
+		var words: [String] = []
+		var currentWord: [Character] = []
+		
+		for char in str {
+			if char == " " {
+				if !currentWord.isEmpty {
+					let currentWordStr: String = String(currentWord)
+					words.append(currentWordStr)
+					currentWord = []
+				}
+			} else {
+				currentWord.append(char)
+			}
+		}
+		
+		if !currentWord.isEmpty {
+			let currentWordStr: String = String(currentWord)
+			words.append(currentWordStr)
+		}
+		
+		let URLCompatibleStr: String = words.joined(separator: "%20")
+		return URLCompatibleStr
+	}
+	
+	static func getURLCompatibleStrCharacters(str: inout [Character], trueLength: Int) -> [Character] {
+		var spaceCount: Int = 0
+		
+		for i in 0..<trueLength  {
+			if str[i] == " " {
+				spaceCount += 1
+			}
+		}
+		
+		var newCount: Int = trueLength + spaceCount * 2
+		str.reserveCapacity(newCount)
+		
+		// NOTE: Remove any extra space at the end of the str
+		if trueLength < str.count {
+			for _ in 0..<(str.count - trueLength) {
+				str.removeLast()
+			}
+		}
+		
+		for _ in (0..<spaceCount * 2) {
+			str.append(" ")
+		}
+		
+		for i in (0..<trueLength).reversed() {
+			if str[i] == " " {
+				str[newCount - 1] = "0"
+				str[newCount - 2] = "2"
+				str[newCount - 3] = "%"
+				newCount -= 3
+			} else {
+				str[newCount - 1] = str[i]
+				newCount -= 1
+			}
+		}
+		
+		return str
+	}
+}
+
 // MARK: - 1.4
 // Palindrome Permutation: Given a string, write a function to check if it is a permuation of a palindrome. A
 // palindrome is a word or phrase that is the same forwards and backwards. A permutation is a rearrangement of letters.

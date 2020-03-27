@@ -72,3 +72,21 @@ extension CH1ArraysAndStringsTests {
         XCTAssertFalse(isPermuation)
     }
 }
+
+// MARK: - 1.3
+
+extension CH1ArraysAndStringsTests {
+	func testGetURLCompatibleStr_withHappyPath_shouldReturnCorrectURLCompatibleStr() {
+		let str: String = "Mr John Smith    "
+		let URLCompatibleStr: String = CH1ArraysAndStrings.getURLCompatibleStr(str: str)
+		let eStr: String = "Mr%20John%20Smith"
+		XCTAssertEqual(URLCompatibleStr, eStr)
+	}
+	
+	func testGetURLCompatibleStrCharacters_withHappyPath_shouldReturnCorrectURLCompatibleStrCharacters() {
+		var chars: [Character] = ["M", "r", " ", "J", "o", "h", "n", " ", "S", "m", "i", "t", "h", " ", " ", " ", " "]
+		let URLCompatibleStrCharacters = CH1ArraysAndStrings.getURLCompatibleStrCharacters(str: &chars, trueLength: 13)
+		let eChars: [Character] = ["M", "r", "%", "2", "0", "J", "o", "h", "n", "%", "2", "0", "S", "m", "i", "t", "h"]
+		XCTAssertEqual(URLCompatibleStrCharacters, eChars)
+	}
+}
