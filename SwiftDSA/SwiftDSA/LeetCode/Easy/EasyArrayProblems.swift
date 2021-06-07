@@ -23,7 +23,7 @@ class EasyArrayProblems {}
 // it and decrement maxLength. At the end of each iteration, update prev with current, increment
 // numberOfProcessedElement.
 
-extension EasyStringProblems {
+extension EasyArrayProblems {
     static func removeDuplicates(_ nums: inout [Int]) -> Int {
         var prev: Int? = nil
         var current: Int? = nil
