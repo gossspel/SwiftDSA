@@ -17,29 +17,29 @@ class EasyArrayProblems {}
 // returns the new length. Do not allocate extra space for another array, you must do this by modifying the input array
 // in-place with O(1) extra memory.
 //
-// Strategy: Have four vars prev: Int? = nil, current: Int? = nil, maxLength: Int = nums.count,
-// numberOfProcessedElement: Int = 0, While (numberOfProcessedElement < maxLength) loop throught the nums array. During
-// each iteration, update current with the current value of the loop, compare it with prev, if it is the same, remove
-// it and decrement maxLength. At the end of each iteration, update prev with current, increment
-// numberOfProcessedElement.
+// Strategy: Have four vars prev: Int? = nil, current: Int? = nil, maxLength: Int = nums.count, next: Int = 0,
+// while (next < maxLength) loop throught the nums array. During each iteration, update current with the current value
+// of the loop, compare it with prev, if it is the same, remove it and decrement maxLength, else increment next. At the
+// end of each iteration, update prev with current.
 
 extension EasyArrayProblems {
     static func removeDuplicates(_ nums: inout [Int]) -> Int {
         var prev: Int? = nil
         var current: Int? = nil
         var maxLength: Int = nums.count
-        var numberOfProcessedElement: Int = 0
+        var next: Int = 0
         
-        while numberOfProcessedElement < maxLength {
-            current = nums[numberOfProcessedElement]
+        while next < maxLength {
+            current = nums[next]
             
             if current == prev {
-                let _ = nums.remove(at: numberOfProcessedElement)
+                let _ = nums.remove(at: next)
                 maxLength -= 1
+            } else {
+                next += 1
             }
             
             prev = current
-            numberOfProcessedElement += 1
         }
         
         return nums.count

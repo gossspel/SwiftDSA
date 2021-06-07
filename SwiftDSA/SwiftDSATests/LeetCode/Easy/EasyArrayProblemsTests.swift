@@ -15,6 +15,28 @@ class EasyArrayProblemsTests: XCTestCase {}
 
 extension EasyArrayProblemsTests {
     func testRemoveDuplicates_withSortedArrayWithOneDuplicatedElement_shouldReturnTwo() {
-        let nums: [Int] = [1, 1, 2]
+        var nums: [Int] = [1, 1, 2]
+        let resultLength: Int = EasyArrayProblems.removeDuplicates(&nums)
+        let expectedResult: [Int] = [1, 2]
+        
+        XCTAssertEqual(resultLength, expectedResult.count)
+        XCTAssertEqual(nums.count, expectedResult.count)
+        
+        for (i, _) in expectedResult.enumerated() {
+            XCTAssertEqual(nums[i], expectedResult[i])
+        }
+    }
+    
+    func testRemoveDuplicates_withSortedArrayWithFiveDuplicatedElements_shouldReturnFive() {
+        var nums: [Int] = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4]
+        let resultLength: Int = EasyArrayProblems.removeDuplicates(&nums)
+        let expectedResult: [Int] = [0, 1, 2, 3, 4]
+        
+        XCTAssertEqual(resultLength, expectedResult.count)
+        XCTAssertEqual(nums.count, expectedResult.count)
+        
+        for (i, _) in expectedResult.enumerated() {
+            XCTAssertEqual(nums[i], expectedResult[i])
+        }
     }
 }
