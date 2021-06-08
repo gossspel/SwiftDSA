@@ -44,4 +44,8 @@ extension EasyArrayProblems {
         
         return nums.count
     }
+    
+    // OptimizedStrategy: Loop through the array, basically update the left y elements of the array with sorted unique
+    // values as we loop through the array, where y is the size of the array with duplicates removed. After that,
+    // remove the last (x - y) element of the array, where x is the size of the original array.
 }
