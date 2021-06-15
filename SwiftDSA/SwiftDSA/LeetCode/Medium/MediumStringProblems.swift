@@ -8,10 +8,7 @@
 
 import Foundation
 
-class MediumStringProblems {
-    var cacheOfIsPalindrome: [String: Bool] = [:]
-    var cacheOfLongestPalindrome: [String: String] = [:]
-}
+class MediumStringProblems {}
 
 // MARK: - 5. Longest Palindromic Substring
 // LINK: https://leetcode.com/problems/longest-palindromic-substring/
