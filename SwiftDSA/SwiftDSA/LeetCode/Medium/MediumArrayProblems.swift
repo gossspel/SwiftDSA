@@ -30,6 +30,12 @@ class MediumArrayProblems {}
 // descending sequence, so we will have to loop through it to find the index of the last element that is bigger than
 // nums[potentialFirstIndex]. Once we found indexToSwap, swap the values between potentialFirstIndex and indexToSwap,
 // and then sort nums[lastPotentialFirstIndex..<nums.count] in an ascending order.
+//
+// Non-trivial case example: Consider 5 8 6 4 => 6 4 5 8; 5 8 6 4 = (5) + (8 6 4) in which we want to swap 5 with the
+// next smallest value that is bigger than it. Notice that (8 6 4) is programmatically formatted to be descending, so
+// we can safely to loop through it and find out 6 is the smallest value that is bigger than 5. Swap the 5 and 6 with
+// their indices and we will get (6) + (8 5 4), if we just sort (8 5 4) in ascending order, we would get (4 5 8), in
+// which 6 4 5 8 would be the next permutation.
 
 extension MediumArrayProblems {
     func nextPermutation(_ nums: inout [Int]) {
