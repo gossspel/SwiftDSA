@@ -81,3 +81,73 @@ extension MediumArrayProblems {
         }
     }
 }
+
+// MARK: - 33. Search in Rotated Sorted Array
+// LINK: https://leetcode.com/problems/search-in-rotated-sorted-array/
+//
+// Descriptions: There is an integer array nums sorted in ascending order (with distinct values).Prior to being passed
+// to your function, nums is rotated at an unknown pivot index k (0 <= k < nums.length) such that the resulting array
+// is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,5,6,7]
+// might be rotated at pivot index 3 and become [4,5,6,7,0,1,2]. Given the array nums after the rotation and an integer
+// target, return the index of target if it is in nums, or -1 if it is not in nums. You must write an algorithm with
+// O(log n) runtime complexity.
+//
+// Strategy: lets call the search method binarySpecialSearch, we should also create a binarySearch method for utility
+// purpose. In binarySpecialSearch, if nums[first] <= nums[last], we can just handle the search with binarySearch.
+// If nums[first] > nums[last], we will check if nums[midPoint] == target, if it is, return midPoint. if not, we will do
+// binarySpecialSearch on nums[0..<midPoint] and on nums[midPoint..<nums.count] and return the max among both, but we
+// will have to adjust the index of the result from the right array since it doesn't start from zero.
+
+extension MediumArrayProblems {
+    func binarySpecialSearch(_ nums: [Int], _ target: Int) -> Int {
+        if nums.count == 1 {
+            return (target == nums[0]) ? 0 : -1
+        }
+        
+        if nums[0] <= nums[nums.count - 1] {
+            return binarySearch(nums, target)
+        } else {
+            let midPoint = (nums.count - 1) / 2
+            
+            if nums[midPoint] == target {
+                return midPoint
+            } else {
+                let left: Int = ((midPoint - 1) >= 0) ? binarySpecialSearch(Array(nums[0..<midPoint]), target) : -1
+                let right: Int
+
+                if (midPoint + 1) <= (nums.count - 1) {
+                    right = binarySpecialSearch(Array(nums[(midPoint + 1)..<nums.count]), target)
+                } else {
+                    right = -1
+                }
+                
+                let adjustedRight: Int = (right != -1) ? (right + midPoint + 1) : -1
+                return max(left, adjustedRight)
+            }
+        }
+    }
+    
+    func binarySearch(_ nums: [Int], _ target: Int) -> Int {
+        if nums.count == 1 {
+            return (target == nums[0]) ? 0 : -1
+        }
+        
+        var startIndex: Int = 0
+        var endIndex: Int = nums.count - 1
+        var midPoint: Int = (endIndex + startIndex) / 2
+        
+        while startIndex <= endIndex {
+            if target == nums[midPoint] {
+                return midPoint
+            } else if target < nums[midPoint] {
+                endIndex = midPoint - 1
+                midPoint = (startIndex + endIndex) / 2
+            } else if target > nums[midPoint] {
+                startIndex = midPoint + 1
+                midPoint = (startIndex + endIndex) / 2
+            }
+        }
+        
+        return -1
+    }
+}

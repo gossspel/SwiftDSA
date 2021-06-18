@@ -68,3 +68,224 @@ extension MediumArrayProblemsTests {
         XCTAssertEqual(nums, [1])
     }
 }
+
+// MARK: - 33. Search in Rotated Sorted Array
+
+extension MediumArrayProblemsTests {
+    func testBinarySearch_with2ElementsNumsAndTargetNotInNums_shouldReturnNegativeOne() {
+        let nums: [Int] = [6, 7]
+        let target: Int = 8
+        let result = MediumArrayProblems().binarySearch(nums, target)
+        XCTAssertEqual(result, -1)
+    }
+    
+    func testBinarySearch_with2ElementsNumsAndTargetIsFirstValueInNums_shouldReturnZero() {
+        let nums: [Int] = [6, 7]
+        let target: Int = 6
+        let result = MediumArrayProblems().binarySearch(nums, target)
+        XCTAssertEqual(result, 0)
+    }
+    
+    func testBinarySearch_with2ElementsNumsAndTargetIsSecondValueInNums_shouldReturnOne() {
+        let nums: [Int] = [6, 7]
+        let target: Int = 7
+        let result = MediumArrayProblems().binarySearch(nums, target)
+        XCTAssertEqual(result, 1)
+    }
+    
+    func testBinarySearch_with5ElementsNumsAndTargetNotInNums_shouldReturnNegativeOne() {
+        let nums: [Int] = [2, 3, 4, 5, 6]
+        let target: Int = 8
+        let result = MediumArrayProblems().binarySearch(nums, target)
+        XCTAssertEqual(result, -1)
+    }
+    
+    func testBinarySearch_with5ElementsNumsAndTargetIsFifthValueInNums_shouldReturnFour() {
+        let nums: [Int] = [2, 3, 4, 5, 6]
+        let target: Int = 6
+        let result = MediumArrayProblems().binarySearch(nums, target)
+        XCTAssertEqual(result, 4)
+    }
+    
+    func testBinarySearch_with5ElementsNumsAndTargetIsSecondValueInNums_shouldReturnOne() {
+        let nums: [Int] = [2, 3, 4, 5, 6]
+        let target: Int = 3
+        let result = MediumArrayProblems().binarySearch(nums, target)
+        XCTAssertEqual(result, 1)
+    }
+    
+    func testBinarySearch_with6ElementsNumsAndTargetTooBig_shouldReturnNegativeOne() {
+        let nums: [Int] = [2, 3, 4, 5, 6, 7]
+        let target: Int = 8
+        let result = MediumArrayProblems().binarySearch(nums, target)
+        XCTAssertEqual(result, -1)
+    }
+    
+    func testBinarySearch_with6ElementsNumsAndTargetTooSmall_shouldReturnNegativeOne() {
+        let nums: [Int] = [2, 3, 4, 5, 6, 7]
+        let target: Int = 1
+        let result = MediumArrayProblems().binarySearch(nums, target)
+        XCTAssertEqual(result, -1)
+    }
+    
+    func testBinarySearch_with6ElementsNumsAndTargetIsFirstValueInNums_shouldReturnZero() {
+        let nums: [Int] = [2, 3, 4, 5, 6, 7]
+        let target: Int = 2
+        let result = MediumArrayProblems().binarySearch(nums, target)
+        XCTAssertEqual(result, 0)
+    }
+    
+    func testBinarySearch_with6ElementsNumsAndTargetIsSecondValueInNums_shouldReturnOne() {
+        let nums: [Int] = [2, 3, 4, 5, 6, 7]
+        let target: Int = 3
+        let result = MediumArrayProblems().binarySearch(nums, target)
+        XCTAssertEqual(result, 1)
+    }
+    
+    func testBinarySearch_with6ElementsNumsAndTargetIsThirdValueInNums_shouldReturnTwo() {
+        let nums: [Int] = [2, 3, 4, 5, 6, 7]
+        let target: Int = 4
+        let result = MediumArrayProblems().binarySearch(nums, target)
+        XCTAssertEqual(result, 2)
+    }
+    
+    func testBinarySearch_with6ElementsNumsAndTargetIsFourthValueInNums_shouldReturnThree() {
+        let nums: [Int] = [2, 3, 4, 5, 6, 7]
+        let target: Int = 5
+        let result = MediumArrayProblems().binarySearch(nums, target)
+        XCTAssertEqual(result, 3)
+    }
+    
+    func testBinarySearch_with6ElementsNumsAndTargetIsFifthValueInNums_shouldReturnFour() {
+        let nums: [Int] = [2, 3, 4, 5, 6, 7]
+        let target: Int = 6
+        let result = MediumArrayProblems().binarySearch(nums, target)
+        XCTAssertEqual(result, 4)
+    }
+    
+    func testBinarySearch_with6ElementsNumsAndTargetIsSixthValueInNums_shouldReturnFive() {
+        let nums: [Int] = [2, 3, 4, 5, 6, 7]
+        let target: Int = 7
+        let result = MediumArrayProblems().binarySearch(nums, target)
+        XCTAssertEqual(result, 5)
+    }
+    
+    func testBinarySpecialSearch_with4ElementsAndPivotIsZeroAndTargetIsZero_shouldReturnCorrectIndex() {
+        let nums: [Int] = [0, 1, 2, 3]
+        let target: Int = 0
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 0)
+    }
+    
+    func testBinarySpecialSearch_with4ElementsAndPivotIsOneAndTargetIsZero_shouldReturnCorrectIndex() {
+        let nums: [Int] = [1, 2, 3, 0]
+        let target: Int = 0
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 3)
+    }
+    
+    func testBinarySpecialSearch_with4ElementsAndPivotIsTwoAndTargetIsZero_shouldReturnCorrectIndex() {
+        let nums: [Int] = [2, 3, 0, 1]
+        let target: Int = 0
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 2)
+    }
+    
+    func testBinarySpecialSearch_with4ElementsAndPivotIsThreeAndTargetIsZero_shouldReturnCorrectIndex() {
+        let nums: [Int] = [3, 0, 1, 2]
+        let target: Int = 0
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 1)
+    }
+    
+    func testBinarySpecialSearch_with4ElementsAndPivotIsZeroAndTargetIsOne_shouldReturnCorrectIndex() {
+        let nums: [Int] = [0, 1, 2, 3]
+        let target: Int = 1
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 1)
+    }
+    
+    func testBinarySpecialSearch_with4ElementsAndPivotIsOneAndTargetIsOne_shouldReturnCorrectIndex() {
+        let nums: [Int] = [1, 2, 3, 0]
+        let target: Int = 1
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 0)
+    }
+    
+    func testBinarySpecialSearch_with4ElementsAndPivotIsTwoAndTargetIsOne_shouldReturnCorrectIndex() {
+        let nums: [Int] = [2, 3, 0, 1]
+        let target: Int = 1
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 3)
+    }
+    
+    func testBinarySpecialSearch_with4ElementsAndPivotIsThreeAndTargetIsOne_shouldReturnCorrectIndex() {
+        let nums: [Int] = [3, 0, 1, 2]
+        let target: Int = 1
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 2)
+    }
+    
+    func testBinarySpecialSearch_with4ElementsAndPivotIsZeroAndTargetIsTwo_shouldReturnCorrectIndex() {
+        let nums: [Int] = [0, 1, 2, 3]
+        let target: Int = 2
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 2)
+    }
+    
+    func testBinarySpecialSearch_with4ElementsAndPivotIsOneAndTargetIsTwo_shouldReturnCorrectIndex() {
+        let nums: [Int] = [1, 2, 3, 0]
+        let target: Int = 2
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 1)
+    }
+    
+    func testBinarySpecialSearch_with4ElementsAndPivotIsTwoAndTargetIsTwo_shouldReturnCorrectIndex() {
+        let nums: [Int] = [2, 3, 0, 1]
+        let target: Int = 2
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 0)
+    }
+    
+    func testBinarySpecialSearch_with4ElementsAndPivotIsThreeAndTargetIsTwo_shouldReturnCorrectIndex() {
+        let nums: [Int] = [3, 0, 1, 2]
+        let target: Int = 2
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 3)
+    }
+    
+    func testBinarySpecialSearch_with5ElementsAndPivotIsZeroAndTargetIsZero_shouldReturnCorrectIndex() {
+        let nums: [Int] = [0, 1, 2, 3, 4]
+        let target: Int = 0
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 0)
+    }
+    
+    func testBinarySpecialSearch_with5ElementsAndPivotIsOneAndTargetIsZero_shouldReturnCorrectIndex() {
+        let nums: [Int] = [1, 2, 3, 4, 0]
+        let target: Int = 0
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 4)
+    }
+    
+    func testBinarySpecialSearch_with5ElementsAndPivotIsTwoAndTargetIsZero_shouldReturnCorrectIndex() {
+        let nums: [Int] = [2, 3, 4, 0, 1]
+        let target: Int = 0
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 3)
+    }
+    
+    func testBinarySpecialSearch_with5ElementsAndPivotIsThreeAndTargetIsZero_shouldReturnCorrectIndex() {
+        let nums: [Int] = [3, 4, 0, 1, 2]
+        let target: Int = 0
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 2)
+    }
+    
+    func testBinarySpecialSearch_with5ElementsAndPivotIsFourAndTargetIsZero_shouldReturnCorrectIndex() {
+        let nums: [Int] = [4, 0, 1, 2, 3]
+        let target: Int = 0
+        let result = MediumArrayProblems().binarySpecialSearch(nums, target)
+        XCTAssertEqual(result, 1)
+    }
+}
