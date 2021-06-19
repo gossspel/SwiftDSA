@@ -26,6 +26,8 @@
 		6B8EC5C22678904C00F8C575 /* MediumLinkedListProblemsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8EC5C12678904C00F8C575 /* MediumLinkedListProblemsTests.swift */; };
 		6B944DDC267E59DD008DB0E8 /* EasyTreeProblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B944DDB267E59DD008DB0E8 /* EasyTreeProblems.swift */; };
 		6B944DE0267E5E61008DB0E8 /* EasyTreeProblemsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B944DDF267E5E61008DB0E8 /* EasyTreeProblemsTests.swift */; };
+		6B944DE4267E6648008DB0E8 /* MediumTreeProblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B944DE3267E6648008DB0E8 /* MediumTreeProblems.swift */; };
+		6B944DE8267E9DCA008DB0E8 /* MediumTreeProblemsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B944DE7267E9DCA008DB0E8 /* MediumTreeProblemsTests.swift */; };
 		6BB3313026742822007C1BCE /* MediumStringProblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB3312F26742822007C1BCE /* MediumStringProblems.swift */; };
 		6BB3313526743611007C1BCE /* MediumStringProblemsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB3313426743611007C1BCE /* MediumStringProblemsTests.swift */; };
 		6BCF675B2679CF00009E4061 /* MediumArrayProblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCF675A2679CF00009E4061 /* MediumArrayProblems.swift */; };
@@ -67,6 +69,8 @@
 		6B8EC5C12678904C00F8C575 /* MediumLinkedListProblemsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumLinkedListProblemsTests.swift; sourceTree = "<group>"; };
 		6B944DDB267E59DD008DB0E8 /* EasyTreeProblems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyTreeProblems.swift; sourceTree = "<group>"; };
 		6B944DDF267E5E61008DB0E8 /* EasyTreeProblemsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyTreeProblemsTests.swift; sourceTree = "<group>"; };
+		6B944DE3267E6648008DB0E8 /* MediumTreeProblems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumTreeProblems.swift; sourceTree = "<group>"; };
+		6B944DE7267E9DCA008DB0E8 /* MediumTreeProblemsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumTreeProblemsTests.swift; sourceTree = "<group>"; };
 		6BB3312F26742822007C1BCE /* MediumStringProblems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumStringProblems.swift; sourceTree = "<group>"; };
 		6BB3313426743611007C1BCE /* MediumStringProblemsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumStringProblemsTests.swift; sourceTree = "<group>"; };
 		6BCF675A2679CF00009E4061 /* MediumArrayProblems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumArrayProblems.swift; sourceTree = "<group>"; };
@@ -178,6 +182,7 @@
 				6BB3312F26742822007C1BCE /* MediumStringProblems.swift */,
 				6B8EC5BD2678828A00F8C575 /* MediumLinkedListProblems.swift */,
 				6BCF675A2679CF00009E4061 /* MediumArrayProblems.swift */,
+				6B944DE3267E6648008DB0E8 /* MediumTreeProblems.swift */,
 			);
 			path = Medium;
 			sourceTree = "<group>";
@@ -188,6 +193,7 @@
 				6BB3313426743611007C1BCE /* MediumStringProblemsTests.swift */,
 				6B8EC5C12678904C00F8C575 /* MediumLinkedListProblemsTests.swift */,
 				6B3C5B27267BBD4200B48458 /* MediumArrayProblemsTests.swift */,
+				6B944DE7267E9DCA008DB0E8 /* MediumTreeProblemsTests.swift */,
 			);
 			path = Medium;
 			sourceTree = "<group>";
@@ -333,6 +339,7 @@
 			files = (
 				6B2B6DCE236180A600913E66 /* ViewController.swift in Sources */,
 				6B1AC7ED23C6AE26006CDABD /* MergeSortUtility.swift in Sources */,
+				6B944DE4267E6648008DB0E8 /* MediumTreeProblems.swift in Sources */,
 				6BFA1D48266859080017A013 /* EasyStringProblems.swift in Sources */,
 				6B8EC5BE2678828A00F8C575 /* MediumLinkedListProblems.swift in Sources */,
 				6B2B6DED236181E200913E66 /* QuickSortUtility.swift in Sources */,
@@ -358,6 +365,7 @@
 				6BB3313526743611007C1BCE /* MediumStringProblemsTests.swift in Sources */,
 				6B944DE0267E5E61008DB0E8 /* EasyTreeProblemsTests.swift in Sources */,
 				6B1AC7E923C66814006CDABD /* QuickSortUtilityTests.swift in Sources */,
+				6B944DE8267E9DCA008DB0E8 /* MediumTreeProblemsTests.swift in Sources */,
 				6B37480B241B6A840023A299 /* CH1ArraysAndStringsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
