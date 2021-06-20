@@ -16,6 +16,7 @@
 		6B2B6DD3236180A700913E66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B2B6DD2236180A700913E66 /* Assets.xcassets */; };
 		6B2B6DD6236180A700913E66 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B2B6DD4236180A700913E66 /* LaunchScreen.storyboard */; };
 		6B2B6DED236181E200913E66 /* QuickSortUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2B6DEC236181E200913E66 /* QuickSortUtility.swift */; };
+		6B337019267FA414002ECB87 /* EasyRecursionProblemsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B337018267FA414002ECB87 /* EasyRecursionProblemsTests.swift */; };
 		6B374808241B5B910023A299 /* CH1ArraysAndStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B374807241B5B910023A299 /* CH1ArraysAndStrings.swift */; };
 		6B37480B241B6A840023A299 /* CH1ArraysAndStringsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B37480A241B6A840023A299 /* CH1ArraysAndStringsTests.swift */; };
 		6B3C5B28267BBD4200B48458 /* MediumArrayProblemsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3C5B27267BBD4200B48458 /* MediumArrayProblemsTests.swift */; };
@@ -28,6 +29,7 @@
 		6B944DE0267E5E61008DB0E8 /* EasyTreeProblemsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B944DDF267E5E61008DB0E8 /* EasyTreeProblemsTests.swift */; };
 		6B944DE4267E6648008DB0E8 /* MediumTreeProblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B944DE3267E6648008DB0E8 /* MediumTreeProblems.swift */; };
 		6B944DE8267E9DCA008DB0E8 /* MediumTreeProblemsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B944DE7267E9DCA008DB0E8 /* MediumTreeProblemsTests.swift */; };
+		6B944DEC267EA42C008DB0E8 /* EasyRecursionProblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B944DEB267EA42C008DB0E8 /* EasyRecursionProblems.swift */; };
 		6BB3313026742822007C1BCE /* MediumStringProblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB3312F26742822007C1BCE /* MediumStringProblems.swift */; };
 		6BB3313526743611007C1BCE /* MediumStringProblemsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB3313426743611007C1BCE /* MediumStringProblemsTests.swift */; };
 		6BCF675B2679CF00009E4061 /* MediumArrayProblems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCF675A2679CF00009E4061 /* MediumArrayProblems.swift */; };
@@ -59,6 +61,7 @@
 		6B2B6DDC236180A700913E66 /* SwiftDSATests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftDSATests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B2B6DE2236180A700913E66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B2B6DEC236181E200913E66 /* QuickSortUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSortUtility.swift; sourceTree = "<group>"; };
+		6B337018267FA414002ECB87 /* EasyRecursionProblemsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyRecursionProblemsTests.swift; sourceTree = "<group>"; };
 		6B374807241B5B910023A299 /* CH1ArraysAndStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CH1ArraysAndStrings.swift; sourceTree = "<group>"; };
 		6B37480A241B6A840023A299 /* CH1ArraysAndStringsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CH1ArraysAndStringsTests.swift; sourceTree = "<group>"; };
 		6B3C5B27267BBD4200B48458 /* MediumArrayProblemsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumArrayProblemsTests.swift; sourceTree = "<group>"; };
@@ -71,6 +74,7 @@
 		6B944DDF267E5E61008DB0E8 /* EasyTreeProblemsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyTreeProblemsTests.swift; sourceTree = "<group>"; };
 		6B944DE3267E6648008DB0E8 /* MediumTreeProblems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumTreeProblems.swift; sourceTree = "<group>"; };
 		6B944DE7267E9DCA008DB0E8 /* MediumTreeProblemsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumTreeProblemsTests.swift; sourceTree = "<group>"; };
+		6B944DEB267EA42C008DB0E8 /* EasyRecursionProblems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyRecursionProblems.swift; sourceTree = "<group>"; };
 		6BB3312F26742822007C1BCE /* MediumStringProblems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumStringProblems.swift; sourceTree = "<group>"; };
 		6BB3313426743611007C1BCE /* MediumStringProblemsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumStringProblemsTests.swift; sourceTree = "<group>"; };
 		6BCF675A2679CF00009E4061 /* MediumArrayProblems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumArrayProblems.swift; sourceTree = "<group>"; };
@@ -213,6 +217,7 @@
 				6BFA1D47266859080017A013 /* EasyStringProblems.swift */,
 				6B3CFEB1266EA0E9000C9B76 /* EasyArrayProblems.swift */,
 				6B944DDB267E59DD008DB0E8 /* EasyTreeProblems.swift */,
+				6B944DEB267EA42C008DB0E8 /* EasyRecursionProblems.swift */,
 			);
 			path = Easy;
 			sourceTree = "<group>";
@@ -232,6 +237,7 @@
 				6BFA1D5326685E330017A013 /* EasyStringProblemsTests.swift */,
 				6B3CFEBB266EA910000C9B76 /* EasyArrayProblemsTests.swift */,
 				6B944DDF267E5E61008DB0E8 /* EasyTreeProblemsTests.swift */,
+				6B337018267FA414002ECB87 /* EasyRecursionProblemsTests.swift */,
 			);
 			path = Easy;
 			sourceTree = "<group>";
@@ -337,6 +343,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B944DEC267EA42C008DB0E8 /* EasyRecursionProblems.swift in Sources */,
 				6B2B6DCE236180A600913E66 /* ViewController.swift in Sources */,
 				6B1AC7ED23C6AE26006CDABD /* MergeSortUtility.swift in Sources */,
 				6B944DE4267E6648008DB0E8 /* MediumTreeProblems.swift in Sources */,
@@ -361,6 +368,7 @@
 				6BFA1D5426685E330017A013 /* EasyStringProblemsTests.swift in Sources */,
 				6B85DCAB23C7E1C700B28CEC /* MergeSortUtilityTests.swift in Sources */,
 				6B3CFEBC266EA910000C9B76 /* EasyArrayProblemsTests.swift in Sources */,
+				6B337019267FA414002ECB87 /* EasyRecursionProblemsTests.swift in Sources */,
 				6B8EC5C22678904C00F8C575 /* MediumLinkedListProblemsTests.swift in Sources */,
 				6BB3313526743611007C1BCE /* MediumStringProblemsTests.swift in Sources */,
 				6B944DE0267E5E61008DB0E8 /* EasyTreeProblemsTests.swift in Sources */,
