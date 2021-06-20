@@ -151,3 +151,87 @@ extension MediumArrayProblems {
         return -1
     }
 }
+
+// MARK: - 34. Find First and Last Position of Element in Sorted Array
+// LINK: https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/
+//
+// Description: Given an array of integers nums sorted in ascending order, find the starting and ending position of a
+// given target value. If target is not found in the array, return [-1, -1]. You must write an algorithm with O(log n)
+// runtime complexity.
+//
+// Strategy: Start by trying to do a binary search, let result = [-1, -1]
+// If target == nums[midPoint], check nums[midPoint - 1] != target and nums[midPoint + 1] != target, if both are true,
+// set start & end = midPoint and return [start, end], else if nums[midPoint - 1] == target, perform searchRange on
+// nums[0..<midPoint] and compare the result with the existing one and get the merged max from them. Repeat the same
+// for the case in which nums[midPoint + 1] == target
+// If target < nums[midPoint], do searchRange on nums[0..<midPoint]
+// If target > nums[midPoint], do searchRange on nums[midPoint+1..<nums.count]
+
+extension MediumArrayProblems {
+    func searchRange(_ nums: [Int], _ target: Int) -> [Int] {
+        guard !nums.isEmpty else {
+            return [-1, -1]
+        }
+        
+        if nums.count == 1 {
+            return (nums[0] == target) ? [0, 0] : [-1, -1]
+        }
+        
+        var result: [Int] = [-1, -1]
+        let midPoint: Int = (nums.count - 1) / 2
+        let hasLeftArray: Bool = (midPoint - 1) >= 0
+        let hasRightArray: Bool = (midPoint + 1) <= (nums.count - 1)
+        
+        if target == nums[midPoint] {
+            result = [midPoint, midPoint]
+            
+            if hasLeftArray && (nums[midPoint - 1] == target) {
+                let leftArrayResult: [Int] = searchRange(Array(nums[0...(midPoint - 1)]), target)
+                result = getMaxRange(rangeA: result, rangeB: leftArrayResult)
+            }
+            
+            if hasRightArray && (nums[midPoint + 1] == target) {
+                let rightArrayResult: [Int] = searchRange(Array(nums[(midPoint + 1)...(nums.count - 1)]), target)
+                let adjustedRightArrayResult: [Int] = getAdjustedRange(range: rightArrayResult,
+                                                                       shiftNStepsToRight: midPoint + 1)
+                result = getMaxRange(rangeA: result, rangeB: adjustedRightArrayResult)
+            }
+            
+            return result
+        } else if target < nums[midPoint] {
+            if hasLeftArray {
+                return searchRange(Array(nums[0...(midPoint - 1)]), target)
+            } else {
+                return result
+            }
+        } else {
+            if hasRightArray {
+                let rightArrayResult: [Int] = searchRange(Array(nums[(midPoint + 1)...(nums.count - 1)]), target)
+                let adjustedRightArrayResult: [Int] = getAdjustedRange(range: rightArrayResult,
+                                                                       shiftNStepsToRight: midPoint + 1)
+                return adjustedRightArrayResult
+            } else {
+                return result
+            }
+        }
+    }
+    
+    private func getMaxRange(rangeA: [Int], rangeB: [Int]) -> [Int] {
+        guard rangeA.count == 2, rangeB.count == 2 else {
+            return []
+        }
+        
+        let minValue: Int = min(rangeA[0], rangeB[0])
+        let maxValue: Int = max(rangeA[1], rangeB[1])
+        return [minValue, maxValue]
+    }
+    
+    private func getAdjustedRange(range: [Int], shiftNStepsToRight: Int) -> [Int] {
+        guard range != [-1, -1] else {
+            return range
+        }
+        
+        let adjustedRange: [Int] = range.map { $0 + shiftNStepsToRight }
+        return adjustedRange
+    }
+}

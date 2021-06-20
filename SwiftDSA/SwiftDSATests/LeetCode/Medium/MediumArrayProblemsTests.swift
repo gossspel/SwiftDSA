@@ -289,3 +289,70 @@ extension MediumArrayProblemsTests {
         XCTAssertEqual(result, 1)
     }
 }
+
+// MARK: - 34. Find First and Last Position of Element in Sorted Array
+
+extension MediumArrayProblemsTests {
+    func testSearchRange_withHappyPathA_shouldReturnCorrectRange() {
+        let nums: [Int] = [5, 7, 7, 8, 8, 10]
+        let target: Int = 8
+        let result = MediumArrayProblems().searchRange(nums, target)
+        XCTAssertEqual(result, [3, 4])
+    }
+    
+    func testSearchRange_withHappyPathB_shouldReturnCorrectRange() {
+        let nums: [Int] = [5, 7, 7, 8, 8, 10]
+        let target: Int = 5
+        let result = MediumArrayProblems().searchRange(nums, target)
+        XCTAssertEqual(result, [0, 0])
+    }
+    
+    func testSearchRange_withHappyPathC_shouldReturnCorrectRange() {
+        let nums: [Int] = [5, 7, 7, 8, 8, 10]
+        let target: Int = 7
+        let result = MediumArrayProblems().searchRange(nums, target)
+        XCTAssertEqual(result, [1, 2])
+    }
+    
+    func testSearchRange_withHappyPathD_shouldReturnCorrectRange() {
+        let nums: [Int] = [5, 7, 7, 8, 8, 10]
+        let target: Int = 10
+        let result = MediumArrayProblems().searchRange(nums, target)
+        XCTAssertEqual(result, [5, 5])
+    }
+    
+    func testSearchRange_withSadPathA_shouldReturnNotFoundRange() {
+        let nums: [Int] = [5, 7, 7, 8, 8, 10]
+        let target: Int = 6
+        let result = MediumArrayProblems().searchRange(nums, target)
+        XCTAssertEqual(result, [-1, -1])
+    }
+    
+    func testSearchRange_withSadPathB_shouldReturnNotFoundRange() {
+        let nums: [Int] = [5, 7, 7, 8, 8, 10]
+        let target: Int = 4
+        let result = MediumArrayProblems().searchRange(nums, target)
+        XCTAssertEqual(result, [-1, -1])
+    }
+    
+    func testSearchRange_withSadPathC_shouldReturnNotFoundRange() {
+        let nums: [Int] = [5, 7, 7, 8, 8, 10]
+        let target: Int = 9
+        let result = MediumArrayProblems().searchRange(nums, target)
+        XCTAssertEqual(result, [-1, -1])
+    }
+    
+    func testSearchRange_withSadPathD_shouldReturnNotFoundRange() {
+        let nums: [Int] = [5, 7, 7, 8, 8, 10]
+        let target: Int = 11
+        let result = MediumArrayProblems().searchRange(nums, target)
+        XCTAssertEqual(result, [-1, -1])
+    }
+    
+    func testSearchRange_withEmptyPath_shouldReturnNotFoundRange() {
+        let nums: [Int] = []
+        let target: Int = 0
+        let result = MediumArrayProblems().searchRange(nums, target)
+        XCTAssertEqual(result, [-1, -1])
+    }
+}
