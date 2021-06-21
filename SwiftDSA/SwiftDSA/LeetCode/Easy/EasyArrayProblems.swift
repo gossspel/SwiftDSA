@@ -49,3 +49,29 @@ extension EasyArrayProblems {
     // values as we loop through the array, where y is the size of the array with duplicates removed. After that,
     // remove the last (x - y) element of the array, where x is the size of the original array.
 }
+
+// MARK: - 53. Maximum Subarray
+// LINK: https://leetcode.com/problems/maximum-subarray/
+//
+// Description: Given an integer array nums, find the contiguous subarray (containing at least one number) which has
+// the largest sum and return its sum.
+//
+// Strategy: We are looping through the array, and at each iteration, we are basically determining to keep growing the
+// existing potentialMaxSubArray or make a new potentialMaxSubArray with the new start.
+
+extension EasyArrayProblems {
+    func maxSubArray(_ nums: [Int]) -> Int {
+        var sumOfPotentialMaxSubArray: Int = nums[0]
+        var sumOfMaxSubArray: Int = sumOfPotentialMaxSubArray
+        
+        for i in 1..<nums.count {
+            sumOfPotentialMaxSubArray = max(sumOfPotentialMaxSubArray + nums[i], nums[i])
+            
+            if sumOfPotentialMaxSubArray > sumOfMaxSubArray {
+                sumOfMaxSubArray = sumOfPotentialMaxSubArray
+            }
+        }
+        
+        return sumOfMaxSubArray
+    }
+}

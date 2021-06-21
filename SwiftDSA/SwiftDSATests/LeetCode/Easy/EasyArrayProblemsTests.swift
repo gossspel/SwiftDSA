@@ -40,3 +40,43 @@ extension EasyArrayProblemsTests {
         }
     }
 }
+
+// MARK: - 53. Maximum Subarray
+
+extension EasyArrayProblemsTests {
+    func testMaxSubArray_withHappyPathA_shouldReturnSumOfMaxSubArray() {
+        let nums: [Int] = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+        let sumOfMaxSubArray: Int = EasyArrayProblems().maxSubArray(nums)
+        XCTAssertEqual(sumOfMaxSubArray, 6)
+    }
+    
+    func testMaxSubArray_withHappyPathB_shouldReturnSumOfMaxSubArray() {
+        let nums: [Int] = [5, 4, -1, 7, 8]
+        let sumOfMaxSubArray: Int = EasyArrayProblems().maxSubArray(nums)
+        XCTAssertEqual(sumOfMaxSubArray, 23)
+    }
+    
+    func testMaxSubArray_withHappyPathC_shouldReturnSumOfMaxSubArray() {
+        let nums: [Int] = [-2, 1, -3, 4, -1, 2, 1, -5, 4, 2]
+        let sumOfMaxSubArray: Int = EasyArrayProblems().maxSubArray(nums)
+        XCTAssertEqual(sumOfMaxSubArray, 7)
+    }
+    
+    func testMaxSubArray_withMinPath_shouldReturnSumOfMaxSubArray() {
+        let nums: [Int] = [1]
+        let sumOfMaxSubArray: Int = EasyArrayProblems().maxSubArray(nums)
+        XCTAssertEqual(sumOfMaxSubArray, 1)
+    }
+    
+    func testMaxSubArray_withAllNegativeElements_shouldReturnMaxOfArray() {
+        let nums: [Int] = [-3, -2, -1, -4, -5]
+        let sumOfMaxSubArray: Int = EasyArrayProblems().maxSubArray(nums)
+        XCTAssertEqual(sumOfMaxSubArray, -1)
+    }
+    
+    func testMaxSubArray_withAllPositiveElements_shouldReturnSumOfArray() {
+        let nums: [Int] = [3, 2, 1, 4, 5]
+        let sumOfMaxSubArray: Int = EasyArrayProblems().maxSubArray(nums)
+        XCTAssertEqual(sumOfMaxSubArray, 15)
+    }
+}
