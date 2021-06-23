@@ -235,3 +235,149 @@ extension MediumArrayProblems {
         return adjustedRange
     }
 }
+
+// MARK: - 39. Combination Sum
+// LINK: https://leetcode.com/problems/combination-sum/
+//
+// Description: Given an array of distinct integers candidates and a target integer target, return a list of all unique
+// combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order. The
+// same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency
+// of at least one of the chosen numbers is different.It is guaranteed that the number of unique combinations that sum
+// up to target is less than 150 combinations for the given input.
+//
+// Strategy: use backtracking, a form of recursion in which we handle the leafNode (if target <= 0) and return. For
+// non-leafNode, we recursively call backtracking to break down the non-leafNode to eventually get to the leafNode.
+// https://www.cis.upenn.edu/~matuszek/cit594-2012/Pages/backtracking.html
+//
+// [2, 3, 5], target = 8
+// 2
+// 2 2
+// 2 2 2
+// 2 2 2 2
+// 2 2 2 3
+// 2 2 2 5
+// 2 2 3
+// 2 2 3 3
+// 2 2 5
+// 2 3
+// 2 3 3
+// 2 5
+// 2 5 5
+// 3
+// 3 3
+// 3 3 3
+// 3 5
+// 5
+// 5 5
+
+extension MediumArrayProblems {
+    func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
+        var combos: [[Int]] = []
+        backtrack(candidates: candidates, combos: &combos, target: target, inProgressCombo: [], indexOfCandidates: 0)
+        return combos
+    }
+    
+    func backtrack(candidates: [Int],
+                   combos: inout [[Int]],
+                   target: Int,
+                   inProgressCombo: [Int],
+                   indexOfCandidates: Int)
+    {
+        if target <= 0 {
+            if target == 0 {
+                combos.append(inProgressCombo)
+            }
+        } else {
+            for i in indexOfCandidates..<candidates.count {
+                guard candidates[i] <= target else {
+                    return
+                }
+                
+                backtrack(candidates: candidates,
+                          combos: &combos,
+                          target: target - candidates[i],
+                          inProgressCombo: inProgressCombo + [candidates[i]],
+                          indexOfCandidates: i)
+            }
+            
+            // backtrackA backtrack(target: 8, inProgressCombo: [], indexOfCandidates: 0)
+            // backtrackB backtrack(target: 6, inProgressCombo: [2], indexOfCandidates: 0)
+            // backtrackC backtrack(target: 4, inProgressCombo: [2, 2], indexOfCandidates: 0)
+            // backtrackD backtrack(target: 2, inProgressCombo: [2, 2, 2], indexOfCandidates: 0)
+            // backtrackE backtrack(target: 0, inProgressCombo: [2, 2, 2, 2], indexOfCandidates: 0)
+            // backtrackE returns, continue execution on backtrackD
+            // backtrackF backtrack(target: -1, inProgressCombo: [2, 2, 2, 3], indexOfCandidates: 1)
+            // backtrackF returns, continue execution on backtrackD
+            // backtrackG backtrack(target: -3, inProgressCombo: [2, 2, 2, 5], indexOfCandidates: 2)
+            // backtrackG returns, backtrackD returns, continue execution on backtrackC
+            // backtrackH backtrack(target: 1, inProgressCombo: [2, 2, 3], indexOfCandidates: 1)
+            // backtrackI backtrack(target: -2, inProgressCombo: [2, 2, 3, 3], indexOfCandidates: 1)
+            // backtrackI returns, continue execution on backtrackC
+            // .... keeps going until backtrackA returns.
+        }
+    }
+    
+    // Sunny Special
+    // Strategy: First sort the array, then loop through the array with each candidate, find all possible combination
+    // sums with only one candidate, and then find all possible combintation sums with only 2 candidates, repeat and
+    // until we proceed to find all possible combination sums with n candidates, where n = target/candidate. After that
+    // we move to the next iteration of candidate and repeat the process until everything is finished.
+    //
+    // [1, 2, 3], target = 8
+    // combination with 1 1. => result of combinationSum([2, 3], 7).map { [1] + $0 }
+    // combination with 2 1s. => result of combinationSum([2, 3], 6).map { [1, 1] + $0 }
+    // ...
+    // combination with target/1 1s => result of combinationSum([2, 3], 0).map { [1, 1, 1, 1, 1, 1, 1, 1] + $0 }
+    // combination with 1 2. => result of combinationSum([3], 6).map { [2] + $0 }
+    // combination with 2 2s. => result of combinationSum([3], 4).map { [2, 2] + $0 }
+    func combinationSumSunny(_ candidates: [Int], _ target: Int) -> [[Int]] {
+        guard !candidates.isEmpty else {
+            return []
+        }
+
+        if candidates.count == 1 {
+            if target % candidates[0] == 0 {
+                let sum = [Array(repeating: candidates[0], count: target / candidates[0])]
+                return sum
+            } else {
+                return []
+            }
+        }
+
+        var results: [[Int]] = []
+        let sortedCandidates: [Int] = candidates.sorted()
+
+        for i in 0..<sortedCandidates.count {
+            guard target / sortedCandidates[i] >= 1 else {
+                continue
+            }
+
+            for j in 1...(target / sortedCandidates[i]) {
+                if j == (target / sortedCandidates[i]) {
+                    if (sortedCandidates[i] * j) == target {
+                        let repeatingElements: [Int] = Array(repeating: sortedCandidates[i], count: j)
+                        results.append(repeatingElements)
+                    }
+                } else {
+                    guard (i + 1) < sortedCandidates.count else {
+                        continue
+                    }
+
+                    let subCandidates: [Int] = Array(sortedCandidates[(i + 1)..<sortedCandidates.count])
+                    let subTarget: Int = target - (sortedCandidates[i] * j)
+                    let incompleteCurrentResults: [[Int]] = combinationSum(subCandidates, subTarget)
+
+                    guard !incompleteCurrentResults.isEmpty else {
+                        continue
+                    }
+
+                    let repeatingElements: [Int] = Array(repeating: sortedCandidates[i], count: j)
+                    let currentResults: [[Int]] = incompleteCurrentResults.map { repeatingElements + $0 }
+                    results += currentResults
+                }
+            }
+        }
+
+        return results
+    }
+}

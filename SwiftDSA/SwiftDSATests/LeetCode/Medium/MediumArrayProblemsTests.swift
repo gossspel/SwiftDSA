@@ -356,3 +356,42 @@ extension MediumArrayProblemsTests {
         XCTAssertEqual(result, [-1, -1])
     }
 }
+
+// MARK: - 39. Combination Sum
+
+class MediumArrayProblems39Tests: XCTestCase {
+    func testCombinationSum_with4CandidatesAndValidTarget_shouldReturnCombosArray() {
+        let candidates: [Int] = [2, 3, 6, 7]
+        let target: Int = 7
+        let combos: [[Int]] = MediumArrayProblems().combinationSum(candidates, target)
+        XCTAssertEqual(combos, [[2, 2, 3], [7]])
+    }
+    
+    func testCombinationSum_with3CandidatesAndValidTarget_shouldReturnCombosArray() {
+        let candidates: [Int] = [2, 3, 5]
+        let target: Int = 8
+        let combos: [[Int]] = MediumArrayProblems().combinationSum(candidates, target)
+        XCTAssertEqual(combos, [[2, 2, 2, 2], [2, 3, 3], [3, 5]])
+    }
+    
+    func testCombinationSum_with1CandidateAndInvalidTarget_shouldReturnEmptyArray() {
+        let candidates: [Int] = [2]
+        let target: Int = 1
+        let combos: [[Int]] = MediumArrayProblems().combinationSum(candidates, target)
+        XCTAssert(combos.isEmpty)
+    }
+    
+    func testCombinationSum_with1CandidateAndValidTargetA_shouldReturnCombosArray() {
+        let candidates: [Int] = [1]
+        let target: Int = 1
+        let combos: [[Int]] = MediumArrayProblems().combinationSum(candidates, target)
+        XCTAssertEqual(combos, [[1]])
+    }
+    
+    func testCombinationSum_with1CandidateAndValidTargetB_shouldReturnCombosArray() {
+        let candidates: [Int] = [1]
+        let target: Int = 2
+        let combos: [[Int]] = MediumArrayProblems().combinationSum(candidates, target)
+        XCTAssertEqual(combos, [[1, 1]])
+    }
+}
