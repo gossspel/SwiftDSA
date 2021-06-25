@@ -381,3 +381,94 @@ extension MediumArrayProblems {
         return results
     }
 }
+
+// MARK: - 40. Combination Sum II
+// LINK: https://leetcode.com/problems/combination-sum-ii/
+//
+// Description: Given a collection of candidate numbers (candidates) and a target number (target), find all unique
+// combinations in candidates where the candidate numbers sum to target. Each number in candidates may only be used
+// once in the combination. Note: The solution set must not contain duplicate combinations.
+//
+// Strategy: use backtracking, a form of recursion in which we handle the leafNode (if target <= 0) and return. For
+// non-leafNode, we recursively call backtracking to break down the non-leafNode to eventually get to the leafNode.
+// https://www.cis.upenn.edu/~matuszek/cit594-2012/Pages/backtracking.html
+//
+
+extension MediumArrayProblems {
+    func combinationSum2(_ candidates: [Int], _ target: Int) -> [[Int]] {
+        let potentialComboElements: [Int] = candidates.sorted()
+        var combos: [[Int]] = []
+        var inProgressCombo: [Int] = []
+        backtrack2(candidates: candidates,
+                   inProgressCombo: &inProgressCombo,
+                   potentialComboElements: potentialComboElements,
+                   combos: &combos,
+                   target: target)
+        return combos
+    }
+    
+    func backtrack2(candidates: [Int],
+                    inProgressCombo: inout [Int],
+                    potentialComboElements: [Int],
+                    combos: inout [[Int]],
+                    target: Int)
+    {
+        if target == 0 {
+            combos.append(inProgressCombo)
+            return
+        }
+        
+        if (target < 0) || potentialComboElements.isEmpty {
+            return
+        }
+        
+        for i in 0..<potentialComboElements.count {
+            // NOTE: since potentialComboElements has been sorted by combinationSum2, no point to recur if its current
+            // element is greater than target because we know none of those path would end up with valid combo.
+            // For example, it is obvious that in candidates = [3, 3, 4, 5], target = 1 has no valid combo.
+            guard potentialComboElements[i] <= target else {
+                return
+            }
+            
+            // NOTE: skip backtracking the redundant element
+            if ((i - 1) > -1) && potentialComboElements[i] == potentialComboElements[i - 1] {
+                continue
+            }
+            
+            let nextPCEs: [Int]
+            
+            if ((i + 1) < potentialComboElements.count) {
+                nextPCEs = Array(potentialComboElements[(i + 1)..<potentialComboElements.count])
+            } else {
+                nextPCEs = []
+            }
+            
+            inProgressCombo.append(potentialComboElements[i])
+            backtrack2(candidates: candidates,
+                       inProgressCombo: &inProgressCombo,
+                       potentialComboElements: nextPCEs,
+                       combos: &combos,
+                       target: target - potentialComboElements[i])
+            inProgressCombo.removeLast()
+        }
+        
+        // backtrack2A backtrack2(inProgressCombo: [], potentialComboElements: [2, 2, 3, 5], target: 8)
+        // backtrack2B backtrack2(inProgressCombo: [2], potentialComboElements: [2, 3, 5], target: 6)
+        // backtrack2C backtrack2(inProgressCombo: [2, 2], potentialComboElements: [3, 5], target: 4, index: 0)
+        // backtrack2D backtrack2(inProgressCombo: [2, 2, 3], potentialComboElements: [5], target: 1, index: 0)
+        // backtrack2E backtrack2(inProgressCombo: [2, 2, 3, 5], potentialComboElements: [], target: -4, index: 0)
+        // backtrack2E returns, backtrack2D finished loop and returns, continue on backtrack2C
+        // backtrack2F backtrack2(inProgressCombo: [2, 2, 5], potentialComboElements: [], target: 1, index: 0)
+        // backtrack2F returns, backtrack2C finished loop and returns, continue on backtrack2B
+        // backtrack2G backtrack2(inProgressCombo: [2, 3], potentialComboElements: [5], target: 3, index: 0)
+        // backtrack2H backtrack2(inProgressCombo: [2, 3, 5], potentialComboElements: [], target: -2, index: 0)
+        // backtrack2H returns, backtrack2G finished loop and returns, continue on backtrack2B
+        // backtrack2I backtrack2(inProgressCombo: [2, 5], potentialComboElements: [], target: 1, index: 0)
+        // backtrack2I returns, backtrack2B finished loop and returns, continue on backtrack2A
+        // backtrack2J backtrack2(inProgressCombo: [3], potentialComboElements: [5], target: 5)
+        // backtrack2K backtrack2(inProgressCombo: [3, 5], potentialComboElements: [], target: 0)
+        // backtrack2K returns, backtrack2J finished loop and returns, continue on backtrack2A
+        // backtrack2J backtrack2(inProgressCombo: [5], potentialComboElements: [], target: 3)
+        // backtrack2J returns, backtrack2A finished looping and returns.
+    }
+}

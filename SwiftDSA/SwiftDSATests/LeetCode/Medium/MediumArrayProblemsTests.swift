@@ -395,3 +395,29 @@ class MediumArrayProblems39Tests: XCTestCase {
         XCTAssertEqual(combos, [[1, 1]])
     }
 }
+
+// MARK: - 40. Combination Sum II
+
+class MediumArrayProblems40Tests: XCTestCase {
+    func testCombinationSum2_with7CandidatesAndValidTarget_shouldReturnCombosArray() {
+        let candidates: [Int] = [10, 1, 2, 7, 6, 1, 5]
+        let target: Int = 8
+        let combos: [[Int]] = MediumArrayProblems().combinationSum2(candidates, target)
+        XCTAssertEqual(combos, [[1, 1, 6], [1, 2, 5], [1, 7], [2, 6]])
+    }
+    
+    func testCombinationSum2_with5CandidatesAndValidTarget_shouldReturnCombosArray() {
+        let candidates: [Int] = [2, 5, 2, 1, 2]
+        let target: Int = 5
+        let combos: [[Int]] = MediumArrayProblems().combinationSum2(candidates, target)
+        XCTAssertEqual(combos, [[1, 2, 2], [5]])
+    }
+    
+    func testCombinationSum2_withManyCandidatesAndValidTarget_shouldReturnCombosArray() {
+        let candidates: [Int] = [1, 1, 2, 2, 3, 5, 6, 7, 8, 1, 1, 2, 2, 3, 5, 6, 7, 8, 1, 1, 2, 2, 3, 5, 6, 7, 8,
+                                 1, 1, 2, 2, 3, 5, 6, 7, 8, 1, 1, 2, 2, 3, 5, 6, 7, 8, 9, 10]
+        let target: Int = 100
+        let combos: [[Int]] = MediumArrayProblems().combinationSum2(candidates, target)
+        XCTAssertEqual(combos.count, 57578)
+    }
+}
