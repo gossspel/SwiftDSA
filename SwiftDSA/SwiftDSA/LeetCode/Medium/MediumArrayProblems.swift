@@ -472,3 +472,95 @@ extension MediumArrayProblems {
         // backtrack2J returns, backtrack2A finished looping and returns.
     }
 }
+
+// MARK: - 45. Jump Game II
+// LINK: https://leetcode.com/problems/jump-game-ii/
+//
+// Description: Given an array of non-negative integers nums, you are initially positioned at the first index of the
+// array. Each element in the array represents your maximum jump length at that position. Your goal is to reach the
+// last index in the minimum number of jumps. You can assume that you can always reach the last index.
+//
+// Strategy: Construct the tree with visited index values. Using breadth first search to find the tree path
+// sequence count. Avoid processing the same node that has been visited, and observe that the maxReach of each
+// level is the max of every node + their reach, because every node is consecutive to each other. It would easier
+// to make this observation if we write down the array value and highlight the reach of every node. Every single
+// node from the start of current level to maxReach would be visited.
+//
+// 2 3 1 1 4
+//        0
+//       / \
+//      1   2
+//     / \
+//    3   4
+// 4 is equal to nums.count - 1, return 2 (jumps)
+
+extension MediumArrayProblems {
+    func jump(_ nums: [Int]) -> Int {
+        guard nums.count > 1 else {
+            return 0
+        }
+
+        var visited: [Bool] = Array(repeating: false, count: nums.count)
+        var level: Int = 1
+        var indexValuesOfCurrentLevel: [Int] = Array(1...nums[0])
+
+        for i in 0...min(nums[0], nums.count - 1) {
+            visited[i] = true
+        }
+
+        while !indexValuesOfCurrentLevel.isEmpty {
+            var reaches: [Int] = []
+            var maxReach: Int = 0
+
+            for indexValue in indexValuesOfCurrentLevel {
+                if indexValue == (nums.count - 1) {
+                    return level
+                }
+
+                visited[indexValue] = true
+                let currentReach: Int = indexValue + nums[indexValue]
+                if currentReach > maxReach {
+                    maxReach = currentReach
+                }
+
+                reaches.append(currentReach)
+            }
+
+            let start: Int = indexValuesOfCurrentLevel[0]
+            let safeMaxReach: Int = min(maxReach, nums.count - 1)
+            indexValuesOfCurrentLevel = (start+1...safeMaxReach).filter { visited[$0] == false }
+            level += 1
+        }
+
+        return level
+    }
+    
+    // NOTE: this is the optimized BFS approach without using extra arrays.
+    func jumpOptimized(_ nums: [Int]) -> Int {
+        guard nums.count > 1 else {
+            return 0
+        }
+
+        var level: Int = 0
+        var left: Int = 0
+        var right: Int = 0
+
+        while right < (nums.count - 1) {
+            var maxReach: Int = 0
+            
+            for i in left...right {
+                let currentReach: Int = i + nums[i]
+                
+                if currentReach > maxReach {
+                    maxReach = currentReach
+                }
+            }
+            
+            left = right + 1
+            right = maxReach
+            level += 1
+        }
+
+        return level
+    }
+}

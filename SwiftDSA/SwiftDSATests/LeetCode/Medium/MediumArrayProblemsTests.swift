@@ -421,3 +421,31 @@ class MediumArrayProblems40Tests: XCTestCase {
         XCTAssertEqual(combos.count, 57578)
     }
 }
+
+// MARK: - 45. Jump Game II
+    
+class MediumArrayProblems45Tests: XCTestCase {
+    func testJump_withTwoNums_shouldReturn1() {
+        let nums = [2, 1]
+        let jumpCount = MediumArrayProblems().jump(nums)
+        XCTAssertEqual(jumpCount, 1)
+    }
+    
+    func testJump_with5NumsA_shouldReturn2() {
+        let nums = [2, 3, 1, 1, 4]
+        let jumpCount = MediumArrayProblems().jump(nums)
+        XCTAssertEqual(jumpCount, 2)
+    }
+    
+    func testJump_with5NumsB_shouldReturn2() {
+        let nums = [2, 3, 0, 1, 4]
+        let jumpCount = MediumArrayProblems().jump(nums)
+        XCTAssertEqual(jumpCount, 2)
+    }
+    
+    func testJump_withSomeNums_shouldReturn10() {
+        let nums = [2, 3, 0, 1, 4, 5, 1, 2, 1, 1, 2, 1, 2, 3, 4, 1, 2, 3, 1, 0, 5, 2, 3, 1, 2, 5, 6, 1, 2, 1, 2]
+        let jumpCount = MediumArrayProblems().jump(nums)
+        XCTAssertEqual(jumpCount, 10)
+    }
+}
