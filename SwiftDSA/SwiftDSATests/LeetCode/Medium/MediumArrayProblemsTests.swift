@@ -449,3 +449,43 @@ class MediumArrayProblems45Tests: XCTestCase {
         XCTAssertEqual(jumpCount, 10)
     }
 }
+
+// MARK: - 46. Permutations
+
+class MediumArrayProblems46Tests: XCTestCase {
+    func testPermute_with1Num_shouldReturnCorrectPermutations() {
+        let nums = [1]
+        let permutations: [[Int]] = MediumArrayProblems().permute(nums)
+        XCTAssertEqual(permutations, [[1]])
+    }
+    
+    func testPermute_with2Nums_shouldReturnCorrectPermutations() {
+        let nums = [0, 1]
+        let permutations: [[Int]] = MediumArrayProblems().permute(nums)
+        XCTAssertEqual(permutations, [[0, 1],[1, 0]])
+    }
+    
+    func testPermute_with3Nums_shouldReturnCorrectPermutations() {
+        let nums = [1, 2, 3]
+        let permutations: [[Int]] = MediumArrayProblems().permute(nums)
+        XCTAssertEqual(permutations, [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]])
+    }
+    
+    func testPermute_with4Nums_shouldReturnCorrectPermutations() {
+        let nums = [1, 2, 3, 4]
+        let permutations: [[Int]] = MediumArrayProblems().permute(nums)
+        XCTAssertEqual(permutations.count, 24)
+    }
+    
+    func testPermute_with5Nums_shouldReturnCorrectPermutations() {
+        let nums = [1, 2, 3, 4, 5]
+        let permutations: [[Int]] = MediumArrayProblems().permute(nums)
+        XCTAssertEqual(permutations.count, 120)
+    }
+    
+    func testPermute_with6Nums_shouldReturnCorrectPermutations() {
+        let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        let permutations: [[Int]] = MediumArrayProblems().permute(nums)
+        XCTAssertEqual(permutations.count, 362880)
+    }
+}

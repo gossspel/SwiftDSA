@@ -564,3 +564,59 @@ extension MediumArrayProblems {
         return level
     }
 }
+
+// MARK: - 46. Permutations
+// LINK: https://leetcode.com/problems/permutations/
+//
+// Description: Given an array nums of distinct integers, return all the possible permutations. You can return the
+// answer in any order.
+//
+// Strategy: DFS backtracking
+
+extension MediumArrayProblems {
+    func permute(_ nums: [Int]) -> [[Int]] {
+        guard nums.count > 1 else {
+            return [[nums[0]]]
+        }
+
+        var inProgressPermutation: [Int] = []
+        let remainingNums: Set<Int> = Set(nums)
+        var permutations: [[Int]] = []
+        backtrack(nums: nums,
+                  inProgressPermutation: &inProgressPermutation,
+                  remainingNums: remainingNums,
+                  permutations: &permutations)
+        return permutations
+    }
+    
+    func backtrack(nums: [Int],
+                   inProgressPermutation: inout [Int],
+                   remainingNums: Set<Int>,
+                   permutations: inout [[Int]])
+    {
+        if inProgressPermutation.count == nums.count {
+            permutations.append(inProgressPermutation)
+            return
+        }
+        
+        for num in remainingNums.sorted() {
+            inProgressPermutation.append(num)
+            
+            var newRemainingNums: Set<Int> = remainingNums
+            newRemainingNums.remove(num)
+            
+            backtrack(nums: nums,
+                      inProgressPermutation: &inProgressPermutation,
+                      remainingNums: newRemainingNums,
+                      permutations: &permutations)
+            inProgressPermutation.removeLast()
+        }
+        
+        // backtracka backtrack(inProgressPermutation: [], remainingNums: Set(1, 2, 3), permutations: [])
+        // backtrackb backtrack(inProgressPermutation: [1], remainingNums: Set(2, 3), permutations: [])
+        // backtrackc backtrack(inProgressPermutation: [1, 2], remainingNums: Set(3), permutations: [])
+        // backtrackd backtrack(inProgressPermutation: [1, 2, 3], remainingNums: Set(), permutations: [])
+        // backtrackd returns, backtrackc returns, continue on backtrackb
+        // backtracke backtrack(inProgressPermutation: [1, 3], remainingNums: Set(2), permutations: [])
+    }
+}
