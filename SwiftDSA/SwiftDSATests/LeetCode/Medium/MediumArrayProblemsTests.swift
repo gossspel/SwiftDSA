@@ -489,3 +489,25 @@ class MediumArrayProblems46Tests: XCTestCase {
         XCTAssertEqual(permutations.count, 362880)
     }
 }
+
+// MARK: - 48. Rotate Image
+
+class MediumArrayProblems48Tests: XCTestCase {
+    func testRotate_with1x1Matrix_shouldDoNothing() {
+        var matrix: [[Int]] = [[1]]
+        MediumArrayProblems().rotate(&matrix)
+        XCTAssertEqual(matrix, [[1]])
+    }
+    
+    func testRotate_with3x3Matrix_shouldRotateProperly() {
+        var matrix: [[Int]] = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        MediumArrayProblems().rotate(&matrix)
+        XCTAssertEqual(matrix, [[7, 4, 1], [8, 5, 2], [9, 6, 3]])
+    }
+    
+    func testRotate_with4x4Matrix_shouldRotateProperly() {
+        var matrix: [[Int]] = [[5, 1, 9, 11], [2, 4, 8, 10], [13, 3, 6, 7], [15, 14, 12, 16]]
+        MediumArrayProblems().rotate(&matrix)
+        XCTAssertEqual(matrix, [[15, 13, 2, 5], [14, 3, 4, 1], [12, 6, 8, 9], [16, 7, 10, 11]])
+    }
+}

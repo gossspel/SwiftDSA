@@ -620,3 +620,45 @@ extension MediumArrayProblems {
         // backtracke backtrack(inProgressPermutation: [1, 3], remainingNums: Set(2), permutations: [])
     }
 }
+
+// MARK: - 48. Rotate Image
+// LINK: https://leetcode.com/problems/rotate-image/
+//
+// Description: You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise). You
+// have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate
+// another 2D matrix and do the rotation.
+//
+// [(0, 0) (0, 1)]   =>  [(1, 0) (0, 0)]
+// [(1, 0) (1, 1)]       [(1, 1) (0, 1)]
+//
+// [(0, 0) (0, 1)] => hReflect => [(1, 0) (1, 1)] => transpose => [(1, 0) (0, 0)]
+// [(1, 0) (1, 1)]                [(0, 0) (0, 1)]                 [(1, 1) (0, 1)]
+//
+// Strategy: First perform horizontal reflect, and then transpose the matrix.
+
+extension MediumArrayProblems {
+    func rotate(_ matrix: inout [[Int]]) {        
+        hReflect(&matrix)
+        transpose(&matrix)
+    }
+    
+    func hReflect(_ matrix: inout [[Int]]) {
+        let midPoint: Int = matrix.count / 2
+        
+        for i in 0..<midPoint {
+            (matrix[i], matrix[matrix.count - 1 - i]) = (matrix[matrix.count - 1 - i], matrix[i])
+        }
+    }
+    
+    func transpose(_ matrix: inout [[Int]]) {
+        for i in 0..<matrix.count {
+            for j in 0..<matrix[i].count {
+                guard j > i else {
+                    continue
+                }
+                
+                (matrix[i][j], matrix[j][i]) = (matrix[j][i], matrix[i][j])
+            }
+        }
+    }
+}
