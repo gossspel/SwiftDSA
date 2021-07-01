@@ -39,3 +39,40 @@ extension MediumStringProblemsTests {
         XCTAssertEqual(lp, "a")
     }
 }
+
+// MARK: - 49. Group Anagrams
+
+class MediumStringProblem49Tests: XCTestCase {
+    func testGroupAnagrams_with6Strs_shouldReturnGroupedAnagrams() {
+        let strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
+        let group = MediumStringProblems().groupAnagrams(strs)
+        
+        for i in 0..<group.count {
+            let sortedKey = String(group[i][0].sorted())
+            if sortedKey == "aet" {
+                XCTAssert(group[i].contains("ate"))
+                XCTAssert(group[i].contains("eat"))
+                XCTAssert(group[i].contains("tea"))
+            } else if sortedKey == "abt" {
+                XCTAssert(group[i].contains("bat"))
+            } else if sortedKey == "ant" {
+                XCTAssert(group[i].contains("nat"))
+                XCTAssert(group[i].contains("tan"))
+            }
+        }
+        
+        XCTAssertEqual(group.count, 3)
+    }
+    
+    func testGroupAnagrams_withOneEmptyStr_shouldReturnEmptyStrIn2Darray() {
+        let strs = [""]
+        let group = MediumStringProblems().groupAnagrams(strs)
+        XCTAssertEqual(group, [[""]])
+    }
+    
+    func testGroupAnagrams_withOneNonEmptyStr_shouldReturnNonEmptyStrIn2Darray() {
+        let strs = ["a"]
+        let group = MediumStringProblems().groupAnagrams(strs)
+        XCTAssertEqual(group, [["a"]])
+    }
+}

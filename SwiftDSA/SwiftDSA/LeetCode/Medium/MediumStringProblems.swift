@@ -85,3 +85,40 @@ extension MediumStringProblems {
         return (LPStart, LPEnd)
     }
 }
+
+// MARK: - 49. Group Anagrams
+// LINK: https://leetcode.com/problems/group-anagrams/
+//
+// Description: Given an array of strings strs, group the anagrams together. You can return the answer in any order. An
+// Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the
+// original letters exactly once.
+//
+// Strategy: Use a dictionary as the storage, with key being sorted string of elements in strs. We are taking advantage
+// of the fact that all anagrams of the same letter combination would be sorted to the same str.
+
+extension MediumStringProblems {
+    func groupAnagrams(_ strs: [String]) -> [[String]] {
+        guard strs.count > 1 else {
+            return [[strs[0]]]
+        }
+        
+        var dict: [String: [String]] = [:]
+        
+        for str in strs {
+            let sortedStr = String(str.sorted())
+            if let _ = dict[sortedStr] {
+                dict[sortedStr]?.append(str)
+            } else {
+                dict[sortedStr] = [str]
+            }
+        }
+        
+        var results: [[String]] = []
+        
+        for (_, value) in dict {
+            results.append(value)
+        }
+        
+        return results
+    }
+}
