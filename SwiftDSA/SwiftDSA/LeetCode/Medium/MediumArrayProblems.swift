@@ -662,3 +662,40 @@ extension MediumArrayProblems {
         }
     }
 }
+
+// MARK: - 55. Jump Game
+// LINK: https://leetcode.com/problems/jump-game/
+//
+// Description: Given an array of non-negative integers nums, you are initially positioned at the first index of the
+// array. Each element in the array represents your maximum jump length at that position. Determine if you are able to
+// reach the last index.
+//
+// Strategy: BFS, use var leftIndex and rightIndex to set boundaries for each level of tree. Find the maxReach of the
+// tree by going through all the nodes between leftIndex and rightIndex. Make sure the maxReach is greater than the
+// current rightIndex, because that guarantees at least one of the node is capable of a non-zero positive jump. Update
+// the leftIndex with rightIndex + 1 and rightIndex with maxReach to represent the next level of the tree.
+
+extension MediumArrayProblems {
+    func canJump(_ nums: [Int]) -> Bool {
+        var left: Int = 0
+        var right: Int =  0
+        
+        while right < (nums.count - 1) {
+            var maxReach: Int = 0
+            
+            for index in left...right {
+                let reach: Int = index + nums[index]
+                maxReach = max(maxReach, reach)
+            }
+            
+            guard maxReach > right else {
+                return false
+            }
+            
+            left = right + 1
+            right = maxReach
+        }
+        
+        return right >= (nums.count - 1)
+    }
+}

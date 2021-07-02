@@ -359,7 +359,7 @@ extension MediumArrayProblemsTests {
 
 // MARK: - 39. Combination Sum
 
-class MediumArrayProblems39Tests: XCTestCase {
+class MediumArrayProblem39Tests: XCTestCase {
     func testCombinationSum_with4CandidatesAndValidTarget_shouldReturnCombosArray() {
         let candidates: [Int] = [2, 3, 6, 7]
         let target: Int = 7
@@ -398,7 +398,7 @@ class MediumArrayProblems39Tests: XCTestCase {
 
 // MARK: - 40. Combination Sum II
 
-class MediumArrayProblems40Tests: XCTestCase {
+class MediumArrayProblem40Tests: XCTestCase {
     func testCombinationSum2_with7CandidatesAndValidTarget_shouldReturnCombosArray() {
         let candidates: [Int] = [10, 1, 2, 7, 6, 1, 5]
         let target: Int = 8
@@ -424,7 +424,7 @@ class MediumArrayProblems40Tests: XCTestCase {
 
 // MARK: - 45. Jump Game II
     
-class MediumArrayProblems45Tests: XCTestCase {
+class MediumArrayProblem45Tests: XCTestCase {
     func testJump_withTwoNums_shouldReturn1() {
         let nums = [2, 1]
         let jumpCount = MediumArrayProblems().jump(nums)
@@ -452,7 +452,7 @@ class MediumArrayProblems45Tests: XCTestCase {
 
 // MARK: - 46. Permutations
 
-class MediumArrayProblems46Tests: XCTestCase {
+class MediumArrayProblem46Tests: XCTestCase {
     func testPermute_with1Num_shouldReturnCorrectPermutations() {
         let nums = [1]
         let permutations: [[Int]] = MediumArrayProblems().permute(nums)
@@ -492,7 +492,7 @@ class MediumArrayProblems46Tests: XCTestCase {
 
 // MARK: - 48. Rotate Image
 
-class MediumArrayProblems48Tests: XCTestCase {
+class MediumArrayProblem48Tests: XCTestCase {
     func testRotate_with1x1Matrix_shouldDoNothing() {
         var matrix: [[Int]] = [[1]]
         MediumArrayProblems().rotate(&matrix)
@@ -509,5 +509,33 @@ class MediumArrayProblems48Tests: XCTestCase {
         var matrix: [[Int]] = [[5, 1, 9, 11], [2, 4, 8, 10], [13, 3, 6, 7], [15, 14, 12, 16]]
         MediumArrayProblems().rotate(&matrix)
         XCTAssertEqual(matrix, [[15, 13, 2, 5], [14, 3, 4, 1], [12, 6, 8, 9], [16, 7, 10, 11]])
+    }
+}
+
+// MARK: - 55. Jump Game
+    
+class MediumArrayProblem55Tests: XCTestCase {
+    func testCanJump_with1NumA_shouldReturnTrue() {
+        let nums = [1]
+        let canJump = MediumArrayProblems().canJump(nums)
+        XCTAssert(canJump)
+    }
+    
+    func testCanJump_with1NumB_shouldReturnTrue() {
+        let nums = [0]
+        let canJump = MediumArrayProblems().canJump(nums)
+        XCTAssert(canJump)
+    }
+    
+    func testCanJump_with5NumsA_shouldReturnTrue() {
+        let nums = [2, 3, 1, 1, 4]
+        let canJump = MediumArrayProblems().canJump(nums)
+        XCTAssert(canJump)
+    }
+    
+    func testCanJump_with5NumsB_shouldReturnTrue() {
+        let nums = [3, 2, 1, 0, 4]
+        let canJump = MediumArrayProblems().canJump(nums)
+        XCTAssertFalse(canJump)
     }
 }
