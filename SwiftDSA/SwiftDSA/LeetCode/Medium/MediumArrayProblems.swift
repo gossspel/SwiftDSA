@@ -699,3 +699,127 @@ extension MediumArrayProblems {
         return right >= (nums.count - 1)
     }
 }
+
+// MARK: - 56. Merge Intervals
+// LINK: https://leetcode.com/problems/merge-intervals/
+//
+// Description: Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and
+// return an array of the non-overlapping intervals that cover all the intervals in the input.
+//
+// Strategy: loop through the intervals to put all of them into a dict, with key = start, value = end, and update the
+// value if the key already exists (merge the interval). After that, loop through that dict and insert all its keys to
+// an array. Sort the array in descending order. Start by removing the last element of the array, check to see if
+// dict[currentStart] >= some other remaining element in the array, if it is, remove the currentStart from the array,
+// update dict[currentStart] = max(dict[currentStart]!, dict[otherStart]!), and update dict[otherStart] = nil, and
+// update hasMergedInCurrentIteration = true. After checking through the check with the remaining elements in the
+// array, if hasMergedInCurrentIteration == true, append currentStart back to the array, because it is a new interval
+// and it might have missed merging some other intervals while doing the "dict[currentStart] >= some other remaining
+// element in the array" check before dict[currentStart] is updated. We can then repeat the same process until the
+// array is empty. In the final step, loop through the sorted keys of the dictionary to return the merged intervals.
+//
+// intervals: [[1, 3], [2, 9], [8, 10], [15, 18]]
+// arrayDescSorted: [15, 8, 2, 1]
+//
+// 1 -> 3     => 1 -> 9     => 1 -> 10
+// 2 -> 9        8 -> 10       15 -> 18
+// 8 -> 10       15 -> 18
+// 15 -> 18
+
+extension MediumArrayProblems {
+    func merge(_ intervals: [[Int]]) -> [[Int]] {
+        var dict: [Int: Int] = [:]
+
+        for interval in intervals {
+            if let value = dict[interval[0]] {
+                dict[interval[0]] = max(value, interval[1])
+            } else {
+                dict[interval[0]] = interval[1]
+            }
+        }
+
+        var array: [Int] = Array(dict.keys)
+        array.sort(by: >)
+
+        while !array.isEmpty {
+            let currentStart: Int = array.removeLast()
+            var hasMergedInCurrentIteration: Bool = false
+
+            // check to see if anything can be merged, looping the array in reverse order to make removal during
+            // looping possible
+            for (i, otherStart) in array.enumerated().reversed() {
+                if dict[currentStart]! >= otherStart {
+                    array.remove(at: i)
+                    dict[currentStart] = max(dict[currentStart]!, dict[otherStart]!)
+                    dict[otherStart] = nil
+                    hasMergedInCurrentIteration = true
+                }
+            }
+            
+            if hasMergedInCurrentIteration {
+                array.append(currentStart)
+            }
+        }
+
+        var results: [[Int]] = []
+
+        for sortedKey in dict.keys.sorted() {
+            results.append([sortedKey, dict[sortedKey]!])
+        }
+
+        return results
+    }
+    
+    // This is slightly optimized because it uses set instead of array, which has O(1) insert and remove; however,
+    // since a set doesn't preserve the order of the sequence, it is more edge cases to guard against.
+    func mergeSlightlyOptimized(_ intervals: [[Int]]) -> [[Int]] {
+        var dict: [Int: Int] = [:]
+        
+        for interval in intervals {
+            if let value = dict[interval[0]] {
+                dict[interval[0]] = max(value, interval[1])
+            } else {
+                dict[interval[0]] = interval[1]
+            }
+        }
+        
+        var set: Set<Int> = Set(dict.keys)
+        
+        while !set.isEmpty {
+            let currentStart: Int = set.removeFirst()
+            var hasMergedToPossiblyExpandMax: Bool = false
+            
+            for otherStart in set {
+                // merge to possibly expand max value
+                if (dict[currentStart]! >= otherStart) && (currentStart <= otherStart) {
+                    set.remove(otherStart)
+                    dict[currentStart] = max(dict[currentStart]!, dict[otherStart]!)
+                    dict[otherStart] = nil
+                    hasMergedToPossiblyExpandMax = true
+                }
+            }
+            
+            for otherStart in set {
+                // merge to possibly expand min value
+                if (currentStart >= otherStart) && (currentStart <= dict[otherStart]!) {
+                    dict[otherStart] = max(dict[currentStart]!, dict[otherStart]!)
+                    dict[currentStart] = nil
+                    break
+                }
+            }
+            
+            if hasMergedToPossiblyExpandMax {
+                if let _ = dict[currentStart] {
+                    set.insert(currentStart)
+                }
+            }
+        }
+        
+        var results: [[Int]] = []
+        
+        for sortedKey in dict.keys.sorted() {
+            results.append([sortedKey, dict[sortedKey]!])
+        }
+        
+        return results
+    }
+}

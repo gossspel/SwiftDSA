@@ -539,3 +539,66 @@ class MediumArrayProblem55Tests: XCTestCase {
         XCTAssertFalse(canJump)
     }
 }
+
+// MARK: - 56. Merge Intervals
+
+class MediumArrayProblem56Tests: XCTestCase {
+    func testMerge_with4SortedIntervals3MergedIntervals_shouldReturn3MergedIntervals() {
+        let intervals: [[Int]] = [[1, 3], [2, 6], [8, 10], [15, 18]]
+        let mergedIntervals: [[Int]] = MediumArrayProblems().merge(intervals)
+        XCTAssertEqual(mergedIntervals, [[1, 6], [8, 10], [15, 18]])
+    }
+    
+    func testMerge_with4SortedIntervals2MergedIntervals_shouldReturn2MergedIntervals() {
+        let intervals: [[Int]] = [[1, 3], [2, 9], [8, 10], [15, 18]]
+        let mergedIntervals: [[Int]] = MediumArrayProblems().merge(intervals)
+        XCTAssertEqual(mergedIntervals, [[1, 10], [15, 18]])
+    }
+    
+    func testMerge_with4UnsortedIntervals3MergedIntervals_shouldReturn3MergedIntervals() {
+        let intervals: [[Int]] = [[15, 18], [1, 3], [8, 10], [2, 6]]
+        let mergedIntervals: [[Int]] = MediumArrayProblems().merge(intervals)
+        XCTAssertEqual(mergedIntervals, [[1, 6], [8, 10], [15, 18]])
+    }
+    
+    func testMerge_with4UnsortedIntervals2MergedIntervals_shouldReturn2MergedIntervals() {
+        let intervals: [[Int]] = [[15, 18], [1, 3], [8, 10], [2, 9]]
+        let mergedIntervals: [[Int]] = MediumArrayProblems().merge(intervals)
+        XCTAssertEqual(mergedIntervals, [[1, 10], [15, 18]])
+    }
+    
+    func testMerge_with2SortedIntervals1MergedInterval_shouldReturn1MergedInterval() {
+        let intervals: [[Int]] = [[1, 4], [4, 5]]
+        let mergedIntervals: [[Int]] = MediumArrayProblems().merge(intervals)
+        XCTAssertEqual(mergedIntervals, [[1, 5]])
+    }
+    
+    func testMerge_with2UnsortedIntervals1MergedInterval_shouldReturn1MergedInterval() {
+        let intervals: [[Int]] = [[4, 5], [1, 4]]
+        let mergedIntervals: [[Int]] = MediumArrayProblems().merge(intervals)
+        XCTAssertEqual(mergedIntervals, [[1, 5]])
+    }
+    
+    func testMerge_with3UnsortedIntervals1MergedInterval_shouldReturn1MergedInterval() {
+        let intervals: [[Int]] = [[1, 4], [0, 2], [3, 5]]
+        let mergedIntervals: [[Int]] = MediumArrayProblems().merge(intervals)
+        XCTAssertEqual(mergedIntervals, [[0, 5]])
+    }
+    
+    func testMerge_with100000UnsortedIntervals1MergedInterval_shouldReturn1MergedInterval() {
+        var testArr: [Int] = [1, 2, 3]
+        
+        for (i, _) in testArr.enumerated().reversed() {
+            testArr.remove(at: i)
+        }
+        
+        var intervals: [[Int]] = []
+        
+        for i in 0..<100000 {
+            intervals += [[0, i], [1, i + 1],  [2, i + 2],  [3, i + 3],  [4, i + 4],  [5, i + 5]]
+        }
+        
+        let mergedIntervals: [[Int]] = MediumArrayProblems().merge(intervals)
+        XCTAssertEqual(mergedIntervals, [[0, 100004]])
+    }
+}
