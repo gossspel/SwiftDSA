@@ -99,10 +99,84 @@ extension MediumDynamicProgrammingProblems {
             return value
         }
         
-        let leftPreviousUPs: Int = recursiveUniquePathDestinationCoordinates(rowIndex: rowIndex - 1, columnIndex: columnIndex)
-        let topPreviousUPs: Int = recursiveUniquePathDestinationCoordinates(rowIndex: rowIndex, columnIndex: columnIndex - 1)
+        let leftPreviousUPs: Int = recursiveUniquePathDestinationCoordinates(rowIndex: rowIndex - 1,
+                                                                             columnIndex: columnIndex)
+        let topPreviousUPs: Int = recursiveUniquePathDestinationCoordinates(rowIndex: rowIndex,
+                                                                            columnIndex: columnIndex - 1)
         let result = leftPreviousUPs + topPreviousUPs
         uniquePathsXY["\(rowIndex),\(columnIndex)"] = result
         return result
+    }
+}
+
+// MARK: - 64. Minimum Path Sum
+// LINK: https://leetcode.com/problems/minimum-path-sum/
+//
+// Description: Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right, which
+// minimizes the sum of all numbers along its path. Note: You can only move either down or right at any point in time.
+//
+// Strategy: This is another DP problem. Make an observation that in any (rowIndex, columnIndex) coordinate,
+// DP[rowIndex][columnIndex] = grid[rowIndex][columnIndex] + min(DP[rowIndex - 1][columnIndex],
+// DP[rowIndex][columnIndex - 1]). In order to make this general case logic to work, we need to fill the top row and
+// left most column of the DP array. this time, for these special cases, the minimum path sum is the sum of all
+// previous elements up to the current element in the top row or left most column. Return
+// DP[maxRowIndex][maxColumnIndex]
+//
+// Grid
+// [1 1 1 1 1]
+// [2 2 2 2 2]
+// [3 3 3 3 3]
+//
+// DP Array
+// [1 2 3 4 5]
+// [3 ? ? ? ?]
+// [6 ? ? ? ?]
+//
+// We only have to loop through all ?s with DP[rowIndex][columnIndex] = min(DP[rowIndex - 1][columnIndex],
+// DP[rowIndex][columnIndex - 1]) + Grid[i][j]
+//
+
+extension MediumDynamicProgrammingProblems {
+    func minPathSum(_ grid: [[Int]]) -> Int {
+        let maxRowIndex: Int = grid.count - 1
+        let maxColumnIndex: Int = grid[0].count - 1
+        
+        if (maxRowIndex == 0) && (maxColumnIndex == 0) {
+            return grid[0][0]
+        } else if maxRowIndex == 0 {
+            return grid[0].reduce(0, +)
+        } else if maxColumnIndex == 0 {
+            var sum: Int = 0
+            
+            for row in grid {
+                sum += row[0]
+            }
+            
+            return sum
+        }
+        
+        var dpArray: [[Int]] = grid
+        
+        // Fill the top row of the DP array
+        var growingRowSum: Int = 0
+        for (columnIndex, columnValue) in dpArray[0].enumerated() {
+            growingRowSum += columnValue
+            dpArray[0][columnIndex] = growingRowSum
+        }
+        
+        // Fill the left most column of the DP array
+        var growingColumnSum: Int = 0
+        for (rowIndex, rowValue) in dpArray.enumerated() {
+            growingColumnSum += rowValue[0]
+            dpArray[rowIndex][0] = growingColumnSum
+        }
+        
+        for i in 1...maxRowIndex {
+            for j in 1...maxColumnIndex {
+                dpArray[i][j] = grid[i][j] + min(dpArray[i - 1][j], dpArray[i][j - 1])
+            }
+        }
+        
+        return dpArray[maxRowIndex][maxColumnIndex]
     }
 }

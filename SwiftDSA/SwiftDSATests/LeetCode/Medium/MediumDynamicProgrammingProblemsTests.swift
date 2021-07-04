@@ -49,3 +49,37 @@ class MediumDynamicProgrammingProblem62Tests: XCTestCase {
         XCTAssertEqual(uniquePaths, 6)
     }
 }
+
+// MARK: - 64. Minimum Path Sum
+
+class MediumDynamicProgrammingProblem64Tests: XCTestCase {
+    func testMinPathSum_with3x3grid_shouldReturn7() {
+        let grid: [[Int]] = [[1, 3, 1], [1, 5, 1], [4, 2, 1]]
+        let minPathSum: Int = MediumDynamicProgrammingProblems().minPathSum(grid)
+        XCTAssertEqual(minPathSum, 7)
+    }
+    
+    func testMinPathSum_with3x2grid_shouldReturn12() {
+        let grid: [[Int]] = [[1, 2, 3], [4, 5, 6]]
+        let minPathSum: Int = MediumDynamicProgrammingProblems().minPathSum(grid)
+        XCTAssertEqual(minPathSum, 12)
+    }
+    
+    func testMinPathSum_with1x3grid_shouldReturn6() {
+        let grid: [[Int]] = [[1, 2, 3]]
+        let minPathSum: Int = MediumDynamicProgrammingProblems().minPathSum(grid)
+        XCTAssertEqual(minPathSum, 6)
+    }
+    
+    func testMinPathSum_with3x1grid_shouldReturn15() {
+        let grid: [[Int]] = [[4], [5], [6]]
+        let minPathSum: Int = MediumDynamicProgrammingProblems().minPathSum(grid)
+        XCTAssertEqual(minPathSum, 15)
+    }
+    
+    func testMinPathSum_with1x1grid_shouldReturn4() {
+        let grid: [[Int]] = [[4]]
+        let minPathSum: Int = MediumDynamicProgrammingProblems().minPathSum(grid)
+        XCTAssertEqual(minPathSum, 4)
+    }
+}
