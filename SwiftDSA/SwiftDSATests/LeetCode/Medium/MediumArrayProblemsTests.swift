@@ -602,3 +602,73 @@ class MediumArrayProblem56Tests: XCTestCase {
         XCTAssertEqual(mergedIntervals, [[0, 100004]])
     }
 }
+
+// MARK: - 75. Sort Colors
+
+class MediumArrayProblem75Tests: XCTestCase {
+    func testSortColors_with6numsA_shouldSortProperly() {
+        var nums: [Int] = [2, 0, 2, 1, 1, 0]
+        MediumArrayProblems().sortColors(&nums)
+        XCTAssertEqual(nums, [0, 0, 1, 1, 2, 2])
+    }
+    
+    func testSortColors_with6numsB_shouldSortProperly() {
+        var nums: [Int] = [2, 0, 1, 1, 1, 0]
+        MediumArrayProblems().sortColors(&nums)
+        XCTAssertEqual(nums, [0, 0, 1, 1, 1, 2])
+    }
+    
+    func testSortColors_with6numsC_shouldSortProperly() {
+        var nums: [Int] = [1, 1, 1, 0, 2, 2]
+        MediumArrayProblems().sortColors(&nums)
+        XCTAssertEqual(nums, [0, 1, 1, 1, 2, 2])
+    }
+    
+    func testSortColors_with6numsD_shouldSortProperly() {
+        var nums: [Int] = [1, 1, 2, 2, 0, 0]
+        MediumArrayProblems().sortColors(&nums)
+        XCTAssertEqual(nums, [0, 0, 1, 1, 2, 2])
+    }
+    
+    func testSortColors_with6numsE_shouldSortProperly() {
+        var nums: [Int] = [1, 1, 0, 0, 2, 2]
+        MediumArrayProblems().sortColors(&nums)
+        XCTAssertEqual(nums, [0, 0, 1, 1, 2, 2])
+    }
+    
+    func testSortColors_with3numsA_shouldSortProperly() {
+        var nums: [Int] = [0, 1, 2]
+        MediumArrayProblems().sortColors(&nums)
+        XCTAssertEqual(nums, [0, 1, 2])
+    }
+    
+    func testSortColors_with3numsB_shouldSortProperly() {
+        var nums: [Int] = [0, 2, 1]
+        MediumArrayProblems().sortColors(&nums)
+        XCTAssertEqual(nums, [0, 1, 2])
+    }
+    
+    func testSortColors_with3numsC_shouldSortProperly() {
+        var nums: [Int] = [1, 2, 0]
+        MediumArrayProblems().sortColors(&nums)
+        XCTAssertEqual(nums, [0, 1, 2])
+    }
+    
+    func testSortColors_with3numsD_shouldSortProperly() {
+        var nums: [Int] = [1, 0, 2]
+        MediumArrayProblems().sortColors(&nums)
+        XCTAssertEqual(nums, [0, 1, 2])
+    }
+    
+    func testSortColors_with3numsE_shouldSortProperly() {
+        var nums: [Int] = [2, 0, 1]
+        MediumArrayProblems().sortColors(&nums)
+        XCTAssertEqual(nums, [0, 1, 2])
+    }
+    
+    func testSortColors_with3numsF_shouldSortProperly() {
+        var nums: [Int] = [2, 1, 0]
+        MediumArrayProblems().sortColors(&nums)
+        XCTAssertEqual(nums, [0, 1, 2])
+    }
+}

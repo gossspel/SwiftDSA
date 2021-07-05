@@ -770,7 +770,7 @@ extension MediumArrayProblems {
     }
     
     // This is slightly optimized because it uses set instead of array, which has O(1) insert and remove; however,
-    // since a set doesn't preserve the order of the sequence, it is more edge cases to guard against.
+    // since a set doesn't preserve the order of the sequence, it has more edge cases to guard against.
     func mergeSlightlyOptimized(_ intervals: [[Int]]) -> [[Int]] {
         var dict: [Int: Int] = [:]
         
@@ -821,5 +821,80 @@ extension MediumArrayProblems {
         }
         
         return results
+    }
+}
+
+// MARK: - 75. Sort Colors
+// LINK: https://leetcode.com/problems/sort-colors/
+// VIDEO: https://www.youtube.com/watch?v=4xbWSRZHqac
+//
+// Description: Given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of
+// the same color are adjacent, with the colors in the order red, white, and blue. We will use the integers 0, 1, and 2
+// to represent the color red, white, and blue, respectively. You must solve this problem without using the library's
+// sort function.
+//
+// Strategy:
+//
+//       indexToProcess
+//            V
+//            2 0 2 1 1 0
+//            ^         ^
+//     leftMark         rightMark
+//
+// - any index before leftMark should have value of 0
+// - any index after rightMark should have value of 2
+// - use leftMark, rightMark and indexToProcess
+//
+// start by indexToProcess = 0, if nums[indexToProcess] == 0, swap value of nums[indexToProcess] and nums[leftMark],
+// increment leftMark by 1, notice that leftMark will only stop at someIndex where nums[someIndex] = 1, because the 0s
+// and 2s are filtered out by the all the swapping done by iterations of indexToProcess, hence, it is safe to increment
+// indexToProcess by 1; if nums[indexToProcess] == 1, increment indexToProcess, essentially we are skipping because we
+// want the 1s to stay in the middle; if nums[indexToProcess] == 2, swap value of nums[indexToProcess] and
+// nums[rightMark], decrement rightMark by 1, and notice that we can't increment indexToProcess, because the swapped
+// value from nums[rightMark] is not protected by the iteration of indexToProcess, so it could be anything from 0, 1,
+// or 2, hence we need to examine the updated nums[indexToProcess] again. Continue the while loop as long as (leftMark
+// < rightMark) and (indexToProcess <= rightMark)
+
+extension MediumArrayProblems {
+    func sortColors(_ nums: inout [Int]) {
+        guard nums.count > 1 else {
+            return
+        }
+
+        var indexToProcess:Int = 0
+        var leftMark: Int = 0
+        var rightMark: Int = nums.count - 1
+
+        while (leftMark < rightMark) && (indexToProcess <= rightMark) {
+            if nums[indexToProcess] == 0 {
+                nums[indexToProcess] = nums[leftMark]
+                nums[leftMark] = 0
+                leftMark += 1
+                indexToProcess += 1
+            } else if nums[indexToProcess] == 1 {
+                indexToProcess += 1
+            } else if nums[indexToProcess] == 2 {
+                nums[indexToProcess] = nums[rightMark]
+                nums[rightMark] = 2
+                rightMark -= 1
+            }
+        }
+    }
+    
+    // Strategy: Since we have a finite number of elements (0, 1 and 2), we can take advantage of the bucket sort, in
+    // which we count the occurences of each element and construct the returning array by pasting those elements group
+    // together in ascending order.
+    func sortColorsByBucketSort(_ nums: inout [Int]) {
+        var dict: [Int: Int] = [:]
+        
+        for num in nums {
+            dict[num] = (dict[num] ?? 0) + 1
+        }
+        
+        let zeros: Int = dict[0] ?? 0
+        let ones: Int = dict[1] ?? 0
+        let twos: Int = dict[2] ?? 0
+        
+        nums = Array(repeating: 0, count: zeros) + Array(repeating: 1, count: ones) + Array(repeating: 2, count: twos)
     }
 }
