@@ -672,3 +672,29 @@ class MediumArrayProblem75Tests: XCTestCase {
         XCTAssertEqual(nums, [0, 1, 2])
     }
 }
+
+// MARK: - 78. Subsets
+
+class MediumArrayProblem78Tests: XCTestCase {
+    func testSubsets_with3Nums_shouldReturnCorrectSubset() {
+        let nums: [Int] = [1, 2, 3]
+        let subsets: [[Int]] = MediumArrayProblems().subsets(nums)
+        XCTAssert(subsets.contains([]))
+        XCTAssert(subsets.contains([1]))
+        XCTAssert(subsets.contains([2]))
+        XCTAssert(subsets.contains([3]))
+        XCTAssert(subsets.contains([1, 2]))
+        XCTAssert(subsets.contains([1, 3]))
+        XCTAssert(subsets.contains([2, 3]))
+        XCTAssert(subsets.contains([1, 2, 3]))
+        XCTAssertEqual(subsets.count, 8)
+    }
+    
+    func testSubsets_with1Num_shouldReturnCorrectSubset() {
+        let nums: [Int] = [0]
+        let subsets: [[Int]] = MediumArrayProblems().subsets(nums)
+        XCTAssert(subsets.contains([]))
+        XCTAssert(subsets.contains([0]))
+        XCTAssertEqual(subsets.count, 2)
+    }
+}

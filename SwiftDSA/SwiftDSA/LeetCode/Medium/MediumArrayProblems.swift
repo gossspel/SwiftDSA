@@ -898,3 +898,66 @@ extension MediumArrayProblems {
         nums = Array(repeating: 0, count: zeros) + Array(repeating: 1, count: ones) + Array(repeating: 2, count: twos)
     }
 }
+
+// MARK: - 78. Subsets
+// LINK: https://leetcode.com/problems/subsets/
+//
+// Descriptions: Given an integer array nums of unique elements, return all possible subsets (the power set). The
+// solution set must not contain duplicate subsets. Return the solution in any order.
+//
+// Strategy: Use DFS backtracking, use remainingNums as the mechanism to keep adding element in the recursive step.
+//
+//                      [1, 2, 3]
+//                          |
+//                         [ ]
+//                        / | \
+//                       /  |  \
+//                      /   |   \
+//                   [1]   [2]   [3]
+//                  / |     |
+//                 /  |     |
+//                /   |   [2, 3]
+//               /    |
+//          [1, 2] [1, 3]
+//
+extension MediumArrayProblems {
+    func subsets(_ nums: [Int]) -> [[Int]] {
+        var subsets: [[Int]] = []
+        var current: [Int] = []
+        let remainingNums: [Int] = nums.sorted()
+        backtrack(subsets: &subsets, current: &current, remainingNums: remainingNums)
+        return subsets
+    }
+    
+    func backtrack(subsets: inout [[Int]], current: inout [Int], remainingNums: [Int]) {
+        if remainingNums.isEmpty {
+            subsets.append(current)
+            return
+        }
+        
+        let rNumsCount: Int = remainingNums.count
+        for i in 0..<rNumsCount {
+            current.append(remainingNums[i])
+            let newRemainingNums: [Int] = (i + 1 < rNumsCount) ? Array(remainingNums[i + 1..<rNumsCount]) : []
+            backtrack(subsets: &subsets, current: &current, remainingNums: newRemainingNums)
+            current.removeLast()
+        }
+        
+        subsets.append(current)
+    }
+    
+    func backtrackOptimized(subsets: inout [[Int]], current: inout [Int], nums: [Int], startIndexOfRemainingNums: Int) {
+        if startIndexOfRemainingNums == nums.count {
+            subsets.append(current)
+            return
+        }
+        
+        for i in startIndexOfRemainingNums..<nums.count {
+            current.append(nums[i])
+            backtrackOptimized(subsets: &subsets, current: &current, nums: nums, startIndexOfRemainingNums: i + 1)
+            current.removeLast()
+        }
+        
+        subsets.append(current)
+    }
+}

@@ -9,8 +9,6 @@
 import XCTest
 @testable import SwiftDSA
 
-class MediumDynamicProgrammingProblemsTests: XCTestCase {}
-
 // MARK: - 62. Unique Paths
 
 class MediumDynamicProgrammingProblem62Tests: XCTestCase {
