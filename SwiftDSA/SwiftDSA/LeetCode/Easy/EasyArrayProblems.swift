@@ -75,3 +75,40 @@ extension EasyArrayProblems {
         return sumOfMaxSubArray
     }
 }
+
+// MARK: - 121. Best Time to Buy and Sell Stock
+// LINK: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+//
+// Description: You are given an array prices where prices[i] is the price of a given stock on the ith day. You want to
+// maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell
+// that stock. Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit,
+// return 0.
+//
+// Strategy:
+// Base case: price is an array of 1 element, return 0 because we can only buy, but not sell
+// Recursive case: price is an array of n elements, where n >= 2. Get the minPrice of prices[0..<n-1] and maxProfit of
+// prices[0..<n-1]. if price[n - 1] - minPrice > maxProfit, return it else return maxProfit. So we just need to build
+// the minPrices array and maxProfits array, update them each iteration and return maxProfits[n - 1].
+
+extension EasyArrayProblems {
+    func maxProfit(_ prices: [Int]) -> Int {
+        guard prices.count > 1 else {
+            return 0
+        }
+        
+        var minPrices: [Int] = Array(repeating: 0, count: prices.count)
+        var maxProfits: [Int] = Array(repeating: 0, count: prices.count)
+        
+        for (i, price) in prices.enumerated() {
+            if i == 0 {
+                minPrices[i] = price
+                maxProfits[i] = 0
+            } else {
+                minPrices[i] = min(price, minPrices[i - 1])
+                maxProfits[i] = max(price - minPrices[i - 1], maxProfits[i - 1])
+            }
+        }
+        
+        return maxProfits[prices.count - 1]
+    }
+}

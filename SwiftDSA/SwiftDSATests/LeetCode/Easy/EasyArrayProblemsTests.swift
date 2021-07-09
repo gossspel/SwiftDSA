@@ -80,3 +80,41 @@ extension EasyArrayProblemsTests {
         XCTAssertEqual(sumOfMaxSubArray, 15)
     }
 }
+
+class EasyArrayProblem121Tests: XCTestCase {
+    func testMaxProfit_with1Price_shouldReturn0() {
+        let prices: [Int] = [7]
+        let maxProfit: Int = EasyArrayProblems().maxProfit(prices)
+        XCTAssertEqual(maxProfit, 0)
+    }
+    
+    func testMaxProfit_with2PricesA_shouldReturn6() {
+        let prices: [Int] = [1, 7]
+        let maxProfit: Int = EasyArrayProblems().maxProfit(prices)
+        XCTAssertEqual(maxProfit, 6)
+    }
+    
+    func testMaxProfit_with2PricesB_shouldReturn0() {
+        let prices: [Int] = [7, 1]
+        let maxProfit: Int = EasyArrayProblems().maxProfit(prices)
+        XCTAssertEqual(maxProfit, 0)
+    }
+    
+    func testMaxProfit_with2PricesC_shouldReturn0() {
+        let prices: [Int] = [7, 7]
+        let maxProfit: Int = EasyArrayProblems().maxProfit(prices)
+        XCTAssertEqual(maxProfit, 0)
+    }
+    
+    func testMaxProfit_with6Prices_shouldReturn5() {
+        let prices: [Int] = [7, 1, 5, 3, 6, 4]
+        let maxProfit: Int = EasyArrayProblems().maxProfit(prices)
+        XCTAssertEqual(maxProfit, 5)
+    }
+    
+    func testMaxProfit_with5Prices_shouldReturn0() {
+        let prices: [Int] = [7, 6, 4, 3, 1]
+        let maxProfit: Int = EasyArrayProblems().maxProfit(prices)
+        XCTAssertEqual(maxProfit, 0)
+    }
+}
