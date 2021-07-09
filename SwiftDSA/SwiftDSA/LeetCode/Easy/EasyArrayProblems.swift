@@ -111,4 +111,19 @@ extension EasyArrayProblems {
         
         return maxProfits[prices.count - 1]
     }
+    
+    func maxProfitNonDP(_ prices: [Int]) -> Int {
+        var minPrice: Int = Int.max
+        var maxProfit: Int = 0
+        
+        for price in prices {
+            if price < minPrice {
+                minPrice = price
+            } else {
+                maxProfit = max(maxProfit, price - minPrice)
+            }
+        }
+        
+        return maxProfit
+    }
 }
