@@ -777,3 +777,31 @@ class MediumArrayProblem79Tests: XCTestCase {
         XCTAssert(exist)
     }
 }
+
+// MARK: - 128. Longest Consecutive Sequence
+
+class MediumArrayProblem128Tests: XCTestCase {
+    func testLongestConsecutive_with6Nums4LCS_shouldReturn4() {
+        let nums = [100,4,200,1,3,2]
+        let LCS = MediumArrayProblems().longestConsecutive(nums)
+        XCTAssertEqual(LCS, 4)
+    }
+    
+    func testLongestConsecutive_with10Nums9LCS_shouldReturn9() {
+        let nums = [0,3,7,2,5,8,4,6,0,1]
+        let LCS = MediumArrayProblems().longestConsecutive(nums)
+        XCTAssertEqual(LCS, 9)
+    }
+    
+    func testLongestConsecutive_with0Nums0LCS_shouldReturn0() {
+        let nums: [Int] = []
+        let LCS = MediumArrayProblems().longestConsecutive(nums)
+        XCTAssertEqual(LCS, 0)
+    }
+    
+    func testLongestConsecutive_with1Num1LCS_shouldReturn1() {
+        let nums = [1]
+        let LCS = MediumArrayProblems().longestConsecutive(nums)
+        XCTAssertEqual(LCS, 1)
+    }
+}
