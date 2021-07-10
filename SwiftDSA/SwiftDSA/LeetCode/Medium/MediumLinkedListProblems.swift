@@ -85,3 +85,56 @@ extension MediumLinkedListProblems {
         }
     }
 }
+
+// MARK: - 92. Reverse Linked List II
+// LINK: https://leetcode.com/problems/reverse-linked-list-ii/
+//
+// Description: Given the head of a singly linked list and two integers left and right where left <= right, reverse the
+// nodes of the list from position left to position right, and return the reversed list.
+//
+// Strategy: Traverse the linked list once, when the current node is within the left right limit, append the node value
+// to valuesStackArray, which is an array that acts as a stack. Now traverse the linked list the second time, when the
+// current node is within the left right limit, call removeLast on valuesStackArray and update the value of the current
+// node with it.
+
+extension MediumLinkedListProblems {
+    func reverseBetween(_ head: ListNode?, _ left: Int, _ right: Int) -> ListNode? {
+        var valuesStackArray: [Int] = []
+        var currentPosition: Int = 1
+        var currentNode: ListNode? = head
+        var nodeToStartReversing: ListNode? = nil
+        var nodeToStopReversing: ListNode? = nil
+        
+        while let sureCurrentNode = currentNode, nodeToStopReversing == nil {
+            if currentPosition >= left && currentPosition <= right {
+                if currentPosition == left {
+                    nodeToStartReversing = currentNode
+                } else if currentPosition == right {
+                    nodeToStopReversing = currentNode
+                }
+                
+                valuesStackArray.append(sureCurrentNode.val)
+            }
+            
+            currentNode = sureCurrentNode.next
+            currentPosition += 1
+        }
+        
+        guard let sureNodeToStartReversing = nodeToStartReversing else {
+            return nil
+        }
+        
+        currentNode = sureNodeToStartReversing
+        
+        while currentNode != nil && !valuesStackArray.isEmpty {
+            guard let value = valuesStackArray.popLast() else {
+                return nil
+            }
+            
+            currentNode?.val = value
+            currentNode = currentNode?.next
+        }
+        
+        return head
+    }
+}

@@ -89,3 +89,73 @@ extension MediumLinkedListProblemsTests {
         XCTAssertEqual(resultValues, [1])
     }
 }
+
+class MediumLinkedListProblem92Tests: XCTestCase {
+    func testReverseBetween_with5NodesLeftIs2RightIs4_shouldReturnLinkedListReversedBetweenPositions2To4() {
+        let node5 = ListNode(5)
+        let node4 = ListNode(4, node5)
+        let node3 = ListNode(3, node4)
+        let node2 = ListNode(2, node3)
+        let head = ListNode(1, node2)
+        let newHead = MediumLinkedListProblems().reverseBetween(head, 2, 4)
+        
+        guard let sureNewHead = newHead else {
+            XCTFail("The head is nil")
+            return
+        }
+        
+        var resultValues: [Int] = [sureNewHead.val]
+        var currentNode: ListNode? = sureNewHead
+        
+        while let nextNode = currentNode?.next {
+            resultValues.append(nextNode.val)
+            currentNode = nextNode
+        }
+        
+        XCTAssertEqual(resultValues, [1, 4, 3, 2, 5])
+    }
+    
+    func testReverseBetween_with5NodesLeftIs1RightIs5_shouldReturnLinkedListReversedBetweenPositions1To5() {
+        let node5 = ListNode(5)
+        let node4 = ListNode(4, node5)
+        let node3 = ListNode(3, node4)
+        let node2 = ListNode(2, node3)
+        let head = ListNode(1, node2)
+        let newHead = MediumLinkedListProblems().reverseBetween(head, 1, 5)
+        
+        guard let sureNewHead = newHead else {
+            XCTFail("The head is nil")
+            return
+        }
+        
+        var resultValues: [Int] = [sureNewHead.val]
+        var currentNode: ListNode? = sureNewHead
+        
+        while let nextNode = currentNode?.next {
+            resultValues.append(nextNode.val)
+            currentNode = nextNode
+        }
+        
+        XCTAssertEqual(resultValues, [5, 4, 3, 2, 1])
+    }
+    
+    func testReverseBetween_with1NodeLeftIs1RightIs1_shouldReturnIdenticalLinkedList() {
+        let head = ListNode(5)
+        let newHead = MediumLinkedListProblems().reverseBetween(head, 1, 1)
+        
+        guard let sureNewHead = newHead else {
+            XCTFail("The head is nil")
+            return
+        }
+        
+        var resultValues: [Int] = [sureNewHead.val]
+        var currentNode: ListNode? = sureNewHead
+        
+        while let nextNode = currentNode?.next {
+            resultValues.append(nextNode.val)
+            currentNode = nextNode
+        }
+        
+        XCTAssertEqual(resultValues, [5])
+    }
+}
