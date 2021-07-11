@@ -11,6 +11,31 @@ import XCTest
 
 class EasyArrayProblemsTests: XCTestCase {}
 
+// MARK: - 1. Two Sum
+
+class EasyArrayProblem1Tests: XCTestCase {
+    func testTwoSum_with4NumsAndTargetIs9_shouldReturn0And1() {
+        let nums = [2,7,11,15]
+        let target = 9
+        let indices = EasyArrayProblems().twoSum(nums, target)
+        XCTAssertEqual(indices, [0, 1])
+    }
+    
+    func testTwoSum_with3NumsAndTargetIs6_shouldReturn0And1() {
+        let nums = [3, 2, 4]
+        let target = 6
+        let indices = EasyArrayProblems().twoSum(nums, target)
+        XCTAssertEqual(indices, [1, 2])
+    }
+    
+    func testTwoSum_with2NumsAndTargetIs6_shouldReturn0And1() {
+        let nums = [3, 3]
+        let target = 6
+        let indices = EasyArrayProblems().twoSum(nums, target)
+        XCTAssertEqual(indices, [0, 1])
+    }
+}
+
 // MARK: - 26. Remove Duplicates from Sorted Array
 
 extension EasyArrayProblemsTests {

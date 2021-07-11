@@ -10,6 +10,59 @@ import Foundation
 
 class EasyArrayProblems {}
 
+// MARK: - 1. Two Sum
+// LINK: https://leetcode.com/problems/two-sum/
+//
+// Description: Given an array of integers nums and an integer target, return indices of the two numbers such that they
+// add up to target. You may assume that each input would have exactly one solution, and you may not use the same
+// element twice. You can return the answer in any order.
+//
+// Strategy: Brute force, use 2 d loop to record any indices pair that sum up to target.
+//
+// Optimized Strategy: loop through the array, insert each element to a set. Loop through the array again and check if
+// the set contains the result of (target - element), and make sure the 2 indices aren't identical since we can use the
+// same element twice.
+
+extension EasyArrayProblems {
+    func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
+        var pair: [Int] = []
+
+        for i in 0..<nums.count {
+            guard i + 1 < nums.count else {
+                continue
+            }
+
+            for j in (i + 1)..<nums.count {
+                if nums[i] + nums[j] == target {
+                    pair = [i, j]
+                    break
+                }
+            }
+        }
+
+        return pair
+    }
+    
+    func twoSumOptimized(_ nums: [Int], _ target: Int) -> [Int] {
+        var indexByValueDict: [Int: Int] = [:]
+        
+        for (i, value) in nums.enumerated() {
+            indexByValueDict[value] = i
+        }
+        
+        for i in 0..<nums.count {
+            let result: Int = target - nums[i]
+            
+            if let indexOfResult = indexByValueDict[result], i != indexOfResult {
+                return [i, indexOfResult]
+            }
+        }
+        
+        return []
+    }
+}
+
+
 // MARK: - 26. Remove Duplicates from Sorted Array
 // LINK: https://leetcode.com/problems/remove-duplicates-from-sorted-array/
 //
