@@ -11,6 +11,40 @@ import XCTest
 
 class MediumArrayProblemsTests: XCTestCase {}
 
+// MARK: - 15. 3Sum
+
+class MediumArrayProblem15Tests: XCTestCase {
+    func testThreeSum_with6Nums_shouldReturnListOfTwoThreeSums() {
+        let nums: [Int] = [-1,0,1,2,-1,-4]
+        let threeSums: [[Int]] = MediumArrayProblems().threeSum(nums)
+        XCTAssertEqual(threeSums, [[-1,-1,2],[-1,0,1]])
+    }
+    
+    func testThreeSum_with0Nums_shouldReturnEmptyList() {
+        let nums: [Int] = []
+        let threeSums: [[Int]] = MediumArrayProblems().threeSum(nums)
+        XCTAssertEqual(threeSums, [])
+    }
+    
+    func testThreeSum_with1Num_shouldReturnEmptyList() {
+        let nums: [Int] = [0]
+        let threeSums: [[Int]] = MediumArrayProblems().threeSum(nums)
+        XCTAssertEqual(threeSums, [])
+    }
+    
+    func testThreeSum_with3Nums_shouldReturnEmptyList() {
+        let nums: [Int] = [0, 0, 0]
+        let threeSums: [[Int]] = MediumArrayProblems().threeSum(nums)
+        XCTAssertEqual(threeSums, [[0, 0, 0]])
+    }
+    
+    func testThreeSum_with11Nums_shouldReturnListOf9ThreeSums() {
+        let nums: [Int] = [-1,0,1,2,-1,-4,-2,-3,3,0,4]
+        let threeSums: [[Int]] = MediumArrayProblems().threeSum(nums)
+        XCTAssertEqual(threeSums, [[-4,0,4],[-4,1,3],[-3,-1,4],[-3,0,3],[-3,1,2],[-2,-1,3],[-2,0,2],[-1,-1,2],[-1,0,1]])
+    }
+}
+
 // MARK: - 31. Next Permutation
 
 extension MediumArrayProblemsTests {

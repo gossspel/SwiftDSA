@@ -12,6 +12,65 @@ class MediumArrayProblems {
     var hasFoundWord: Bool = false
 }
 
+// MARK: - 15. 3Sum
+// LINK: https://leetcode.com/problems/3sum/
+//
+// Description: Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i !=
+// k, and j != k, and nums[i] + nums[j] + nums[k] == 0. Notice that the solution set must not contain duplicate
+// triplets.
+//
+// [-1,0,1,2,-1,-4] = > [-4, -1, -1, 0, 1, 2]
+//                            ^            ^
+//                         left            right
+//
+// Strategy: Since this is not asking us to return the list of index pair, we can probably take advantage of it and
+// sort the array in order to prune the repeated cases. We can loop through nums with an enumerated for loop to get its
+// index and value in each iteration. After picking up the first number, we just have to find the two sum in which b +
+// c = -a with the rest of the numbers. Since the numbers are sorted, we can use the left and right pointer approach.
+// let left start as (i + 1) and right start as (nums.count - 1). Continue the loop as long as left < right. If value +
+// sortedNums[left] + sortedNums[right] = 0, add [value, sortedNums[left], sortedNums[right]) into the result and keep
+// incrementing left until sortedNums[newleft] > sortedNums[left], and make sure left < right in order to avoid
+// duplicated combos. For the next iteration of the for loop, make sure sortedNums[i] != sortedNums[i - 1] since we
+// want to avoid repeated elements. Continue the initial for loop until its value is greater than zero, because at that
+// point, both b and c will positive numbers and there will be no more combinations that would sum up to zero.
+
+extension MediumArrayProblems {
+    func threeSum(_ nums: [Int]) -> [[Int]] {
+        var results: [[Int]] = []
+        let sortedNums: [Int] = nums.sorted()
+        
+        for (i, value) in sortedNums.enumerated() {
+            if value > 0 {
+                return results
+            }
+            
+            if i != 0, sortedNums[i] == sortedNums[i - 1] {
+                continue
+            }
+            
+            var left: Int = i + 1
+            var right: Int = sortedNums.count - 1
+            
+            while left < right {
+                if value + sortedNums[left] + sortedNums[right] == 0 {
+                    results.append([value, sortedNums[left], sortedNums[right]])
+                    left += 1
+                    
+                    while sortedNums[left - 1] == sortedNums[left], left < right {
+                        left += 1
+                    }
+                } else if value + sortedNums[left] + sortedNums[right] > 0 {
+                    right -= 1
+                } else {
+                    left += 1
+                }
+            }
+        }
+        
+        return results
+    }
+}
+
 // MARK: - 31. Next Permutation
 // LINK: https://leetcode.com/problems/next-permutation/
 //

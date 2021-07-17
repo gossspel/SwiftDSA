@@ -143,3 +143,28 @@ class EasyArrayProblem121Tests: XCTestCase {
         XCTAssertEqual(maxProfit, 0)
     }
 }
+
+// MARK: - 167. Two Sum II - Input array is sorted
+
+class EasyArrayProblem167Tests: XCTestCase {
+    func testTwoSum2_with4NumsAndTargetIs9_shouldReturn0And1() {
+        let nums = [2,7,11,15]
+        let target = 9
+        let indices = EasyArrayProblems().twoSum2(nums, target)
+        XCTAssertEqual(indices, [1, 2])
+    }
+    
+    func testTwoSum2_with3NumsAndTargetIs6_shouldReturn0And1() {
+        let nums = [2, 3, 4]
+        let target = 6
+        let indices = EasyArrayProblems().twoSum2(nums, target)
+        XCTAssertEqual(indices, [1, 3])
+    }
+    
+    func testTwoSum2_with2NumsAndTargetIs6_shouldReturn0And1() {
+        let nums = [3, 3]
+        let target = 6
+        let indices = EasyArrayProblems().twoSum2(nums, target)
+        XCTAssertEqual(indices, [1, 2])
+    }
+}

@@ -24,23 +24,34 @@ class EasyArrayProblems {}
 // same element twice.
 
 extension EasyArrayProblems {
-    func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
-        var pair: [Int] = []
-
+    func twoSum(_ nums: [Int], _ target: Int) -> [Int] {        
+        var indexListByValueDict: [Int: [Int]] = [:]
+        
         for i in 0..<nums.count {
-            guard i + 1 < nums.count else {
-                continue
-            }
-
-            for j in (i + 1)..<nums.count {
-                if nums[i] + nums[j] == target {
-                    pair = [i, j]
-                    break
-                }
+            if let indexList = indexListByValueDict[nums[i]] {
+                indexListByValueDict[nums[i]] = indexList + [i]
+            } else {
+                indexListByValueDict[nums[i]] = [i]
             }
         }
-
-        return pair
+        
+        for i in 0..<nums.count {
+            let result: Int = target - nums[i]
+            
+            guard let indexList = indexListByValueDict[result] else {
+                continue
+            }
+            
+            let filteredIndexList = indexList.filter { $0 != i }
+            
+            guard let resultIndex = filteredIndexList.first else {
+                continue
+            }
+            
+            return [i, resultIndex]
+        }
+        
+        return []
     }
     
     func twoSumOptimized(_ nums: [Int], _ target: Int) -> [Int] {
@@ -178,5 +189,44 @@ extension EasyArrayProblems {
         }
         
         return maxProfit
+    }
+}
+
+// MARK: - 167. Two Sum II - Input array is sorted
+// LINK: https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/
+//
+// Description: Given an array of integers numbers that is already sorted in non-decreasing order, find two numbers
+// such that they add up to a specific target number. Return the indices of the two numbers (1-indexed) as an integer
+// array answer of size 2, where 1 <= answer[0] < answer[1] <= numbers.length. The tests are generated such that there
+// is exactly one solution. You may not use the same element twice.
+//
+// Strategy: Since numbers is sorted, we can use two pointer, one left and one right to keep track of the sum. Have the
+// left pointer start as the first index, and right pointer start as the last index. If numbers[left] + numbers[right]
+// > target, we can decrement right in order to have a lesser value on the numbers[right]. If numbers[left] +
+// numbers[right] < target, we can increment left in order o have a greater value on the numbers[left]. If
+// numbers[left] + numbers[right] == target, we will return [left, right]. We will repeat this process until left ==
+// right.
+
+extension EasyArrayProblems {
+    func twoSum2(_ numbers: [Int], _ target: Int) -> [Int] {
+        guard numbers.count > 1 else {
+            return []
+        }
+        
+        var left: Int = 0
+        var right: Int = numbers.count - 1
+        
+        while left < right {
+            if numbers[left] + numbers[right] > target {
+                right -= 1
+            } else if numbers[left] + numbers[right] < target {
+                left += 1
+            } else {
+                // NOTE: has to return the (1-indexed) indices
+                return [left + 1, right + 1]
+            }
+        }
+        
+        return []
     }
 }
