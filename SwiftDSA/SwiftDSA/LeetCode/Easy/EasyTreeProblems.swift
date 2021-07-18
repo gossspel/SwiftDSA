@@ -135,3 +135,41 @@ extension EasyTreeProblems {
     }
 }
 
+// MARK: - 104. Maximum Depth of Binary Tree
+// LINK: https://leetcode.com/problems/maximum-depth-of-binary-tree/
+//
+// Description: Given the root of a binary tree, return its maximum depth. A binary tree's maximum depth is the number
+// of nodes along the longest path from the root node down to the farthest leaf node.
+//
+// Strategy: Do breath first search to traverse the tree and return the maximum tree level.
+
+extension EasyTreeProblems {
+    func maxDepth(_ root: TreeNode?) -> Int {
+        guard let sureRoot = root else {
+            return 0
+        }
+        
+        var currentLevel: Int = 0
+        var currentLevelNodes: [TreeNode] = [sureRoot]
+        
+        while !currentLevelNodes.isEmpty {
+            var nextLevelNodes: [TreeNode] = []
+            
+            for currentLevelNode in currentLevelNodes {
+                if let left = currentLevelNode.left {
+                    nextLevelNodes.append(left)
+                }
+                
+                if let right = currentLevelNode.right {
+                    nextLevelNodes.append(right)
+                }
+            }
+            
+            currentLevelNodes = nextLevelNodes
+            currentLevel += 1
+        }
+        
+        return currentLevel
+    }
+}
+

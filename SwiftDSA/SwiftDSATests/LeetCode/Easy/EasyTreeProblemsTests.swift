@@ -118,3 +118,35 @@ class EasyTreeProblem101Tests: XCTestCase {
         XCTAssertTrue(EasyTreeProblems().isSymmetric(root))
     }
 }
+
+// MARK: - 104. Maximum Depth of Binary Tree
+
+class EasyTreeProblem104Tests: XCTestCase {
+    func testMaxDepth_with5Nodes3Levels_shouldReturn3() {
+        let node7 = TreeNode(7)
+        let node6 = TreeNode(15)
+        let node3 = TreeNode(20, node6, node7)
+        let node2 = TreeNode(2, nil, nil)
+        let root = TreeNode(1, node2, node3)
+        let maxLevels: Int = EasyTreeProblems().maxDepth(root)
+        XCTAssertEqual(maxLevels, 3)
+    }
+    
+    func testMaxDepth_with2Nodes2Levels_shouldReturn3() {
+        let node3 = TreeNode(2, nil, nil)
+        let root = TreeNode(1, nil, node3)
+        let maxLevels: Int = EasyTreeProblems().maxDepth(root)
+        XCTAssertEqual(maxLevels, 2)
+    }
+    
+    func testMaxDepth_with0Nodes0Levels_shouldReturn0() {
+        let maxLevels: Int = EasyTreeProblems().maxDepth(nil)
+        XCTAssertEqual(maxLevels, 0)
+    }
+    
+    func testMaxDepth_with1Node1Level_shouldReturn1() {
+        let root = TreeNode(1, nil, nil)
+        let maxLevels: Int = EasyTreeProblems().maxDepth(root)
+        XCTAssertEqual(maxLevels, 1)
+    }
+}
