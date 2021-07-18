@@ -71,3 +71,50 @@ extension EasyTreeProblemsTests {
         XCTAssertEqual(traversalSequence, [2, 3, 1])
     }
 }
+
+// MARK: - 101. Symmetric Tree
+
+class EasyTreeProblem101Tests: XCTestCase {
+    func testIsSymmetric_with7NodesSymmetricTree_shouldReturnTrue() {
+        let node7 = TreeNode(3)
+        let node6 = TreeNode(4)
+        let node5 = TreeNode(4)
+        let node4 = TreeNode(3)
+        let node3 = TreeNode(2, node6, node7)
+        let node2 = TreeNode(2, node4, node5)
+        let root = TreeNode(1, node2, node3)
+        XCTAssertTrue(EasyTreeProblems().isSymmetric(root))
+    }
+    
+    func testIsSymmetric_with5NodesAsymmetricTree_shouldReturnTrue() {
+        let node7 = TreeNode(3)
+        let node5 = TreeNode(3)
+        let node3 = TreeNode(2, nil, node7)
+        let node2 = TreeNode(2, nil, node5)
+        let root = TreeNode(1, node2, node3)
+        XCTAssertFalse(EasyTreeProblems().isSymmetric(root))
+    }
+    
+    func testIsSymmetric_with5NodesSymmetricTreeA_shouldReturnTrue() {
+        let node7 = TreeNode(3)
+        let node4 = TreeNode(3)
+        let node3 = TreeNode(2, nil, node7)
+        let node2 = TreeNode(2, node4, nil)
+        let root = TreeNode(1, node2, node3)
+        XCTAssertTrue(EasyTreeProblems().isSymmetric(root))
+    }
+    
+    func testIsSymmetric_with5NodesSymmetricTreeB_shouldReturnTrue() {
+        let node6 = TreeNode(3)
+        let node5 = TreeNode(3)
+        let node3 = TreeNode(2, node6, nil)
+        let node2 = TreeNode(2, nil, node5)
+        let root = TreeNode(1, node2, node3)
+        XCTAssertTrue(EasyTreeProblems().isSymmetric(root))
+    }
+    
+    func testIsSymmetric_with1NodeSymmetricTree_shouldReturnTrue() {
+        let root = TreeNode(1)
+        XCTAssertTrue(EasyTreeProblems().isSymmetric(root))
+    }
+}

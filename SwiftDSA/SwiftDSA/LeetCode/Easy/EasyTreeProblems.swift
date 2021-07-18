@@ -36,7 +36,6 @@ public class TreeNode {
         self.right = right
     }
 }
- 
 
 // MARK: - 94. Binary Tree Inorder Traversal
 // LINK: https://leetcode.com/problems/binary-tree-inorder-traversal/
@@ -64,3 +63,75 @@ extension EasyTreeProblems {
         return results
     }
 }
+
+// MARK: - 101. Symmetric Tree
+// LINK: https://leetcode.com/problems/symmetric-tree/
+//
+// Description: Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its
+// center).
+//
+// Strategy: For the iterative solution, do a left to right BFS, in each tree levels, append the values from the node
+// to an array, and check to make sure the array is symmetric. For the recursive solution, create a method to
+// recursively compare left and right tree. Return true if both leftRoot and RightRoot are nil because nil trees are by
+// definition symmetrical and we need that as a stopping base case. If leftRoot.val != rightRoot.val, return false,
+// else we will do the recursive case of comparing leftRoot.left with rightRight.right and rightRoot.left with
+// leftRoot.right.
+
+extension EasyTreeProblems {
+    func isSymmetric(_ root: TreeNode?) -> Bool {
+        guard let sureRoot = root else {
+            return true
+        }
+        
+        return isSymmetric(leftRoot: sureRoot.left, rightRoot: sureRoot.right)
+    }
+    
+    func isSymmetric(leftRoot: TreeNode?, rightRoot: TreeNode?) -> Bool {
+        guard leftRoot?.val == rightRoot?.val else {
+            return false
+        }
+        
+        if leftRoot?.val == nil && rightRoot?.val == nil {
+            return true
+        }
+        
+        let isLeftTreeSymmetric: Bool = isSymmetric(leftRoot: leftRoot?.left, rightRoot: rightRoot?.right)
+        let isRightTreeSymmetric: Bool = isSymmetric(leftRoot: leftRoot?.right, rightRoot: rightRoot?.left)
+        return isLeftTreeSymmetric && isRightTreeSymmetric
+    }
+    
+    func isSymmetricIterative(_ root: TreeNode?) -> Bool {
+        guard root != nil else {
+            return true
+        }
+        
+        var currentLevelNodes: [TreeNode?] = [root]
+        
+        while !currentLevelNodes.isEmpty {
+            var nextLevelNodes: [TreeNode?] = []
+            
+            for currentLevelNode in currentLevelNodes {
+                nextLevelNodes.append(currentLevelNode?.left)
+                nextLevelNodes.append(currentLevelNode?.right)
+            }
+            
+            // [0 1 2 3 4] => midPointIndex = 2, [0 1 2 3] => midPointIndex = 2
+            let currentLevelMidPointIndex: Int = currentLevelNodes.count / 2
+            
+            for i in 0..<currentLevelMidPointIndex {
+                if currentLevelNodes[i]?.val != currentLevelNodes[currentLevelNodes.count - 1 - i]?.val {
+                    return false
+                }
+            }
+            
+            if (currentLevelNodes.filter { $0 != nil }).isEmpty {
+                currentLevelNodes = []
+            } else {
+                currentLevelNodes = nextLevelNodes
+            }
+        }
+        
+        return true
+    }
+}
+
