@@ -168,3 +168,22 @@ class EasyArrayProblem167Tests: XCTestCase {
         XCTAssertEqual(indices, [1, 2])
     }
 }
+
+// MARK: - 217. Contains Duplicate
+
+class EasyArrayProblem217Tests: XCTestCase {
+    func testContainDuplicate_with4NumsWithDuplicates_shouldReturnTrue() {
+        let nums = [1,2,3,1]
+        XCTAssertTrue(EasyArrayProblems().containsDuplicate(nums))
+    }
+    
+    func testContainDuplicate_with4NumsWithoutDuplicates_shouldReturnFalse() {
+        let nums = [1,2,3,4]
+        XCTAssertFalse(EasyArrayProblems().containsDuplicate(nums))
+    }
+    
+    func testContainDuplicate_with10NumsWithDuplicates_shouldReturnTrue() {
+        let nums = [1,1,1,3,3,4,3,2,4,2]
+        XCTAssertTrue(EasyArrayProblems().containsDuplicate(nums))
+    }
+}

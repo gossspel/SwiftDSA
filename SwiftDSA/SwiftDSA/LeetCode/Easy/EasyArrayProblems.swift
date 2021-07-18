@@ -230,3 +230,18 @@ extension EasyArrayProblems {
         return []
     }
 }
+
+// MARK: - 217. Contains Duplicate
+// LINK: https://leetcode.com/problems/contains-duplicate/
+//
+// Description: Given an integer array nums, return true if any value appears at least twice in the array, and return
+// false if every element is distinct.
+//
+// Strategy: Init a set with the nums, return nums.count != setNums.count
+
+extension EasyArrayProblems {
+    func containsDuplicate(_ nums: [Int]) -> Bool {
+        let setNums: Set<Int> = Set(nums)
+        return nums.count != setNums.count
+    }
+}
