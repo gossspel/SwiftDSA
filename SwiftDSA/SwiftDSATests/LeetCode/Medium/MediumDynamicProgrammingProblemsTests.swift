@@ -81,3 +81,25 @@ class MediumDynamicProgrammingProblem64Tests: XCTestCase {
         XCTAssertEqual(minPathSum, 4)
     }
 }
+
+// MARK: - 198. House Robber
+
+class MediumDynamicProgrammingProblem198Tests: XCTestCase {
+    func testRob_with4Houses_shouldReturn4() {
+        let nums = [1,2,3,1]
+        let amount = MediumDynamicProgrammingProblems().rob(nums)
+        XCTAssertEqual(amount, 4)
+    }
+    
+    func testRob_with5Houses_shouldReturn12() {
+        let nums = [2,7,9,3,1]
+        let amount = MediumDynamicProgrammingProblems().rob(nums)
+        XCTAssertEqual(amount, 12)
+    }
+    
+    func testRob_with7Houses_shouldReturn14() {
+        let nums = [4,1,2,7,5,3,1]
+        let amount = MediumDynamicProgrammingProblems().rob(nums)
+        XCTAssertEqual(amount, 14)
+    }
+}

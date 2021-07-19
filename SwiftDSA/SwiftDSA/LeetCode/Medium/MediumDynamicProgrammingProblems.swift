@@ -180,3 +180,52 @@ extension MediumDynamicProgrammingProblems {
         return dpArray[maxRowIndex][maxColumnIndex]
     }
 }
+
+// MARK: - 198. House Robber
+// LINK: https://leetcode.com/problems/house-robber/
+//
+// Description: You are a professional robber planning to rob houses along a street. Each house has a certain amount of
+// money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security
+// systems connected and it will automatically contact the police if two adjacent houses were broken into on the same
+// night. Given an integer array nums representing the amount of money of each house, return the maximum amount of
+// money you can rob tonight without alerting the police.
+//
+// 1               evenIndexSum = 1, oddIndexSum = 0, maxSum = max(evenIndexSum, oddSum) = 1
+// 1 2             evenIndexSum = 1, oddIndexSum = 2, maxSum = max(evenIndexSum, oddSum) = 2
+// 1 2 1           evenIndexSum = 2, oddIndexSum = 2, maxSum = max(evenIndexSum, oddSum) = 2
+// 1 2 1 2         evenIndexSum = 2, oddIndexSum = 4,
+// 1 2 1 2 1       evenIndexSum = 3, oddIndexSum = 4
+// 1 2 1 2 1 0     evenIndexSum = 3, oddIndexSum = 4
+// 1 2 1 2 1 0 3   evenIndexSum = 6, oddIndexSum = 4, maxSum = 7
+//
+// Strategy:
+// base case should be 3 houses or less, because the max amount we can rob is max(sumOfOddValues, sumOfEvenValues).
+// recursive case should be 4 houses or more, because the max amount we can rob is max(sumOfMaxAtIndexMinus1,
+// sumOfMaxAtIndexMinus2 + currentValue, sumOfMaxAtIndexMinus3 + currentValue)
+
+extension MediumDynamicProgrammingProblems {
+    func rob(_ nums: [Int]) -> Int {
+        var maxAtIndex: [Int] = []
+        var evenIndexSum: Int = 0
+        var oddIndexSum: Int = 0
+        var currentMax: Int = 0
+        
+        for i in 0..<nums.count {
+            if i % 2 == 0 {
+                evenIndexSum += nums[i]
+            } else {
+                oddIndexSum += nums[i]
+            }
+            
+            if i >= 3 {
+                currentMax = max(maxAtIndex[i - 1], maxAtIndex[i - 2] + nums[i], maxAtIndex[i - 3] + nums[i])
+            } else {
+                currentMax = max(evenIndexSum, oddIndexSum)
+            }
+            
+            maxAtIndex.append(currentMax)
+        }
+        
+        return maxAtIndex[nums.count - 1]
+    }
+}
