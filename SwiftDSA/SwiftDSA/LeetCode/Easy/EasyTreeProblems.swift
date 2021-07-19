@@ -64,6 +64,36 @@ extension EasyTreeProblems {
     }
 }
 
+// MARK: - 100. Same Tree
+// LINK: https://leetcode.com/problems/same-tree/
+//
+// Description: Given the roots of two binary trees p and q, write a function to check if they are the same or not. Two
+// binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+//
+// Strategy: If p and q have the same value and are both leave nodes, return true. Otherwise we want to make sure
+// isSameTree(p.left, q.left) == true and isSameTree(p.right, q.right) == true.
+
+extension EasyTreeProblems {
+    func isSameTree(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
+        if p == nil && q == nil {
+            return true
+        } else if let sureP = p, let sureQ = q {
+            guard sureP.val == sureQ.val else {
+                return false
+            }
+            
+            if sureP.left == nil && sureP.right == nil && sureQ.left == nil && sureQ.right == nil {
+                return true
+            } else {
+                return isSameTree(p?.left, q?.left) && isSameTree(p?.right, q?.right)
+            }
+        } else {
+            // Either p or q is nil, so they are not the same
+            return false
+        }
+    }
+}
+
 // MARK: - 101. Symmetric Tree
 // LINK: https://leetcode.com/problems/symmetric-tree/
 //

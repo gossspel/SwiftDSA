@@ -72,6 +72,32 @@ extension EasyTreeProblemsTests {
     }
 }
 
+// MARK: - 100. Same Tree
+
+class EasyTreeProblem100Tests: XCTestCase {
+    func testIsSameTree_withTwoIdentical3NodesTree_shouldReturnTrue() {
+        let node3 = TreeNode(3)
+        let node2 = TreeNode(2)
+        let root = TreeNode(1, node2, node3)
+        XCTAssertTrue(EasyTreeProblems().isSameTree(root, root))
+    }
+    
+    func testIsSameTree_withTwoDifferent2NodesTree_shouldReturnFalse() {
+        let node2 = TreeNode(2)
+        let p = TreeNode(1, node2, nil)
+        let q = TreeNode(1, nil, node2)
+        XCTAssertFalse(EasyTreeProblems().isSameTree(p, q))
+    }
+    
+    func testIsSameTree_withTwoDifferent3NodesTree_shouldReturnFalse() {
+        let node3 = TreeNode(3)
+        let node2 = TreeNode(2)
+        let p = TreeNode(1, node2, node3)
+        let q = TreeNode(1, node3, node2)
+        XCTAssertFalse(EasyTreeProblems().isSameTree(p, q))
+    }
+}
+
 // MARK: - 101. Symmetric Tree
 
 class EasyTreeProblem101Tests: XCTestCase {
