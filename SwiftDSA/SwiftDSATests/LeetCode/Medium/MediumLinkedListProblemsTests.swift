@@ -159,3 +159,60 @@ class MediumLinkedListProblem92Tests: XCTestCase {
         XCTAssertEqual(resultValues, [5])
     }
 }
+
+// MARK: - 138. Copy List with Random Pointer
+
+class MediumLinkedListProblem138Tests: XCTestCase {
+    func testCopyRandomList_with3NodesA_shouldReturnHeadOfCopiedList() {
+        let node3 = Node(3)
+        let node2 = Node(3)
+        let root = Node(3)
+        root.next = node2
+        node2.next = node3
+        node2.random = root
+        let copiedHead = MediumLinkedListProblems().copyRandomList(root)
+        
+        var current: Node? = copiedHead
+        var nodes: [Node] = []
+        
+        while let sureCurrent = current {
+            nodes.append(sureCurrent)
+            current = sureCurrent.next
+        }
+        
+        current = copiedHead
+        var currentIndex: Int = 0
+        
+        while let sureCurrent = current {
+            let memAddress: String = "\(Unmanaged.passUnretained(sureCurrent).toOpaque())"
+            let expectedMemAddress: String = "\(Unmanaged.passUnretained(nodes[currentIndex]).toOpaque())"
+            XCTAssertEqual(memAddress, expectedMemAddress)
+            
+            if currentIndex == 0 {
+                let nextMemAddress: String = "\(Unmanaged.passUnretained(sureCurrent.next!).toOpaque())"
+                let expectedNextMemAddress: String = "\(Unmanaged.passUnretained(nodes[currentIndex + 1]).toOpaque())"
+                XCTAssertEqual(nextMemAddress, expectedNextMemAddress)
+                XCTAssertNil(sureCurrent.random)
+            } else if currentIndex == 1{
+                let nextMemAddress: String = "\(Unmanaged.passUnretained(sureCurrent.next!).toOpaque())"
+                let expectedNextMemAddress: String = "\(Unmanaged.passUnretained(nodes[currentIndex + 1]).toOpaque())"
+                XCTAssertEqual(nextMemAddress, expectedNextMemAddress)
+                
+                let randomMemAddress: String = "\(Unmanaged.passUnretained(sureCurrent.random!).toOpaque())"
+                let expectedRandomMemAddress: String = "\(Unmanaged.passUnretained(nodes[0]).toOpaque())"
+                XCTAssertEqual(randomMemAddress, expectedRandomMemAddress)
+            } else if currentIndex == 2 {
+                XCTAssertNil(sureCurrent.next)
+                XCTAssertNil(sureCurrent.random)
+            }
+            
+            current = sureCurrent.next
+            currentIndex += 1
+        }
+    }
+    
+    func testCopyRandomList_with0NodesA_shouldReturnNil() {
+        let copiedHead = MediumLinkedListProblems().copyRandomList(nil)
+        XCTAssertNil(copiedHead)
+    }
+}
