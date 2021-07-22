@@ -885,6 +885,79 @@ extension MediumArrayProblems {
     }
 }
 
+// MARK: - 57. Insert Interval
+// LINK: https://leetcode.com/problems/insert-interval/
+//
+// Description: Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if necessary).
+// You may assume that the intervals were initially sorted according to their start times.
+//
+// Strategy: Loop through the intervals, find out the indices of the intervals that intersect with the newInterval,
+// remove those intersecting intervals and replace them with the newInterval. If the indicesToRemove is empty, that
+// means the newInterval is not intersecting with any existing interval. In that case, the new interval should be
+// inserted in either the beginning, end or somewhere in the interval, we would use a var indexToInsert: Int? to track
+// where it should be inserted. If the new interval should be inserted in anywhere other than the end of the intervals,
+// then we would definitely observe when the first right non overlapping interval is encountered, and the indexToInsert
+// should be set to that index. Otherwise, if the new interval is to be inserted to the end of the intervals, then var
+// indexToInsert: Int? would never be updated and we can just append the new interval to the intervals.
+//
+// 1 2 3 4 5 6 7 8 9 10
+//       ^ - ^
+// ^ - ^       ^ - ^
+extension MediumArrayProblems {
+    func insert(_ intervals: [[Int]], _ newInterval: [Int]) -> [[Int]] {
+        var mergedInterval: [Int] = newInterval
+        var indicesToRemove: [Int] = []
+        var firstRightNonOverlappingIntervalEncountered: Bool = false
+        var indexToInsert: Int? = nil
+        
+        for (i, interval) in intervals.enumerated() {
+            if interval[0] > newInterval[1] {
+                // interval is far away from the newInterval to the right
+                if !firstRightNonOverlappingIntervalEncountered {
+                    firstRightNonOverlappingIntervalEncountered = true
+                    indexToInsert = i
+                }
+                
+                continue
+            } else if interval[1] < newInterval[0] {
+                // interval is far away from the newInterval to the left
+                continue
+            } else {
+                mergedInterval = [min(interval[0], mergedInterval[0]), max(interval[1], mergedInterval[1])]
+                indicesToRemove.append(i)
+            }
+        }
+        
+        if !indicesToRemove.isEmpty {
+            guard let firstIndex = indicesToRemove.first, let lastIndex = indicesToRemove.last else {
+                return []
+            }
+            
+            let firstPart: [[Int]] = Array(intervals[..<firstIndex])
+            let secondPart: [[Int]] = [mergedInterval]
+            let thirdPart: [[Int]]
+            
+            if ((lastIndex + 1) < intervals.count) {
+                thirdPart = Array(intervals[(lastIndex + 1)..<intervals.count])
+            } else {
+                thirdPart = []
+            }
+            
+            return firstPart + secondPart + thirdPart
+        } else {
+            var resultIntervals: [[Int]] = intervals
+            
+            if let sureIndexToInsert = indexToInsert {
+                resultIntervals.insert(mergedInterval, at: sureIndexToInsert)
+            } else {
+                resultIntervals.append(mergedInterval)
+            }
+            
+            return resultIntervals
+        }
+    }
+}
+
 // MARK: - 75. Sort Colors
 // LINK: https://leetcode.com/problems/sort-colors/
 // VIDEO: https://www.youtube.com/watch?v=4xbWSRZHqac
