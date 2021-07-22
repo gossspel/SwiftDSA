@@ -229,3 +229,44 @@ extension MediumDynamicProgrammingProblems {
         return maxAtIndex[nums.count - 1]
     }
 }
+
+// MARK: - 322. Coin Change
+// LINK: https://leetcode.com/problems/coin-change/
+// VIDEO: https://www.youtube.com/watch?v=1R0_7HqNaW0
+//
+// Description: You are given an integer array coins representing coins of different denominations and an integer
+// amount representing a total amount of money. Return the fewest number of coins that you need to make up that amount.
+// If that amount of money cannot be made up by any combination of the coins, return -1. You may assume that you have
+// an infinite number of each kind of coin.
+//
+// Strategy: Create a DP array minCoinForAmount to record the # of minCoin needed to return the specific amount.
+// Initialize said DP array with some arbitrary big value (amount + 1), as that will be guaranteed to invalid because
+// the coin of smallest possible value is 1. We can set minCoinForAmount[0] = 0 because it takes zero coin to come up
+// with the 0 amount. For any amount > 0, we want to go through our available coin and try to use them if they are
+// smaller than the current amount. We will update the DP array minCoinForAmount[amount] =
+// min(minCoinForAmount[amount], 1 + minCoinForAmount[amount - coinValue]). After the process if finished, if
+// minCoinForAmount[amount] != (amount + 1), we know the initialized minCoinForAmount[amount] value has been updated
+// and we can return it, otherwise we can return -1
+
+extension MediumDynamicProgrammingProblems {
+    func coinChange(_ coins: [Int], _ amount: Int) -> Int {
+        guard amount > 0 else {
+            return 0
+        }
+        
+        var minCoinForAmount: [Int] = Array(repeating: amount + 1, count: amount + 1)
+        
+        minCoinForAmount[0] = 0
+        
+        for someAmount in 0...amount {
+            for coin in coins {
+                if coin <= someAmount {
+                    minCoinForAmount[someAmount] = min(minCoinForAmount[someAmount],
+                                                       1 + minCoinForAmount[someAmount - coin])
+                }
+            }
+        }
+        
+        return (minCoinForAmount[amount] != (amount + 1)) ? minCoinForAmount[amount] : -1
+    }
+}
