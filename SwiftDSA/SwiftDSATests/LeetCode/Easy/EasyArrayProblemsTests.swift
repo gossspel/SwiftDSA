@@ -144,6 +144,28 @@ class EasyArrayProblem121Tests: XCTestCase {
     }
 }
 
+// MARK: - 136. Single Number
+
+class EasyArrayProblem136Tests: XCTestCase {
+    func testSingleNumber_with3NumsAnd1AsSingleNumber_shouldReturn1() {
+        let nums = [2, 2, 1]
+        let result = EasyArrayProblems().singleNumber(nums)
+        XCTAssertEqual(result, 1)
+    }
+    
+    func testSingleNumber_with5NumsAnd4AsSingleNumber_shouldReturn4() {
+        let nums = [4, 1, 2, 1, 2]
+        let result = EasyArrayProblems().singleNumber(nums)
+        XCTAssertEqual(result, 4)
+    }
+    
+    func testSingleNumber_with1NumAnd1AsSingleNumber_shouldReturn1() {
+        let nums = [1]
+        let result = EasyArrayProblems().singleNumber(nums)
+        XCTAssertEqual(result, 1)
+    }
+}
+
 // MARK: - 167. Two Sum II - Input array is sorted
 
 class EasyArrayProblem167Tests: XCTestCase {

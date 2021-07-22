@@ -192,6 +192,30 @@ extension EasyArrayProblems {
     }
 }
 
+// MARK: - 136. Single Number
+// LINK: https://leetcode.com/problems/single-number/
+// VIDEO: https://www.youtube.com/watch?v=krgK0UlfNYY
+//
+// Description: Given a non-empty array of integers nums, every element appears twice except for one. Find that single
+// one. You must implement a solution with a linear runtime complexity and use only constant extra space.
+//
+// Strategy: In order to do this with O(N) time and O(1) space, we need to take advantage of the XOR operator. In XOR,
+// N XOR N = 0; N XOR 0 = N; 0 XOR N = N; 0 XOR 0 = 0; Since getting idential LHS and RHS with an XOR operator would
+// yield a zero, we can just link every number up with XOR operators and only the lone single number would be result of
+// the massive comparison.
+
+extension EasyArrayProblems {
+    func singleNumber(_ nums: [Int]) -> Int {
+        var result: Int = 0
+        
+        for num in nums {
+            result ^= num
+        }
+        
+        return result
+    }
+}
+
 // MARK: - 167. Two Sum II - Input array is sorted
 // LINK: https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/
 //
