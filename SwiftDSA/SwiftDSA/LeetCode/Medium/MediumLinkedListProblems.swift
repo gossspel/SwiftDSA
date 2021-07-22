@@ -30,10 +30,10 @@ public class ListNode {
     }
 }
 
-public class Node {
+public class RandomListNode {
     public var val: Int
-    public var next: Node?
-    public var random: Node?
+    public var next: RandomListNode?
+    public var random: RandomListNode?
     
     public init(_ val: Int) {
         self.val = val
@@ -176,14 +176,14 @@ extension MediumLinkedListProblems {
 // to update the random pointers of the node by nodes[i].random = nodes[randomNodeIndices[i]].
 
 extension MediumLinkedListProblems {
-    func copyRandomList(_ head: Node?) -> Node? {
+    func copyRandomList(_ head: RandomListNode?) -> RandomListNode? {
         guard let _ = head else {
             return nil
         }
         
-        var nodes: [Node] = []
+        var nodes: [RandomListNode] = []
         var nodeIndexByMemoryAddress: [String: Int] = [:]
-        var current: Node? = head
+        var current: RandomListNode? = head
         var currentIndex: Int = 0
         var randomNodeIndices: [Int] = []
         
@@ -191,7 +191,7 @@ extension MediumLinkedListProblems {
             let memAddress: String = "\(Unmanaged.passUnretained(sureCurrent).toOpaque())"
             nodeIndexByMemoryAddress[memAddress] = currentIndex
             
-            nodes.append(Node(sureCurrent.val))
+            nodes.append(RandomListNode(sureCurrent.val))
             current = sureCurrent.next
             currentIndex += 1
         }

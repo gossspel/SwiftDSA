@@ -164,16 +164,16 @@ class MediumLinkedListProblem92Tests: XCTestCase {
 
 class MediumLinkedListProblem138Tests: XCTestCase {
     func testCopyRandomList_with3NodesA_shouldReturnHeadOfCopiedList() {
-        let node3 = Node(3)
-        let node2 = Node(3)
-        let root = Node(3)
+        let node3 = RandomListNode(3)
+        let node2 = RandomListNode(3)
+        let root = RandomListNode(3)
         root.next = node2
         node2.next = node3
         node2.random = root
         let copiedHead = MediumLinkedListProblems().copyRandomList(root)
         
-        var current: Node? = copiedHead
-        var nodes: [Node] = []
+        var current: RandomListNode? = copiedHead
+        var nodes: [RandomListNode] = []
         
         while let sureCurrent = current {
             nodes.append(sureCurrent)
