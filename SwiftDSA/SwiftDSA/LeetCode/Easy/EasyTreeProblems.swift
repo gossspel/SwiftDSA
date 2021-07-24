@@ -203,3 +203,41 @@ extension EasyTreeProblems {
     }
 }
 
+// MARK: - 226. Invert Binary Tree
+// LINK: https://leetcode.com/problems/invert-binary-tree/
+//
+// Description: Given the root of a binary tree, invert the tree, and return its root.
+//
+// Strategy: Use BFS or DFS to traverse the whole tree. Swap left and right on every node.
+
+extension EasyTreeProblems {
+    func invertTree(_ root: TreeNode?) -> TreeNode? {
+        guard let sureRoot = root else {
+            return nil
+        }
+        
+        var currentLevelNodes: [TreeNode] = [sureRoot]
+        
+        while !currentLevelNodes.isEmpty {
+            var nextLevelNodes: [TreeNode] = []
+            
+            for currentLevelNode in currentLevelNodes {
+                if let currentLeft = currentLevelNode.left {
+                    nextLevelNodes.append(currentLeft)
+                }
+                
+                if let currentRight = currentLevelNode.right {
+                    nextLevelNodes.append(currentRight)
+                }
+                
+                let temp = currentLevelNode.left
+                currentLevelNode.left = currentLevelNode.right
+                currentLevelNode.right = temp
+            }
+            
+            currentLevelNodes = nextLevelNodes
+        }
+        
+        return root
+    }
+}
