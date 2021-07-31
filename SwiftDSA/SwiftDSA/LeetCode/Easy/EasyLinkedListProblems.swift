@@ -68,6 +68,44 @@ extension EasyLinkedListProblems {
     }
 }
 
+// MARK: - 160. Intersection of Two Linked Lists
+// LINK: https://leetcode.com/problems/intersection-of-two-linked-lists/
+//
+// Description: Given the heads of two singly linked-lists headA and headB, return the node at which the two lists
+// intersect. If the two linked lists have no intersection at all, return null.
+//
+// Strategy: Use a strSet, traverse the first linkedlist, insert the mem address of each node into the strSet. Traverse
+// the second linked list, insert the mem address of each node into the strSet, if the count of was not increased,
+// return that node, otherwise return nil.
+
+extension EasyLinkedListProblems {
+    func getIntersectionNode(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
+        var strSet: Set<String> = Set()
+        var current: ListNode? = headA
+        
+        while let sureCurrent = current {
+            strSet.insert("\(Unmanaged.passUnretained(sureCurrent).toOpaque())")
+            current = sureCurrent.next
+        }
+        
+        current = headB
+        
+        while let sureCurrent = current {
+            let strSetCount: Int = strSet.count
+            
+            strSet.insert("\(Unmanaged.passUnretained(sureCurrent).toOpaque())")
+            
+            if strSetCount == strSet.count {
+                return sureCurrent
+            }
+            
+            current = sureCurrent.next
+        }
+        
+        return nil
+    }
+}
+
 // MARK: - 206. Reverse Linked List
 // LINK: https://leetcode.com/problems/reverse-linked-list/
 //
