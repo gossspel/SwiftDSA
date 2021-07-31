@@ -270,3 +270,46 @@ extension MediumDynamicProgrammingProblems {
         return (minCoinForAmount[amount] != (amount + 1)) ? minCoinForAmount[amount] : -1
     }
 }
+
+// MARK: - 300. Longest Increasing Subsequence
+// LINK: https://leetcode.com/problems/longest-increasing-subsequence/
+//
+// Description: Given an integer array nums, return the length of the longest strictly increasing subsequence.
+// A subsequence is a sequence that can be derived from an array by deleting some or no elements without changing the
+// order of the remaining elements. For example, [3,6,2,7] is a subsequence of the array [0,3,1,6,2,2,7].
+//
+// Strategy: Construct an array called LIS, it stores the count longest increasing subsequence that can be achieved by
+// starting at index i. We will first create a LIS that has the same count as nums and fill it with 1s because at any
+// giving index, the minimum LIS can be the element at said index. After that we work backward, we know that the
+// LIS[nums.count - 1] can be at max 1 because there are no more elements available to be put into the LIS, but LIS[x]
+// = max(1, 1 + LIS[x + 1](if nums[x] < nums[x + 1]), ..., 1 + LIS[x + n](if nums[x] < nums[x + n]), where (x + n) <
+// nums.count. This is valid because LIS[i] denotes the count of longest increasing subsequence that can be achieved by
+// starting at index i.
+
+// 0 1 0 3 2 3
+// LIS[3] = max(1, 1 + LIS[4](if nums[3] < nums[4]), 1 + LIS[5]if nums[3] < nums[5])
+// LIS[4] = max(1, 1 + LIS[5](if nums[4] < nums[5]))
+// LIS[5] = 1
+
+extension MediumDynamicProgrammingProblems {
+    func lengthOfLIS(_ nums: [Int]) -> Int {
+        if nums.count == 0 {
+            return 0
+        } else if nums.count == 1 {
+            return 1
+        } else {
+            var LIS: [Int] = Array(repeating: 1, count: nums.count)
+            
+            for i in (0..<(nums.count - 1)).reversed() {
+                for j in 1..<(nums.count - i) {
+                    if nums[i] < nums[i + j] {
+                        LIS[i] = max(LIS[i], 1 + LIS[i + j])
+                    }
+                }
+            }
+            
+            let LISMaxLength = LIS.max() ?? -1
+            return LISMaxLength
+        }
+    }
+}
