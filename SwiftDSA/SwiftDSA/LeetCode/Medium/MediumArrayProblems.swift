@@ -958,6 +958,44 @@ extension MediumArrayProblems {
     }
 }
 
+// MARK: - 73. Set Matrix Zeroes
+// LINK: https://leetcode.com/problems/set-matrix-zeroes/
+//
+// Description: Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's, and
+// return the matrix. You must do it in place.
+//
+// Strategy: O(m + n) space solution would be checking each row, if that row contains a zero, mark it to update the
+// whole row to zeros; similarly check each column, if that column contains a zero, mark it to update the whole column
+// to zeros.
+
+extension MediumArrayProblems {
+    func setZeroes(_ matrix: inout [[Int]]) {
+        guard !matrix.isEmpty else {
+            return
+        }
+        
+        var rowsToBeUpdatedToZeros: [Bool] = Array(repeating: false, count: matrix.count)
+        var columnsToBeUpdatedToZeros: [Bool] = Array(repeating: false, count: matrix[0].count)
+        
+        for i in 0..<matrix.count {
+            for j in 0..<matrix[i].count {
+                if matrix[i][j] == 0 {
+                    rowsToBeUpdatedToZeros[i] = true
+                    columnsToBeUpdatedToZeros[j] = true
+                }
+            }
+        }
+        
+        for i in 0..<matrix.count {
+            for j in 0..<matrix[i].count {
+                if rowsToBeUpdatedToZeros[i] == true || columnsToBeUpdatedToZeros[j] == true {
+                    matrix[i][j] = 0
+                }
+            }
+        }
+    }
+}
+
 // MARK: - 75. Sort Colors
 // LINK: https://leetcode.com/problems/sort-colors/
 // VIDEO: https://www.youtube.com/watch?v=4xbWSRZHqac
