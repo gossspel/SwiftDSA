@@ -1261,3 +1261,77 @@ extension MediumArrayProblems {
         return longestStreak
     }
 }
+
+// MARK: - 238. Product of Array Except Self
+// LINK: https://leetcode.com/problems/product-of-array-except-self/
+// VIDEO: https://www.youtube.com/watch?v=gREVHiZjXeQ
+//
+// Description: Given an integer array nums, return an array answer such that answer[i] is equal to the product of all
+// the elements of nums except nums[i]. The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit
+// integer. You must write an algorithm that runs in O(n) time and without using the division operation.
+//
+// Strategy: Recognize that for each element, the productExceptSelf is really just (left partial product) * (right
+// partial product). We would need to create leftProductUpToElement: [Int] and rightProductUpToElement: [Int] and use
+// them to create finalProductExceptSelf: [Int]
+//
+// input: [1, 2, 3, 4]
+// leftProduct: [1, 2, 6, 24]
+// rightProduct: [24, 24, 12, 4]
+// finalProduct: [RP[1], LP[0] * RP[2], LP[1] * RP[3], LP[2]]
+// finalProduct: [24, 1*12, 2*4, 6]
+
+extension MediumArrayProblems {
+    func productExceptSelf(_ nums: [Int]) -> [Int] {
+        var LP: [Int] = Array(repeating: 0, count: nums.count)
+        LP[0] = nums[0]
+        
+        var RP: [Int] = Array(repeating: 0, count: nums.count)
+        RP[nums.count - 1] = nums[nums.count - 1]
+        
+        for i in 1..<nums.count {
+            LP[i] = LP[i - 1] * nums[i]
+            RP[nums.count - 1 - i] = RP[nums.count - i] * nums[nums.count - 1 - i]
+        }
+        
+        var FP: [Int] = Array(repeating: 0, count: nums.count)
+        FP[0] = RP[1]
+        FP[nums.count - 1] = LP[nums.count - 2]
+        for i in 1..<(nums.count - 1) {
+            FP[i] = LP[i - 1] * RP[i + 1]
+        }
+        
+        return FP
+    }
+    
+    func productExceptSelfOptimized(_ nums: [Int]) -> [Int] {
+        // Optimized Strategy: Create the LP array and store it in FP array. Update the last element of the FP array as
+        // the second to last element of the LP array (which in this case is the FP array itself). Calculate RP1 for
+        // now because we would need to set it to FP[0] at the end. Use the last element of nums as the starting RP
+        // value, loop backward to finish constructing the FP array while updating RP in each iteration. In the end,
+        // update FP[0] = RP1 because the first element of the FP array is the special case in which only right product
+        // exists, similar to the last element of the FP array in which only the left product exists.
+        
+        var RP1: Int = 1
+        var FP: [Int] = Array(repeating: 0, count: nums.count)
+        FP[0] = nums[0]
+        
+        for i in 1..<nums.count {
+            RP1 *= nums[i]
+            FP[i] = FP[i - 1] * nums[i]
+        }
+        
+        FP[nums.count - 1] = FP[nums.count - 2]
+        
+        var RP: Int = nums[nums.count - 1]
+        
+        for i in 1..<(nums.count - 1) {
+            // FP[2] = LP[1] * RP[3]
+            // FP[1] = LP[0] * RP[2]
+            FP[nums.count - 1 - i] = FP[nums.count - 2 - i] * RP
+            RP = RP * nums[nums.count - 1 - i]
+        }
+        
+        FP[0] = RP1
+        return FP
+    }
+}
