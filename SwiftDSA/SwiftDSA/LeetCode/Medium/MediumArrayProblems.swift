@@ -1262,6 +1262,58 @@ extension MediumArrayProblems {
     }
 }
 
+// MARK: - 152. Maximum Product Subarray
+// LINK: https://leetcode.com/problems/maximum-product-subarray/
+// VIDEO: https://www.youtube.com/watch?v=lXVy6YWFcRM
+//
+// Description: Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest
+// product, and return the product.
+//
+// Strategy: Keep track of both maxProductIncludingCurrentNum and minProductIncludingCurrentNum. The
+// maxProductIncludingCurrentNum would be calculated by max(current * maxProductIncludingPreviousNum, current *
+// minProductIncludingPreviousNum, current). The minProductIncludingCurrentNum would be calculated by min(current *
+// maxProductIncludingPreviousNum, current * minProductIncludingPreviousNum, current). One edge case is that if
+// previous num is zero, we need to update the maxProductIncludingPreviousNum and minProductIncludingPreviousNum to 1
+// since 0 would break them.
+//
+// nums = [-4, -2, -2, -2, -3]
+// maxProductIncludingCurrentNum = [-4, 8, 4, 32, 24]
+// minProductIncludingCurrentNum = [-4, -2, -16, -8, -96]
+//
+// nums = [-2, 0, -1]
+// maxProductIncludingCurrentNum = [-2, 1, -1]
+// minProductIncludingCurrentNum = [-2, 1, -1]
+
+extension MediumArrayProblems {
+    func maxProduct(_ nums: [Int]) -> Int {
+        guard nums.count > 1 else {
+            return nums[0]
+        }
+        
+        var result: Int = nums[0]
+        var minProductIncludingCurrentNum: Int = nums[0]
+        var maxProductIncludingCurrentNum : Int = nums[0]
+        
+        for i in 1..<nums.count {
+            if nums[i - 1] == 0 {
+                maxProductIncludingCurrentNum  = 1
+                minProductIncludingCurrentNum = 1
+            }
+            
+            let temp: Int = maxProductIncludingCurrentNum  * nums[i]
+            
+            maxProductIncludingCurrentNum  = max(nums[i] * maxProductIncludingCurrentNum,
+                                                 nums[i] * minProductIncludingCurrentNum,
+                                                 nums[i])
+            minProductIncludingCurrentNum = min(temp, nums[i] * minProductIncludingCurrentNum, nums[i])
+            
+            result = max(result, maxProductIncludingCurrentNum )
+        }
+        
+        return result
+    }
+}
+
 // MARK: - 238. Product of Array Except Self
 // LINK: https://leetcode.com/problems/product-of-array-except-self/
 // VIDEO: https://www.youtube.com/watch?v=gREVHiZjXeQ
