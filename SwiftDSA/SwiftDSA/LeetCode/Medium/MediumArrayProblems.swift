@@ -1314,6 +1314,55 @@ extension MediumArrayProblems {
     }
 }
 
+// MARK: - 153. Find Minimum in Rotated Sorted Array
+// LINK: https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
+//
+// Description: Suppose an array of length n sorted in ascending order is rotated between 1 and n times. For example,
+// the array nums = [0,1,2,4,5,6,7] might become: [4,5,6,7,0,1,2] if it was rotated 4 times; [0,1,2,4,5,6,7] if it was
+// rotated 7 times. Notice that rotating an array [a[0], a[1], a[2], ..., a[n-1]] 1 time results in the array [a[n-1],
+// a[0], a[1], a[2], ..., a[n-2]]. Given the sorted rotated array nums of unique elements, return the minimum element
+// of this array. You must write an algorithm that runs in O(log n) time.
+//
+// Strategy:
+// rotate 0 time: [1,2,3,4,5] => midP = 3, leftArr = [1,2], rightArr = [4,5]
+// rotate 1 time: [5,1,2,3,4] => midP = 2, leftArr = [5,1], rightArr = [3,4]
+// rotate 2 time: [4,5,1,2,3] => midP = 1, leftArr = [4,5], rightArr = [2,3]
+// rotate 3 time: [3,4,5,1,2] => midP = 5, leftArr = [3,4], rightArr = [1,2]
+// rotate 4 time: [2,3,4,5,1] => midP = 4, leftArr = [2,3], rightArr = [5,1]
+//
+// do binary search, check to see whether leftArr or rightArr has its first element greater than its last element. Get
+// the leftArr/rightArr in which the first element is greater than last element and do the same binary search on it. If
+// both of them has their first element less than last element, then returns the min of nums[midPoint], leftArr[0] and
+// rightArr[0].
+
+extension MediumArrayProblems {
+    func findMin(_ nums: [Int]) -> Int {
+        var prunedNums: [Int] = nums
+        
+        while !prunedNums.isEmpty {
+            if prunedNums.count == 1 {
+                return prunedNums[0]
+            } else if prunedNums.count == 2 {
+                return (prunedNums[1] > prunedNums[0]) ? prunedNums[0] : prunedNums[1]
+            }
+            
+            let midPoint: Int =  (0 + prunedNums.count - 1) / 2
+            let leftArr: [Int] = Array(prunedNums[0..<midPoint])
+            let rightArr: [Int] = Array(prunedNums[(midPoint + 1)..<prunedNums.count])
+            
+            if leftArr[0] > leftArr[leftArr.count - 1] {
+                prunedNums = leftArr
+            } else if rightArr[0] > rightArr[rightArr.count - 1] {
+                prunedNums = rightArr
+            } else {
+                return min(leftArr[0], prunedNums[midPoint], rightArr[0])
+            }
+        }
+        
+        return -1
+    }
+}
+
 // MARK: - 238. Product of Array Except Self
 // LINK: https://leetcode.com/problems/product-of-array-except-self/
 // VIDEO: https://www.youtube.com/watch?v=gREVHiZjXeQ
