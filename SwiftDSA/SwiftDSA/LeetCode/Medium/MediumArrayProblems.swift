@@ -12,6 +12,66 @@ class MediumArrayProblems {
     var hasFoundWord: Bool = false
 }
 
+// MARK: - 11. Container With Most Water
+// LINK: https://leetcode.com/problems/container-with-most-water/
+//
+// Description: Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai). n
+// vertical lines are drawn such that the two endpoints of the line i is at (i, ai) and (i, 0). Find two lines, which,
+// together with the x-axis forms a container, such that the container contains the most water. Notice that you may not
+// slant the container.
+//
+// Strategy: Use a left and right pointer approach. Use the left most line and right most line as the starting point,
+// measure the area between them, if leftHeight < rightHeight, increment leftIndex by 1; if leftHeight > rightHeight,
+// decrement rightIndex by 1; if leftHeight == rightHeight, increment leftIndex by 1 and decrement rightIndex by 1;
+// Continue as long as leftIndex < rightIndex. The rationale of this approach is that we are always trying to produce a
+// higher maxArea by pruning the bar with lower height.
+
+extension MediumArrayProblems {
+    func maxArea(_ height: [Int]) -> Int {
+        var maxArea: Int = -1
+        var leftIndex: Int = 0
+        var rightIndex: Int = height.count - 1
+        
+        while leftIndex < rightIndex {
+            maxArea = max(maxArea, min(height[leftIndex], height[rightIndex]) * (rightIndex - leftIndex))
+            
+            if height[leftIndex] < height[rightIndex] {
+                leftIndex += 1
+            } else if height[leftIndex] > height[rightIndex] {
+                rightIndex -= 1
+            } else {
+                leftIndex += 1
+                rightIndex -= 1
+            }
+        }
+        
+        return maxArea
+    }
+    
+    // Strategy: Use brute force with 2 dimensional loop, calculate the area of water of each beginning line, use a
+    // variable maxHeight to keep track of the maxHeight of the beginning line, use another variable maxArea to keep
+    // track of the maxArea. In the next iteration of the outer loop, only proceed if the height of the next beginning
+    // line is greater than maxHeight, and update maxHeight to it. After everything finishes, return maxArea.
+    func maxAreaSlow(_ height: [Int]) -> Int {
+        var maxHeight: Int = -1
+        var maxArea: Int = -1
+        
+        for i in 0..<(height.count - 1) {
+            guard height[i] > maxHeight else {
+                continue
+            }
+            
+            maxHeight = height[i]
+            
+            for j in (i + 1)..<(height.count) {
+                maxArea = max((j - i) * min(height[i], height[j]), maxArea)
+            }
+        }
+        
+        return maxArea
+    }
+}
+
 // MARK: - 15. 3Sum
 // LINK: https://leetcode.com/problems/3sum/
 //
