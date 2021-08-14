@@ -10,6 +10,43 @@ import Foundation
 
 class MediumStringProblems {}
 
+// MARK: - 3. Longest Substring Without Repeating Characters
+// LINK: https://leetcode.com/problems/longest-substring-without-repeating-characters/
+//
+// Description: Given a string s, find the length of the longest substring without repeating characters.
+//
+// Strategy: Use the following vars: characterIndexMap: [Char: Int], start: Int, maxLength: Int. Loop through the
+// string by each character. If the character does not exist in characterIndexMap, record it along with its index in
+// the characterIndexMap and update maxLength = max(maxLength, (i - start + 1)). If the character exists in
+// characterIndexMap, update start = characterIndexMap[char] + 1 only if (characterIndexMap[char] + 1 > start) since we
+// only want the start to increase to avoid repetition, otherwise, update maxLength = max(maxLength, (i - start + 1)).
+// Before moving on to the next iteration, we have to update characterIndexMap[char] = currentIndex
+//
+// zabcdaz => when the current iteration is processing the second z, the start would be at index 2, which has a value
+// of b, and we won't want to update the start to the index after the first z, which is index 1, because we would have
+// updated the start to a lesser value, which guarantees repetition.
+
+extension MediumStringProblems {
+    func lengthOfLongestSubstring(_ s: String) -> Int {
+        var characterIndexMap: [Character: Int] = [:]
+        var start: Int = 0
+        var maxLength: Int = 0
+        let chars: [Character] = Array(s)
+        
+        for (index, char) in chars.enumerated() {
+            if let existingIndex = characterIndexMap[char], (existingIndex + 1) > start {
+                start = existingIndex + 1
+            } else {
+                maxLength = max(maxLength, index - start + 1)
+            }
+            
+            characterIndexMap[char] = index
+        }
+        
+        return maxLength
+    }
+}
+
 // MARK: - 5. Longest Palindromic Substring
 // LINK: https://leetcode.com/problems/longest-palindromic-substring/
 //
