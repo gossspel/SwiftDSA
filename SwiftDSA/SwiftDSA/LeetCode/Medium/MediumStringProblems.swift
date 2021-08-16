@@ -159,3 +159,46 @@ extension MediumStringProblems {
         return results
     }
 }
+
+// MARK: - 424. Longest Repeating Character Replacement
+// LINK: https://leetcode.com/problems/longest-repeating-character-replacement/
+//
+// Description: You are given a string s and an integer k. You can choose any character of the string and change it to
+// any other uppercase English character. You can perform this operation at most k times. Return the length of the
+// longest substring containing the same letter you can get after performing the above operations.
+//
+// Strategy: You want a start: Int to measure the starting index of the sub string, and then you want a charCountMap:
+// [Character: Count] to keep track of the counting of the character, and then you want a result: Int to keep track of
+// the longest same char substring. You want to loop through the string, and update the charCountMap by incrementing
+// the currentChar count by 1. If the currentSubstringCount (i - start + 1) minus maxCount of a char in the
+// charCountMap <= k, we want to update the result with the currentSubStringCount, else we would want to update the
+// sliding window by incrementing the start by 1 and decrementing the corresponding character count by 1 in the
+// charCountMap.
+
+extension MediumStringProblems {
+    func characterReplacement(_ s: String, _ k: Int) -> Int {
+        let chars: [Character] = Array(s)
+        var charCountMap: [Character: Int] = [:]
+        var start: Int = 0
+        var result: Int = 0
+        var charCountMax: Int = 0
+        
+        for (i, char) in chars.enumerated() {
+            let currentCharCount: Int = (charCountMap[char] ?? 0) + 1
+            charCountMap[char] = currentCharCount
+            charCountMax = max(charCountMax, currentCharCount)
+            
+            let currentSubstrCount: Int = i - start + 1
+            
+            if (currentSubstrCount - charCountMax) <= k {
+                result = max(result, currentSubstrCount)
+            } else {
+                charCountMap[chars[start]] = (charCountMap[chars[start]] ?? 0) - 1
+                start += 1
+                result = max(result, i - start + 1)
+            }
+        }
+        
+        return result
+    }
+}
