@@ -202,3 +202,58 @@ extension MediumStringProblems {
         return result
     }
 }
+
+// MARK: - 647. Palindromic Substrings
+// LINK: https://leetcode.com/problems/palindromic-substrings/
+//
+// Description: Given a string s, return the number of palindromic substrings in it. A string is a palindrome when it
+// reads the same backward as forward. A substring is a contiguous sequence of characters within the string.
+//
+// aaa => |a|a|a|
+// Strategy: Expand from center and count how many times it can be expanded, add it to the total count
+
+extension MediumStringProblems {
+    func countSubstrings(_ s: String) -> Int {
+        let chars: [Character] = Array(s)
+        var count: Int = 0
+        
+        // NOTE: expand around character center
+        for i in 0..<chars.count {
+            count += numberOfPalindromicSubstrFromExpandingCenter(chars: chars, initialLeft: i, initialRight: i)
+        }
+        
+        // NOTE: expand around non character center
+        if chars.count > 1 {
+            var initialLeft: Int = 0
+            var initialRight: Int = 1
+            
+            while initialRight < chars.count {
+                count += numberOfPalindromicSubstrFromExpandingCenter(chars: chars,
+                                                                      initialLeft: initialLeft,
+                                                                      initialRight: initialRight)
+                initialLeft += 1
+                initialRight += 1
+            }
+        }
+        
+        return count
+    }
+    
+    func numberOfPalindromicSubstrFromExpandingCenter(chars: [Character], initialLeft: Int, initialRight: Int) -> Int {
+        var totalCount: Int = 0
+        var left: Int = initialLeft
+        var right: Int = initialRight
+        
+        while (left > -1) && (right < chars.count) {
+            if chars[left] == chars[right] {
+                totalCount += 1
+                left -= 1
+                right += 1
+            } else {
+                return totalCount
+            }
+        }
+        
+        return totalCount
+    }
+}
