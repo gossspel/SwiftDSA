@@ -51,6 +51,52 @@ extension EasyStringProblems {
     }
 }
 
+// MARK: - 20. Valid Parentheses
+// LINK: https://leetcode.com/problems/valid-parentheses/
+//
+// Description: Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input
+// string is valid. An input string is valid if: 1.) Open brackets must be closed by the same type of brackets. 2.)
+// Open brackets must be closed in the correct order.
+//
+// Strategy: Use an array as a stack. Loop through the string, if the character is '(', '[', or '{', push it to the
+// stack, if the character is ')', ']' or '}', pop from the stack and check if the popped element can form a complete
+// parantheses with the current character, if it can't, return false. When the loop is finished, if the stack is empty,
+// return true, else return false
+
+extension EasyStringProblems {
+    func isValid(_ s: String) -> Bool {
+        guard s.count % 2 == 0 else {
+            return false
+        }
+        
+        var charStack: [Character] = []
+        
+        for char in s {
+            if char == "(" || char == "[" || char == "{" {
+                charStack.append(char)
+            } else if char == ")" || char == "]" || char == "}" {
+                guard let poppedChar = charStack.popLast() else {
+                    return false
+                }
+                
+                if char == ")" && poppedChar != "(" {
+                    return false
+                }
+                
+                if char == "]" && poppedChar != "[" {
+                    return false
+                }
+                
+                if char == "}" && poppedChar != "{" {
+                    return false
+                }
+            }
+        }
+        
+        return charStack.isEmpty
+    }
+}
+
 // MARK: - 242. Valid Anagram
 // LINK: https://leetcode.com/problems/valid-anagram/
 //
