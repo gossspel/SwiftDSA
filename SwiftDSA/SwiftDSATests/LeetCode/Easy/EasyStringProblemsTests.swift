@@ -26,3 +26,12 @@ extension EasyStringProblemsTests {
         XCTAssertEqual(result, "")
     }
 }
+
+// MARK: - 125. Valid Palindrome
+
+class EasyStringProblem125Tests: XCTestCase {
+    func testIsPalindrome_withPanamaPalindrome_shouldReturnTrue() {
+        let str: String = "A man, a plan, a canal: Panama"
+        XCTAssertTrue(EasyStringProblems().isPalindrome(str))
+    }
+}
