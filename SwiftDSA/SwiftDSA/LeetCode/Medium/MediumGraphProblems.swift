@@ -106,3 +106,64 @@ extension MediumGraphProblems {
         return nodeByValue[sureNode.val]
     }
 }
+
+// MARK: - 207. Course Schedule
+// LINK: https://leetcode.com/problems/course-schedule/
+// VIDEO: https://www.youtube.com/watch?v=EgI5nU9etnU
+//
+// Description: There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are
+// given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you
+// want to take course ai. For example, the pair [0, 1], indicates that to take course 0 you have to first take course
+// 1. Return true if you can finish all courses. Otherwise, return false.
+//
+// Strategy: In order to check whether we can finish a particular course, we would create a graph in which a course is
+// a node, and it will point to each of its prereqs individually, if there is a cycle in the graph, then we know we
+// can't finish all courses for sure. In order to detect the cycle in the graph, we would rely on using a set to check
+// if we are visiting the same node twice
+
+extension MediumGraphProblems {
+    func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
+        var prereqsByCourse: [Int: [Int]] = [:]
+
+        for i in 0..<prerequisites.count {
+            prereqsByCourse[prerequisites[i][0]] =  prereqsByCourse[prerequisites[i][0]] ?? []
+            prereqsByCourse[prerequisites[i][0]]?.append(prerequisites[i][1])
+        }
+
+        guard prereqsByCourse.keys.count < numCourses else {
+            return false
+        }
+
+        var visitedSet: Set<Int> = Set()
+
+        for course in prereqsByCourse.keys {
+            if !canFinishParticular(course: course, prereqsByCourse: &prereqsByCourse, visitedSet: &visitedSet) {
+                return false
+            }
+        }
+
+        return true
+    }
+
+    func canFinishParticular(course: Int, prereqsByCourse: inout [Int: [Int]], visitedSet: inout Set<Int>) -> Bool {
+        if visitedSet.contains(course) {
+            return false
+        }
+
+        guard let prereqs = prereqsByCourse[course], !prereqs.isEmpty else {
+            return true
+        }
+
+        visitedSet.insert(course)
+
+        for prereq in prereqs {
+            if !canFinishParticular(course: prereq, prereqsByCourse: &prereqsByCourse, visitedSet: &visitedSet) {
+                return false
+            }
+        }
+
+        prereqsByCourse[course] = []
+        visitedSet.remove(course)
+        return true
+    }
+}
