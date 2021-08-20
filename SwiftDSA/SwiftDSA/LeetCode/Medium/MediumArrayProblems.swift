@@ -1290,13 +1290,14 @@ extension MediumArrayProblems {
 
 // MARK: - 128. Longest Consecutive Sequence
 // LINK: https://leetcode.com/problems/longest-consecutive-sequence/
+// VIDEO: https://www.youtube.com/watch?v=P6RZZMu_maU
 //
 // Description: Given an unsorted array of integers nums, return the length of the longest consecutive elements
 // sequence. You must write an algorithm that runs in O(n) time.
 //
 // Strategy: Init the nums with a Set to get rid of all the duplicated elements and make checking whether an element
-// exists to have O(1) complexity. After that, only start counting streak from local minimums and return the longest
-// streak in the end.
+// exists to have O(1) complexity. After that, only start counting streak from local minimums (element with no left
+// neigbor) and return the longest streak in the end.
 
 extension MediumArrayProblems {
     func longestConsecutive(_ nums: [Int]) -> Int {
@@ -1304,7 +1305,7 @@ extension MediumArrayProblems {
         let numSet: Set<Int> = Set(nums)
         
         for num in numSet {
-            // NOTE: only start counting streak from local minimums
+            // NOTE: only start counting streak from local minimum (element with no left neighbor)
             if !numSet.contains(num - 1) {
                 var streak: Int = 0
                 var current: Int = num
