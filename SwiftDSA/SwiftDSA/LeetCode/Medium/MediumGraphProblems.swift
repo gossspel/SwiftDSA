@@ -107,6 +107,63 @@ extension MediumGraphProblems {
     }
 }
 
+// MARK: - 200. Number of Islands
+// LINK: https://leetcode.com/problems/number-of-islands/
+// VIDEO: https://www.youtube.com/watch?v=o8S2bO3pmO4
+//
+// Description: Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the
+// number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or
+// vertically. You may assume all four edges of the grid are all surrounded by water.
+//
+// Strategy: We want to loop through the 2D array, identify each island, and remove the island from the array and
+// repeat until we reach the end of the 2D array.
+
+extension MediumGraphProblems {
+    func numIslands(_ grid: [[Character]]) -> Int {
+        var copiedGrid: [[Character]] = grid
+        var islandCount: Int = 0
+        
+        for row in 0..<copiedGrid.count {
+            for column in 0..<copiedGrid[row].count {
+                guard copiedGrid[row][column] == "1" else {
+                    continue
+                }
+                
+                if identifyPotentialIslandAndRemoveItFromTheMap(grid: &copiedGrid, row: row, column: column) {
+                    islandCount += 1
+                }
+            }
+        }
+        
+        return islandCount
+    }
+    
+    func identifyPotentialIslandAndRemoveItFromTheMap(grid: inout [[Character]], row: Int, column: Int) -> Bool {
+        guard row < grid.count, row > -1, column < grid[row].count, column > -1, grid[row][column] == "1" else {
+            return false
+        }
+        
+        // remove the marked land from the map
+        grid[row][column] = "0"
+        
+        // process the cell above
+        _ = identifyPotentialIslandAndRemoveItFromTheMap(grid: &grid, row: row - 1, column: column)
+        
+        // process the cell below
+        _ = identifyPotentialIslandAndRemoveItFromTheMap(grid: &grid, row: row + 1, column: column)
+        
+        // process the cell on left
+        _ = identifyPotentialIslandAndRemoveItFromTheMap(grid: &grid, row: row, column: column - 1)
+        
+        // process the cell on right
+        _ = identifyPotentialIslandAndRemoveItFromTheMap(grid: &grid, row: row, column: column + 1)
+        
+        return true
+    }
+}
+
+
+
 // MARK: - 207. Course Schedule
 // LINK: https://leetcode.com/problems/course-schedule/
 // VIDEO: https://www.youtube.com/watch?v=EgI5nU9etnU
