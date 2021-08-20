@@ -244,45 +244,28 @@ extension EasyTreeProblems {
 
 // MARK: - 572. Subtree of Another Tree
 // LINK: https://leetcode.com/problems/subtree-of-another-tree/
+// VIDEO: https://www.youtube.com/watch?v=HdMs2Fl_I-Q
 //
 // Description: Given the roots of two binary trees root and subRoot, return true if there is a subtree of root with
 // the same structure and node values of subRoot and false otherwise. A subtree of a binary tree tree is a tree that
 // consists of a node in tree and all of this node's descendants. The tree tree could also be considered as a subtree
 // of itself.
 //
-// Strategy: Traverse the root until we reach a node with the same value as the subRoot. If that doesn't happen, return
-// false; if that happens, compare that node and the subRoot to see if they are the same tree.
+// Strategy: compare the root and subRoot, if root is nil, return false, because the non nil subRoot can't not be a \
+// subtree of a nil pointer. If the root is the same as the subRoot, return true, else call isSubtree on (root.left,
+// subRoot) and (root.right, subRoot) and return true if one of them is true
 
 extension EasyTreeProblems {
     func isSubtree(_ root: TreeNode?, _ subRoot: TreeNode?) -> Bool {
-        guard let sureSubRoot = subRoot else {
+        if root == nil {
             return false
+        } else if isSameTreeAgain(p: root, q: subRoot) {
+            return true
+        } else {
+            let isLeftSubTree: Bool = isSubtree(root?.left, subRoot)
+            let isRightSubTree: Bool = isSubtree(root?.right, subRoot)
+            return isLeftSubTree || isRightSubTree
         }
-        
-        let nodes = nodesWithValueInTree(root, value: sureSubRoot.val)
-        for node in nodes {
-            if isSameTreeAgain(p: sureSubRoot, q: node) {
-                return true
-            }
-        }
-        
-        return false
-    }
-    
-    func nodesWithValueInTree(_ root: TreeNode?, value: Int) -> [TreeNode] {
-        guard let sureRoot = root else {
-            return []
-        }
-        
-        var nodes: [TreeNode] = []
-        
-        if sureRoot.val == value {
-            nodes.append(sureRoot)
-        }
-        
-        nodes += nodesWithValueInTree(sureRoot.left, value: value)
-        nodes += nodesWithValueInTree(sureRoot.right, value: value)
-        return nodes
     }
     
     func isSameTreeAgain(p: TreeNode?, q: TreeNode?) -> Bool {
@@ -302,5 +285,39 @@ extension EasyTreeProblems {
         let identicalRight: Bool = isSameTreeAgain(p: sureRoot1.right, q: sureRoot2.right)
         
         return identicalLeft && identicalRight
+    }
+    
+    // Strategy: Traverse the root until we found nodes with the same value as the subRoot. If that doesn't happen,
+    // return false; if that happens, compare those nodes and the subRoot to see if if we can find a same tree pair.
+    
+    func isSubtreeBruteForce(_ root: TreeNode?, _ subRoot: TreeNode?) -> Bool {
+        guard let sureSubRoot = subRoot else {
+            return false
+        }
+
+        let nodes = nodesWithValueInTree(root, value: sureSubRoot.val)
+        for node in nodes {
+            if isSameTreeAgain(p: sureSubRoot, q: node) {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    func nodesWithValueInTree(_ root: TreeNode?, value: Int) -> [TreeNode] {
+        guard let sureRoot = root else {
+            return []
+        }
+
+        var nodes: [TreeNode] = []
+
+        if sureRoot.val == value {
+            nodes.append(sureRoot)
+        }
+
+        nodes += nodesWithValueInTree(sureRoot.left, value: value)
+        nodes += nodesWithValueInTree(sureRoot.right, value: value)
+        return nodes
     }
 }
