@@ -10,6 +10,48 @@ import Foundation
 
 class MediumTreeProblems {}
 
+// MARK: - 98. Validate Binary Search Tree
+// LINK: https://leetcode.com/problems/validate-binary-search-tree/
+//
+// Description: Given the root of a binary tree, determine if it is a valid binary search tree (BST). A valid BST is
+// defined as follows: The left subtree of a node contains only nodes with keys less than the node's key. The right
+// subtree of a node contains only nodes with keys greater than the node's key. Both the left and right subtrees must
+// also be binary search trees.
+//
+// Strategy: The trickiest part of this problem is that we have to make sure the nodes of the right subtree are
+// strictly greater than root, and the nodes of left subtree are strictly less than root. In order to achieve that, we
+// need to pass in the min and max to a recursive method call.
+
+extension MediumTreeProblems {
+    func isValidBST(_ root: TreeNode?) -> Bool {
+        guard let sureRoot = root else {
+            return false
+        }
+
+        let isLeftSubtreeValid: Bool = isValidBST(root: root?.left, min: nil, max: sureRoot.val)
+        let isRightSubtreeValid: Bool = isValidBST(root: root?.right, min: sureRoot.val, max: nil)
+        return isLeftSubtreeValid && isRightSubtreeValid
+    }
+
+    func isValidBST(root: TreeNode?, min: Int?, max: Int?) -> Bool {
+        guard let sureRoot = root else {
+            return true
+        }
+
+        if let sureMax = max, sureRoot.val >= sureMax {
+            return false
+        }
+
+        if let sureMin = min, sureRoot.val <= sureMin {
+            return false
+        }
+
+        let isLeftSubtreeValid: Bool = isValidBST(root: root?.left, min: min, max: root?.val)
+        let isRightSubtreeValid: Bool = isValidBST(root: root?.right, min: root?.val, max: max)
+        return isLeftSubtreeValid && isRightSubtreeValid
+    }
+}
+
 // MARK: - 102. Binary Tree Level Order Traversal
 // LINK: https://leetcode.com/problems/binary-tree-level-order-traversal/
 //
