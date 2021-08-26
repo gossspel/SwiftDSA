@@ -118,3 +118,31 @@ extension MediumTreeProblems {
         return root
     }
 }
+
+// MARK: - 230. Kth Smallest Element in a BST
+// LINK: https://leetcode.com/problems/kth-smallest-element-in-a-bst/
+//
+// Description: Given the root of a binary search tree, and an integer k, return the kth (1-indexed) smallest element
+// in the tree.
+//
+// Strategy: Recognize that an inorder traversal can visit a BST in ascending order. We will construct the ascending
+// list of nodes using inorder traversal, and then return the kth = nth + 1 node.
+
+extension MediumTreeProblems {
+    func kthSmallest(_ root: TreeNode?, _ k: Int) -> Int {
+        let nodeValues: [Int] = inOrderTraversal(root: root)
+        let index: Int = k - 1
+        return nodeValues[index]
+    }
+    
+    func inOrderTraversal(root: TreeNode?) -> [Int] {
+        guard let sureRoot = root else {
+            return []
+        }
+        
+        let leftSubtreeNodeValues: [Int] = inOrderTraversal(root: sureRoot.left)
+        let rightSubtreeNodeValues: [Int] = inOrderTraversal(root: sureRoot.right)
+        let nodeValues: [Int] = leftSubtreeNodeValues + [sureRoot.val] + rightSubtreeNodeValues
+        return nodeValues
+    }
+}
