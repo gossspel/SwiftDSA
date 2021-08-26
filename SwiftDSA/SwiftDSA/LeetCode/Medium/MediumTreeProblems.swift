@@ -145,4 +145,32 @@ extension MediumTreeProblems {
         let nodeValues: [Int] = leftSubtreeNodeValues + [sureRoot.val] + rightSubtreeNodeValues
         return nodeValues
     }
+    
+    // Strategy: Recognize that you can save some space complexity by recursively updating the ascending index and
+    // value, use var indexValue: [Int] which has 2 elements, the first element denotes the current ascending index and
+    // the second element denotes the value of that node. When indexValue[0] == k, we can update indexValue[1] and
+    // return it.
+    
+    func kthSmallestFaster(_ root: TreeNode?, _ k: Int) -> Int {
+        var indexValue: [Int] = [0, 0]
+        inOrderTraversal(root: root, indexValue: &indexValue, k: k)
+        return indexValue[1]
+    }
+    
+    func inOrderTraversal(root: TreeNode?, indexValue: inout [Int], k: Int) {
+        guard let sureRoot = root else {
+            return
+        }
+        
+        inOrderTraversal(root: sureRoot.left, indexValue: &indexValue, k: k)
+        
+        indexValue[0] += 1
+        
+        if indexValue[0] == k {
+            indexValue[1] = sureRoot.val
+            return
+        }
+        
+        inOrderTraversal(root: sureRoot.right, indexValue: &indexValue, k: k)
+    }
 }
