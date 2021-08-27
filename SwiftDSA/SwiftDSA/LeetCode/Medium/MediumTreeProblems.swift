@@ -119,6 +119,89 @@ extension MediumTreeProblems {
     }
 }
 
+// MARK: - 208. Implement Trie (Prefix Tree)
+// LINK: https://leetcode.com/problems/implement-trie-prefix-tree/
+// VIDEO: https://www.youtube.com/watch?v=oobqoCJlHA0
+//
+// Description: A trie (pronounced as "try") or prefix tree is a tree data structure used to efficiently store and
+// retrieve keys in a dataset of strings. There are various applications of this data structure, such as autocomplete
+// and spellchecker. Implement the Trie class:
+// - Trie() Initializes the trie object.
+// - void insert(String word) Inserts the string word into the trie.
+// - boolean search(String word) Returns true if the string word is in the trie (i.e., was inserted before), and false
+// otherwise.
+// - boolean startsWith(String prefix) Returns true if there is a previously inserted string word that has the prefix
+// prefix, and false otherwise.
+//
+// Strategy: Create the TrieNode with var isEndOfWord: Bool and var trieDict: [Character: TrieNode]. Notice that the
+// node doesn't hold any value, as the values would be held via the key of trieDict. With this TrieNode data structure,
+// we can easily implement the Trie class.
+
+class Trie {
+    
+    class TrieNode {
+        var isEndOfWord: Bool
+        var trieDict: [Character: TrieNode]
+        
+        init() {
+            self.isEndOfWord = false
+            self.trieDict = [:]
+        }
+    }
+    
+    var root: TrieNode
+
+    /** Initialize your data structure here. */
+    init() {
+        self.root = TrieNode()
+    }
+    
+    /** Inserts a word into the trie. */
+    func insert(_ word: String) {
+        var currentNode: TrieNode? = self.root
+        
+        for char in word {
+            if currentNode?.trieDict[char] == nil {
+                currentNode?.trieDict[char] = TrieNode()
+            }
+            
+            currentNode = currentNode?.trieDict[char]
+        }
+        
+        currentNode?.isEndOfWord = true
+    }
+    
+    /** Returns if the word is in the trie. */
+    func search(_ word: String) -> Bool {
+        var currentNode: TrieNode? = self.root
+        
+        for char in word {
+            if let nextNode = currentNode?.trieDict[char] {
+                currentNode = nextNode
+            } else {
+                return false
+            }
+        }
+        
+        return currentNode?.isEndOfWord ?? false
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    func startsWith(_ prefix: String) -> Bool {
+        var currentNode: TrieNode? = self.root
+        
+        for char in prefix {
+            if let nextNode = currentNode?.trieDict[char] {
+                currentNode = nextNode
+            } else {
+                return false
+            }
+        }
+        
+        return true
+    }
+}
+
 // MARK: - 230. Kth Smallest Element in a BST
 // LINK: https://leetcode.com/problems/kth-smallest-element-in-a-bst/
 //
