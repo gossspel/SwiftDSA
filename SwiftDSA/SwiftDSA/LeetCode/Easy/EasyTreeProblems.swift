@@ -242,6 +242,34 @@ extension EasyTreeProblems {
     }
 }
 
+// MARK: - 235. Lowest Common Ancestor of a Binary Search Tree
+// LINK: https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
+//
+// Description: Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.
+// According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as
+// the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+//
+// Strategy: Basically we are trying to see if both p and q are in one side of the subtree (either left subtree or
+// right subtree), if they are, then we will update the root to be root.left/root.right depending on where the p and q
+// reside in. Otherwise, p and q are in different subtree and the root must be the lowest common ancestor, so we would
+// return that.
+
+extension EasyTreeProblems {
+    func lowestCommonAncestor(_ root: TreeNode?, _ p: TreeNode?, _ q: TreeNode?) -> TreeNode? {
+        guard let rootVal = root?.val, let pVal = p?.val, let qVal = q?.val else {
+            return nil
+        }
+        
+        if pVal > rootVal && qVal > rootVal {
+            return lowestCommonAncestor(root?.right, p, q)
+        } else if pVal < rootVal && qVal < rootVal {
+            return lowestCommonAncestor(root?.left, p, q)
+        } else {
+            return root
+        }
+    }
+}
+
 // MARK: - 572. Subtree of Another Tree
 // LINK: https://leetcode.com/problems/subtree-of-another-tree/
 // VIDEO: https://www.youtube.com/watch?v=HdMs2Fl_I-Q
