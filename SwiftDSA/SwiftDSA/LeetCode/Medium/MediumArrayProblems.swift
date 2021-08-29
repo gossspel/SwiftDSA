@@ -1497,3 +1497,52 @@ extension MediumArrayProblems {
         return FP
     }
 }
+
+// MARK: - 347. Top K Frequent Elements
+// LINK: https://leetcode.com/problems/top-k-frequent-elements/
+//
+// Description: Given an integer array nums and an integer k, return the k most frequent elements. You may return the
+// answer in any order.
+//
+// Strategy: First loop through the the integer array and populate the var frequencyByNum: [Int: Int] while keeping
+// track of the var maxFrequency: Int. Once it is done, construct the array numListsInAscendingFrequency: [[Int]] in
+// which the first element would be the numList with frequency = 0, and the last elment would be the numList with
+// frequency = maxFreq. In the end we would keep popping the array and use the num in the numList to populate the var
+// results: [Int] until the results reaches the length of k.
+
+extension MediumArrayProblems {
+    func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
+        var maxFrequency: Int = 0
+        var freqByNum: [Int: Int] = [:]
+        
+        for num in nums {
+            freqByNum[num] = (freqByNum[num] ?? 0) + 1
+            
+            if (freqByNum[num] ?? 0) > maxFrequency {
+                maxFrequency = (freqByNum[num] ?? 0)
+            }
+        }
+        
+        var numListsInAscendingFrequency: [[Int]] = Array(repeating: [], count: maxFrequency + 1)
+        
+        for (num, freq) in freqByNum {
+            numListsInAscendingFrequency[freq].append(num)
+        }
+        
+        var results: [Int] = []
+        
+        while results.count != k {
+            let numList: [Int] = numListsInAscendingFrequency.popLast() ?? []
+            
+            for num in numList {
+                guard results.count != k else {
+                    break
+                }
+                
+                results.append(num)
+            }
+        }
+        
+        return results
+    }
+}
