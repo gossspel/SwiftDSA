@@ -137,17 +137,17 @@ extension MediumTreeProblems {
 // node doesn't hold any value, as the values would be held via the key of trieDict. With this TrieNode data structure,
 // we can easily implement the Trie class.
 
-class Trie {
+class TrieNode {
+    var isEndOfWord: Bool
+    var trieDict: [Character: TrieNode]
     
-    class TrieNode {
-        var isEndOfWord: Bool
-        var trieDict: [Character: TrieNode]
-        
-        init() {
-            self.isEndOfWord = false
-            self.trieDict = [:]
-        }
+    init() {
+        self.isEndOfWord = false
+        self.trieDict = [:]
     }
+}
+
+class Trie {
     
     var root: TrieNode
 
@@ -199,6 +199,80 @@ class Trie {
         }
         
         return true
+    }
+}
+
+// MARK: - 211. Design Add and Search Words Data Structure
+// LINK: https://leetcode.com/problems/design-add-and-search-words-data-structure/
+//
+// Description: Design a data structure that supports adding new words and finding if a string matches any previously
+// added string. Implement the WordDictionary class:
+// - WordDictionary() Initializes the object.
+// - void addWord(word) Adds word to the data structure, it can be matched later.
+// - bool search(word) Returns true if there is any string in the data structure that matches word or false otherwise.
+// word may contain dots '.' where dots can be matched with any letter.
+//
+// Strategy: Implement this pretty much like how we would implement the Trie, but the trickiest part is actually
+// processing the search for "." in the words. "." is the match all and we need to make sure our word search can
+// process all variations of it. For example, if we add "abc" into the WordDictionary, we need to be able to search for
+// "...", ".bc", ".b.", "a..", "a.c", "..c", etc. Therefore, we need to use a DFS approach to check all the children
+// TrieNodes whenever we encounter a "."
+
+// TODO: Use ArraySlice<Character> to make this faster
+
+class WordDictionary {
+    var root: TrieNode
+    
+    /** Initialize your data structure here. */
+    init() {
+        self.root = TrieNode()
+    }
+    
+    func addWord(_ word: String) {
+        var currentNode: TrieNode? = self.root
+        
+        for char in word {
+            if currentNode?.trieDict[char] == nil {
+                currentNode?.trieDict[char] = TrieNode()
+            }
+            
+            currentNode = currentNode?.trieDict[char]
+        }
+        
+        currentNode?.isEndOfWord = true
+    }
+    
+    func search(_ word: String) -> Bool {
+        return dfs(node: self.root, word: Array(word))
+    }
+    
+    func dfs(node: TrieNode?, word: [Character]) -> Bool {
+        guard let sureNode = node else {
+            return false
+        }
+        
+        if word.isEmpty {
+            return sureNode.isEndOfWord
+        }
+        
+        let char: Character = word[0]
+        let newWord: [Character] = (word.count == 1) ? [] : Array(word[1...])
+        
+        if char == "." {
+            let trieDict: [Character: TrieNode] = node?.trieDict ?? [:]
+            
+            for char in trieDict.keys {
+                if dfs(node: node?.trieDict[char], word: newWord) {
+                    return true
+                }
+            }
+            
+            return false
+        } else if node?.trieDict[char] != nil {
+            return dfs(node: node?.trieDict[char], word: newWord)
+        }
+        
+        return false
     }
 }
 

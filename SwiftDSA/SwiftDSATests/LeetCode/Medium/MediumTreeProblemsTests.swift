@@ -45,3 +45,22 @@ extension MediumTreeProblemsTests {
         XCTAssertEqual(results, [])
     }
 }
+
+// MARK: - 211. Design Add and Search Words Data Structure
+
+class MediumTreeProblem211Tests: XCTestCase {
+    func testLong() {
+        let dict = WordDictionary()
+        dict.addWord("a")
+        dict.addWord("ab")
+        XCTAssertTrue(dict.search("a"))
+        XCTAssertTrue(dict.search("a."))
+        XCTAssertTrue(dict.search("ab"))
+        XCTAssertFalse(dict.search(".a"))
+        XCTAssertTrue(dict.search(".b"))
+        XCTAssertFalse(dict.search("ab."))
+        XCTAssertTrue(dict.search("."))
+        XCTAssertTrue(dict.search(".."))
+    }
+}
+
