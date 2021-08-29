@@ -1508,7 +1508,8 @@ extension MediumArrayProblems {
 // track of the var maxFrequency: Int. Once it is done, construct the array numListsInAscendingFrequency: [[Int]] in
 // which the first element would be the numList with frequency = 0, and the last elment would be the numList with
 // frequency = maxFreq. In the end we would keep popping the array and use the num in the numList to populate the var
-// results: [Int] until the results reaches the length of k.
+// results: [Int] until the results reaches the length of k. Note that numListsInAscendingFrequency: [[Int]] is
+// basically used for bucket sort.
 
 extension MediumArrayProblems {
     func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
