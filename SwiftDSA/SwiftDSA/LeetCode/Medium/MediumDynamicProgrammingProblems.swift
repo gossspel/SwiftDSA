@@ -313,3 +313,69 @@ extension MediumDynamicProgrammingProblems {
         }
     }
 }
+
+// MARK: - 1143. Longest Common Subsequence
+// LINK: https://leetcode.com/problems/longest-common-subsequence/
+// VIDEO: https://www.youtube.com/watch?v=LAKWWDX3sGw
+//
+// Description: Given two strings text1 and text2, return the length of their longest common subsequence. If there is
+// no common subsequence, return 0. A subsequence of a string is a new string generated from the original string with
+// some characters (can be none) deleted without changing the relative order of the remaining characters. For example,
+// "ace" is a subsequence of "abcde". A common subsequence of two strings is a subsequence that is common to both
+// strings.
+//
+//     A E B
+//   0 0 0 0
+// A 0 1 1 1
+// B 0 1 1 2
+// C 0 1 1 2
+//
+//     E A
+//   0 0 0
+// C 0 0 0
+// A 0 0 1
+//
+//     E A
+//   0 0 0
+// C 0 0 0
+// E 0 1 1
+//
+// Strategy: Create a 2D grid, with row being (empty str + text1) and column being (empty str + text2). Iterate through
+// the whole grid, we will primarily need to handle two cases: 1.) the last char of both strs match each other. 2.) the
+// last char or both strs don't match each other.
+//
+// if the last char of both strs match each other, then its LCS is equal to 1 + previous diagonal value. In order to
+// explain this look at the following example. text1 = "EA" and text2 = "CA", since both "A" match with each other, we
+// can increment LCS by 1 and remove the "A" in both texts, so text1 = "E" and text2 = "C", and once we have the LCS of
+// text1 = "E" and text2 = "C", we would have our answer. Essentially this boils down to the following:
+// LCS("EA", "CA") = 1 + LCS("E", "C").
+//
+// On the other hand, if the last char of both strs don't match each other, then its LCS is equal the max of
+// (LCS(text1WithLastCharRemoved, text2), LCS(text1, text2WithLastCharRemoved)). Consider the following example. text1
+// = "EA" and text2 = "CE". At grid coordinate (2,2), we have "EA" comparing with "CE", since the last characters don't
+// match each other, we can skip either one of them and try to maintain the higher LCS. If we skip "E", text1 stays at
+// "EA" and text2 becomes "C" and the LCS of that is 0. If we skip "A", text1 becomes "E" and text2 stays as "CE" and
+// the LCS of that is 1. So by definition of getting the LCS, we need to skip "A" since by doing that, we can have a
+// longer LCS. Hence LCS("EA", "CE") = 1.
+
+extension MediumDynamicProgrammingProblems {
+    func longestCommonSubsequence(_ text1: String, _ text2: String) -> Int {
+        let chars1: [Character] = Array(text1)
+        let chars2: [Character] = Array(text2)
+        
+        var intersections: [[Int]] = Array(repeating: Array(repeating: 0, count: chars1.count + 1),
+                                           count: chars2.count + 1)
+        
+        for row in 1..<intersections.count {
+            for column in 1..<intersections[row].count {
+                if chars1[column - 1] == chars2[row - 1] {
+                    intersections[row][column] = 1 + intersections[row - 1][column - 1]
+                } else {
+                    intersections[row][column] = max(intersections[row - 1][column], intersections[row][column - 1])
+                }
+            }
+        }
+        
+        return intersections[chars2.count][chars1.count]
+    }
+}
