@@ -82,6 +82,46 @@ class MediumDynamicProgrammingProblem64Tests: XCTestCase {
     }
 }
 
+// MARK: - 139. Word Break
+
+class MediumDynamicProgrammingProblem139Tests: XCTestCase {
+    func testLeetCode() {
+        let s: String = "leetcode"
+        let wordDict: [String] = ["leet", "code"]
+        let isBreakable: Bool = MediumDynamicProgrammingProblems().wordBreak(s, wordDict)
+        XCTAssert(isBreakable)
+    }
+    
+    func testApplepenapple() {
+        let s: String = "applepenapple"
+        let wordDict: [String] = ["apple","pen"]
+        let isBreakable: Bool = MediumDynamicProgrammingProblems().wordBreak(s, wordDict)
+        XCTAssert(isBreakable)
+    }
+    
+    func testCatsandog() {
+        let s: String = "catsandog"
+        let wordDict: [String] = ["cats", "dog", "sand", "and", "cat"]
+        let isBreakable: Bool = MediumDynamicProgrammingProblems().wordBreak(s, wordDict)
+        XCTAssertFalse(isBreakable)
+    }
+    
+    func testBb() {
+        let s: String = "bb"
+        let wordDict: [String] = ["a", "b", "bbb", "bbbb"]
+        let isBreakable: Bool = MediumDynamicProgrammingProblems().wordBreak(s, wordDict)
+        XCTAssertTrue(isBreakable)
+    }
+    
+    func testCars() {
+        let s: String = "cars"
+        let wordDict: [String] = ["car", "ca", "rs"]
+        let isBreakable: Bool = MediumDynamicProgrammingProblems().wordBreak(s, wordDict)
+        XCTAssertTrue(isBreakable)
+    }
+}
+
+
 // MARK: - 198. House Robber
 
 class MediumDynamicProgrammingProblem198Tests: XCTestCase {

@@ -181,6 +181,62 @@ extension MediumDynamicProgrammingProblems {
     }
 }
 
+// MARK: - 139. Word Break
+// LINK: https://leetcode.com/problems/word-break/
+// VIDEO: https://www.youtube.com/watch?v=Sx9NNgInc3A
+//
+// Description: Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a
+// space-separated sequence of one or more dictionary words. Note that the same word in the dictionary may be reused
+// multiple times in the segmentation.
+//
+// Strategy: We basically want to create a DP array called isEntireStrBreakableStartingAtIndex.
+// isEntireStrBreakableStartingAtIndex[0] will tell us whether or not the string s is breakable using the words in the
+// wordDict. The base case is always isEntireStrBreakableStartingAtIndex[s.count] = true, that is because the non
+// existing empty str right next to the end of str s is breakable using none of the words in the wordDict by default.
+// And then we work our way back up to check isEntireStrBreakableStartingAtIndex[s.count - 1] till
+// isEntireStrBreakableStartingAtIndex[0]. If a word from the wordDict can be matched a subString that starts with
+// index i, then isEntireStrBreakableStartingAtIndex[i] = isEntireStrBreakableStartingAtIndex[i + word.count], because
+// once the subStr is matched with the word, we just need to update the ending pointer to the new location (i +
+// word.count) and see if the remaining str is also breakable. Once we found a combination that satisfies
+// isEntireStrBreakableStartingAtIndex[i] = true, we want to stop trying any other word in the dictionary because we
+// don't want to overwrite that result with false. For example, let s = "leetcode", wordDict = ["leet", "code", "co"],
+// when i = 4, and we found the matching word "code" such that isEntireStrBreakableStartingAtIndex[4] =
+// isEntireStrBreakableStartingAtIndex[4 + 4] = true, we want to stop there because if we don't, we will find the
+// matching word "co" such that isEntireStrBreakableStartingAtIndex[4] = isEntireStrBreakableStartingAtIndex[4 + 2] =
+// false, which overrode the previous true. Once we finish processing the whole isEntireStrBreakableStartingAtIndex
+// array, we can return isEntireStrBreakableStartingAtIndex[0] as the answer.
+
+extension MediumDynamicProgrammingProblems {
+    func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
+        let chars: [Character] = Array(s)
+        
+        var isEntireStrBreakableStartingAtIndex: [Bool] = Array(repeating: false, count: s.count + 1)
+        isEntireStrBreakableStartingAtIndex[s.count] = true
+        
+        for i in (0..<s.count).reversed() {
+            let subStr: [Character] = Array(chars[i...])
+            
+            for word in wordDict {
+                guard word.count <= subStr.count else {
+                    continue
+                }
+                
+                let possibleMatchedWord = String(subStr[0..<word.count])
+                
+                if possibleMatchedWord == word {
+                    isEntireStrBreakableStartingAtIndex[i] = isEntireStrBreakableStartingAtIndex[i + word.count]
+                }
+                
+                if isEntireStrBreakableStartingAtIndex[i] {
+                    break
+                }
+            }
+        }
+        
+        return isEntireStrBreakableStartingAtIndex[0]
+    }
+}
+
 // MARK: - 198. House Robber
 // LINK: https://leetcode.com/problems/house-robber/
 //
