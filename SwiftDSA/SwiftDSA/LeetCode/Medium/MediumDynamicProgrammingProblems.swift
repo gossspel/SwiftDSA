@@ -370,6 +370,39 @@ extension MediumDynamicProgrammingProblems {
     }
 }
 
+// MARK: - 377. Combination Sum IV
+// LINK: https://leetcode.com/problems/combination-sum-iv/
+//
+// Description: Given an array of distinct integers nums and a target integer target, return the number of possible
+// combinations that add up to target. The answer is guaranteed to fit in a 32-bit integer.
+//
+// Strategy: We want to create a DP array to denote the number of unique pathways to sum up to specific target. DP[0] =
+// 1 because there is only 1 way to sum up to 0, which is not visiting any number in the nums array. For computation of
+// DP[n], consider any number in nums, as long as it is less than or equal to n, it can potentially be a node that can
+// get us to n. So DP[n] = DP[smallestNumInNums <= n] + DP[secondSmallestNumInNums <= n] + ... + DP[biggestNumInNums <=
+// n]. Let's try to understand better with an example: nums = [1, 2, 3], target = 4. DP[0] = 1; DP[1] = DP[1 - 1] = 1;
+// DP[2] = DP[2 - 2] + DP[2 - 1] = 2; DP[3] = DP[3 - 1] + DP[3 - 2] + DP[3 - 3] = 4; DP[4] = DP[4 - 1] + DP[4 - 2] +
+// DP[4 - 3] = 7
+
+extension MediumDynamicProgrammingProblems {
+    func combinationSum4(_ nums: [Int], _ target: Int) -> Int {
+        var dp: [Int] = Array(repeating: 0, count: target + 1)
+        dp[0] = 1
+        
+        for i in 1..<dp.count {
+            for num in nums {
+                guard i - num >= 0 else {
+                    continue
+                }
+                
+                dp[i] &+= dp[i - num]
+            }
+        }
+        
+        return dp[target]
+    }
+}
+
 // MARK: - 1143. Longest Common Subsequence
 // LINK: https://leetcode.com/problems/longest-common-subsequence/
 // VIDEO: https://www.youtube.com/watch?v=LAKWWDX3sGw
