@@ -246,43 +246,56 @@ extension MediumDynamicProgrammingProblems {
 // night. Given an integer array nums representing the amount of money of each house, return the maximum amount of
 // money you can rob tonight without alerting the police.
 //
-// 1               evenIndexSum = 1, oddIndexSum = 0, maxSum = max(evenIndexSum, oddSum) = 1
-// 1 2             evenIndexSum = 1, oddIndexSum = 2, maxSum = max(evenIndexSum, oddSum) = 2
-// 1 2 1           evenIndexSum = 2, oddIndexSum = 2, maxSum = max(evenIndexSum, oddSum) = 2
-// 1 2 1 2         evenIndexSum = 2, oddIndexSum = 4,
-// 1 2 1 2 1       evenIndexSum = 3, oddIndexSum = 4
-// 1 2 1 2 1 0     evenIndexSum = 3, oddIndexSum = 4
-// 1 2 1 2 1 0 3   evenIndexSum = 6, oddIndexSum = 4, maxSum = 7
+// 1               dp[0] = 0; dp[1] = 1
+// 1 2             dp[2] = max(dp[1], dp[0] + nums[1]) = 2
+// 1 2 1           dp[3] = max(dp[2], dp[1] + nums[2]) = 2
+// 1 2 1 2         dp[4] = max(dp[3], dp[2] + nums[3]) = 4
+// 1 2 1 2 1       dp[5] = max(dp[4], dp[3] + nums[4]) = 4
+// 1 2 1 2 1 0     dp[6] = max(dp[5], dp[4] + nums[5]) = 4
+// 1 2 1 2 1 0 3   dp[7] = max(dp[6], dp[5] + nums[6]) = 7
 //
-// Strategy:
-// base case should be 3 houses or less, because the max amount we can rob is max(sumOfOddValues, sumOfEvenValues).
-// recursive case should be 4 houses or more, because the max amount we can rob is max(sumOfMaxAtIndexMinus1,
-// sumOfMaxAtIndexMinus2 + currentValue, sumOfMaxAtIndexMinus3 + currentValue)
+// Strategy: Create a dp array in which dp[n] is the max amount that can be robbed by n houses. dp[0] = 0 because you
+// can only rob $0 from 0 house. dp[1] = nums[0] because if there is only one house, the max amount you can rob is the
+// money stashed in that only house. dp[n] = max(dp[n - 1], dp[n - 2] + nums[n - 1]) because you can either steal from
+// the last house or second to last house without triggering the alarm.
 
 extension MediumDynamicProgrammingProblems {
     func rob(_ nums: [Int]) -> Int {
-        var maxAtIndex: [Int] = []
-        var evenIndexSum: Int = 0
-        var oddIndexSum: Int = 0
-        var currentMax: Int = 0
+        var dp: [Int] = Array(repeating: 0, count: nums.count + 1)
+        dp[1] = nums[0]
         
-        for i in 0..<nums.count {
-            if i % 2 == 0 {
-                evenIndexSum += nums[i]
-            } else {
-                oddIndexSum += nums[i]
-            }
-            
-            if i >= 3 {
-                currentMax = max(maxAtIndex[i - 1], maxAtIndex[i - 2] + nums[i], maxAtIndex[i - 3] + nums[i])
-            } else {
-                currentMax = max(evenIndexSum, oddIndexSum)
-            }
-            
-            maxAtIndex.append(currentMax)
+        for house in 2..<dp.count {
+            let sumFromFirstPath: Int = dp[house - 1]
+            let sumFromSecondPath: Int = dp[house - 2] + nums[house - 1]
+            dp[house] = max(sumFromFirstPath, sumFromSecondPath)
         }
         
-        return maxAtIndex[nums.count - 1]
+        return dp[dp.count - 1]
+    }
+}
+
+// MARK: - 213. House Robber II
+// LINK: https://leetcode.com/problems/house-robber-ii/
+//
+// Description: You are a professional robber planning to rob houses along a street. Each house has a certain amount of
+// money stashed. All houses at this place are arranged in a circle. That means the first house is the neighbor of the
+// last one. Meanwhile, adjacent houses have a security system connected, and it will automatically contact the police
+// if two adjacent houses were broken into on the same night. Given an integer array nums representing the amount of
+// money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+//
+// Strategy: Notice that since the houses are lined up in a circle, it really means that we can either rob the first or
+// last house but not both. As a result, we can easily reuse the house robber I solution on both the
+// numsWithoutFirstHouse and numsWithoutLastHouse and return the max from them if nums >= 2.
+
+extension MediumDynamicProgrammingProblems {
+    func rob2(_ nums: [Int]) -> Int {
+        guard nums.count > 1 else {
+            return nums[0]
+        }
+        
+        let maxAmountRobbedwithoutFirstHouse: Int = rob(Array(nums[1...]))
+        let maxAmountRobbedwithoutLastHouse: Int = rob(Array(nums[0..<(nums.count - 1)]))
+        return max(maxAmountRobbedwithoutFirstHouse, maxAmountRobbedwithoutLastHouse)
     }
 }
 
