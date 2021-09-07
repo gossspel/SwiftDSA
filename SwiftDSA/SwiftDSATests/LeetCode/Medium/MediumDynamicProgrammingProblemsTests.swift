@@ -9,6 +9,34 @@
 import XCTest
 @testable import SwiftDSA
 
+// MARK: - 55. Jump Game
+    
+class MediumDynamicProgrammingProblem55Tests: XCTestCase {
+    func testCanJump_with1NumA_shouldReturnTrue() {
+        let nums = [1]
+        let canJump = MediumDynamicProgrammingProblems().canJump(nums)
+        XCTAssert(canJump)
+    }
+    
+    func testCanJump_with1NumB_shouldReturnTrue() {
+        let nums = [0]
+        let canJump = MediumDynamicProgrammingProblems().canJump(nums)
+        XCTAssert(canJump)
+    }
+    
+    func testCanJump_with5NumsA_shouldReturnTrue() {
+        let nums = [2, 3, 1, 1, 4]
+        let canJump = MediumDynamicProgrammingProblems().canJump(nums)
+        XCTAssert(canJump)
+    }
+    
+    func testCanJump_with5NumsB_shouldReturnTrue() {
+        let nums = [3, 2, 1, 0, 4]
+        let canJump = MediumDynamicProgrammingProblems().canJump(nums)
+        XCTAssertFalse(canJump)
+    }
+}
+
 // MARK: - 62. Unique Paths
 
 class MediumDynamicProgrammingProblem62Tests: XCTestCase {

@@ -12,6 +12,57 @@ class MediumDynamicProgrammingProblems {
     var uniquePathsXY: [String: Int] = [:]
 }
 
+// MARK: - 55 Jump Game
+// LINK: https://leetcode.com/problems/jump-game/
+//
+// Description: You are given an integer array nums. You are initially positioned at the array's first index, and each
+// element in the array represents your maximum jump length at that position. Return true if you can reach the last
+// index, or false otherwise.
+//
+// Strategy: Create a DP array that denotes "is the last index reachable with an array of size n". dp[0] = true because
+// if the array is of size 0, then by definition its non existent last index is already reached. dp[1] = true because
+// the constraints nums[i] >= 0 exists, dp[1] is always true. For dp[2]....dp[n], as long as there is an element in
+// nums that can reach nums[nums.count - 1], we can return true. Since we need to check every element before dp[n], the
+// time complexity for this DP array approach would be O(n^2). However, there is a ways for us to optimize this to be
+// O(n). We don't need to check every element before dp[n], we can keep track of the maxReach from nums and only check
+// the last x = maxReach elements before dp[n], because any element earlier than that is guaranteed to not reach the
+// index of nums[n - 1]. As a result the time complexity would be improved to O(n * maxReach) = O(n).
+
+extension MediumDynamicProgrammingProblems {
+    func canJump(_ nums: [Int]) -> Bool {
+        guard nums.count > 1 else {
+            return true
+        }
+        
+        // NOTE: dp denotes the isTheLastIndexReachableWithArrayOfSizeN
+        var dp: [Bool] = Array(repeating: false, count: nums.count + 1)
+        
+        // NOTE: if the array is of size 0, then by definition its non existent last index is already reached.
+        dp[0] = true
+        
+        // NOTE: Because the constraints nums[i] >= 0 exists, dp[1] is always true
+        dp[1] = true
+        
+        var maxReach: Int = 0
+        var lowerBound: Int = 1
+        
+        for n in 2..<dp.count {
+            for m in lowerBound..<n {
+                maxReach = max(maxReach, nums[m - 1])
+                
+                if dp[m] && (nums[m - 1] + (m - 1) >= (n - 1)) {
+                    dp[n] = true
+                    break
+                }
+            }
+            
+            lowerBound = ((n - maxReach) > 1) ? (n - maxReach) : 1
+        }
+        
+        return dp[nums.count]
+    }
+}
+
 // MARK: - 62. Unique Paths
 // LINK: https://leetcode.com/problems/unique-paths/
 //
