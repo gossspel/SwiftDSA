@@ -9,6 +9,24 @@
 import XCTest
 @testable import SwiftDSA
 
+// MARK: - 21. Merge Two Sorted Lists
+
+class EasyLinkedListProblem21Tests: XCTestCase {
+    func testExample1() {
+        let root1 = ListNode(1)
+        root1.next = ListNode(2)
+        root1.next?.next = ListNode(4)
+        
+        let root2 = ListNode(1)
+        root2.next = ListNode(3)
+        root2.next?.next = ListNode(4)
+        
+        let mergedList = EasyLinkedListProblems().mergeTwoLists(root1, root2)
+        XCTAssertEqual(mergedList?.val, 1)
+    }
+}
+
+
 // MARK: - 141. Linked List Cycle
 
 class EasyLinkedListProblem141Tests: XCTestCase {
