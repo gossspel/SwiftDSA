@@ -621,47 +621,6 @@ extension MediumArrayProblems {
             return 0
         }
 
-        var visited: [Bool] = Array(repeating: false, count: nums.count)
-        var level: Int = 1
-        var indexValuesOfCurrentLevel: [Int] = Array(1...nums[0])
-
-        for i in 0...min(nums[0], nums.count - 1) {
-            visited[i] = true
-        }
-
-        while !indexValuesOfCurrentLevel.isEmpty {
-            var reaches: [Int] = []
-            var maxReach: Int = 0
-
-            for indexValue in indexValuesOfCurrentLevel {
-                if indexValue == (nums.count - 1) {
-                    return level
-                }
-
-                visited[indexValue] = true
-                let currentReach: Int = indexValue + nums[indexValue]
-                if currentReach > maxReach {
-                    maxReach = currentReach
-                }
-
-                reaches.append(currentReach)
-            }
-
-            let start: Int = indexValuesOfCurrentLevel[0]
-            let safeMaxReach: Int = min(maxReach, nums.count - 1)
-            indexValuesOfCurrentLevel = (start+1...safeMaxReach).filter { visited[$0] == false }
-            level += 1
-        }
-
-        return level
-    }
-    
-    // NOTE: this is the optimized BFS approach without using extra arrays.
-    func jumpOptimized(_ nums: [Int]) -> Int {
-        guard nums.count > 1 else {
-            return 0
-        }
-
         var level: Int = 0
         var left: Int = 0
         var right: Int = 0
