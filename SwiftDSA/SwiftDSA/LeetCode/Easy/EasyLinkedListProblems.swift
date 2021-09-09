@@ -209,4 +209,19 @@ extension EasyLinkedListProblems {
         
         return head
     }
+    
+    func reverseListConstantSpace(_ head: ListNode?) -> ListNode? {
+        var prev: ListNode? = nil
+        var current: ListNode? = head
+        var temp: ListNode? = current?.next
+        
+        while current != nil {
+            current?.next = prev
+            prev = current
+            current = temp
+            temp = current?.next
+        }
+        
+        return prev
+    }
 }
