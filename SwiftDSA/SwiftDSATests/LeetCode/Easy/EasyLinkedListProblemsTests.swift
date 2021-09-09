@@ -85,6 +85,8 @@ class EasyLinkedListProblem206Tests: XCTestCase {
         var iteration: Int = 0
         var current: ListNode? = reverseHead
         
+        XCTAssertNotNil(current)
+        
         while current != nil {
             XCTAssertEqual(current?.val, expectedValues[iteration])
             iteration += 1
