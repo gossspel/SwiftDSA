@@ -244,7 +244,7 @@ extension MediumLinkedListProblems {
 // need to put an end after we finish reordering the list.
 
 extension MediumLinkedListProblems {
-    func reorderListSlow(_ head: ListNode?) {
+    func reorderList(_ head: ListNode?) {
         var nodes: [ListNode] = []
         
         var current: ListNode? = head
