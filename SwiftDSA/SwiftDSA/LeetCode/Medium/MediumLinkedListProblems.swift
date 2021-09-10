@@ -227,3 +227,58 @@ extension MediumLinkedListProblems {
         return nodes.first
     }
 }
+
+// MARK: - 143. Reorder List
+// LINK: https://leetcode.com/problems/reorder-list/
+//
+// Description: You are given the head of a singly linked-list. The list can be represented as: L0 → L1 → … → Ln - 1 →
+// Ln Reorder the list to be on the following form: L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → … You may not modify the
+// values in the list's nodes. Only nodes themselves may be changed.
+//
+// Strategy: Loop through the whole linked list and put all of its nodes to an array. After that, we pretty much use
+// the array like a deque. Since we always start off with the root as the first node, we can start with leftIndex = 1,
+// and we will start with rightIndex = nodes.count - 1. We are trying to construct the new list by using an element
+// from the beginning of the array in one iteration, and an element from the ending of the array in the next iteration.
+// We would update the leftIndex and rightIndex accordingly and we would continue until the leftIndex crosses the
+// rightIndex. In the end, when the leftIndex crosses the rightIndex, we would want to mark node.next = nil because we
+// need to put an end after we finish reordering the list.
+
+extension MediumLinkedListProblems {
+    func reorderListSlow(_ head: ListNode?) {
+        var nodes: [ListNode] = []
+        
+        var current: ListNode? = head
+        
+        while let sureCurrent = current {
+            nodes.append(sureCurrent)
+            current = sureCurrent.next
+        }
+        
+        guard nodes.count > 2 else {
+            return
+        }
+        
+        var leftIndex: Int = 1
+        var rightIndex: Int = nodes.count - 1
+        var newCurrent: ListNode? = head
+        var shouldUseLeftIndexNext: Bool = false
+        
+        while leftIndex <= rightIndex {
+            if shouldUseLeftIndexNext {
+                newCurrent?.next = nodes[leftIndex]
+                leftIndex += 1
+                shouldUseLeftIndexNext = false
+            } else {
+                newCurrent?.next = nodes[rightIndex]
+                rightIndex -= 1
+                shouldUseLeftIndexNext = true
+            }
+            
+            newCurrent = newCurrent?.next
+            
+            if leftIndex > rightIndex {
+                newCurrent?.next = nil
+            }
+        }
+    }
+}

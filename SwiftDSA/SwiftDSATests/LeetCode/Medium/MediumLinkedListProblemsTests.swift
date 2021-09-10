@@ -216,3 +216,32 @@ class MediumLinkedListProblem138Tests: XCTestCase {
         XCTAssertNil(copiedHead)
     }
 }
+
+// MARK: - 143. Reorder List
+
+class MediumLinkedListProblem143Tests: XCTestCase {
+    func testExample1() {
+        let root = ListNode(1)
+        root.next = ListNode(2)
+        root.next?.next = ListNode(3)
+        root.next?.next?.next = ListNode(4)
+        
+        MediumLinkedListProblems().reorderList(root)
+        XCTAssertEqual(root.val, 1)
+        XCTAssertEqual(root.next?.val, 4)
+        XCTAssertEqual(root.next?.next?.val, 2)
+        XCTAssertEqual(root.next?.next?.next?.val, 3)
+        
+        var nodeValues: [Int] = []
+        
+        var current: ListNode? = root
+        
+        while let sureCurrent = current {
+            nodeValues.append(sureCurrent.val)
+            current = sureCurrent.next
+        }
+        
+        XCTAssertEqual(nodeValues, [1, 4, 2, 3])
+    }
+}
+
