@@ -68,3 +68,96 @@ extension MediumMatrixProblems {
         return results
     }
 }
+
+// MARK: - 79. Word Search
+// LINK: https://leetcode.com/problems/word-search/
+// VIDEO: https://www.youtube.com/watch?v=vYYNp0Jrdv0
+//
+// Description: Given an m x n grid of characters board and a string word, return true if word exists in the grid. The
+// word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or
+// vertically neighboring. The same letter cell may not be used more than once.
+//
+// Strategy: loop through the board, whenever we find a character that matches the beginning of the word, do a DFS
+// backtrack, in which we pass in the board, word as chars, rowIndex, columnIndex, and inProgressSequenceCount.
+// Basically we are looking at a particular coordinate (rowIndex, columnIndex) and determine if it can lead to a path
+// that matches the word. In the base case, we return true if chars.count == inProgressSequenceCount, and we return
+// false if that coordinate is out of bound or doesn't match with the corresponding character from the word. As long as
+// that coordinate is within the bound and matches the corresponding order of the character within the word, we can
+// continue the recursive case. In the recursive case, we will recursively check the top, left, bottom, right and
+// return true if any one of them is true.
+
+extension MediumMatrixProblems {
+    func exist(_ board: [[Character]], _ word: String) -> Bool {
+        let chars: [Character] = Array(word)
+        let startingChar: Character = chars[0]
+        var editableBoard: [[Character]] = board
+        
+        for i in 0..<board.count {
+            for j in 0..<board[i].count {
+                if board[i][j] == startingChar && backtrack(board: &editableBoard,
+                                                            chars: chars,
+                                                            rowIndex: i,
+                                                            columnIndex: j,
+                                                            inProgressSequenceCount: 0)
+                {
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    
+    func backtrack(board: inout [[Character]],
+                   chars: [Character],
+                   rowIndex: Int,
+                   columnIndex: Int,
+                   inProgressSequenceCount: Int) -> Bool
+    {
+        if chars.count == inProgressSequenceCount {
+            return true
+        }
+        
+        if (rowIndex < 0 ||
+                rowIndex == board.count ||
+                columnIndex < 0 ||
+                columnIndex == board[rowIndex].count ||
+                board[rowIndex][columnIndex] != chars[inProgressSequenceCount])
+        {
+            return false
+        }
+        
+        let temp: Character = board[rowIndex][columnIndex]
+        
+        board[rowIndex][columnIndex] = Character(" ")
+
+        let existOnLeft: Bool = backtrack(board: &board,
+                                          chars: chars,
+                                          rowIndex: rowIndex - 1,
+                                          columnIndex: columnIndex,
+                                          inProgressSequenceCount: inProgressSequenceCount + 1)
+        
+        let existOnRight: Bool = backtrack(board: &board,
+                                          chars: chars,
+                                          rowIndex: rowIndex + 1,
+                                          columnIndex: columnIndex,
+                                          inProgressSequenceCount: inProgressSequenceCount + 1)
+        
+        let existOnTop: Bool = backtrack(board: &board,
+                                          chars: chars,
+                                          rowIndex: rowIndex,
+                                          columnIndex: columnIndex - 1,
+                                          inProgressSequenceCount: inProgressSequenceCount + 1)
+        
+        let existOnBottom: Bool = backtrack(board: &board,
+                                          chars: chars,
+                                          rowIndex: rowIndex,
+                                          columnIndex: columnIndex + 1,
+                                          inProgressSequenceCount: inProgressSequenceCount + 1)
+        
+        board[rowIndex][columnIndex] = temp
+        
+        let hasFound: Bool = existOnLeft || existOnRight || existOnTop || existOnBottom
+        return hasFound
+    }
+}
