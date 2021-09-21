@@ -424,6 +424,14 @@ extension MediumDynamicProgrammingProblems {
 // min(minCoinForAmount[amount], 1 + minCoinForAmount[amount - coinValue]). After the process if finished, if
 // minCoinForAmount[amount] != (amount + 1), we know the initialized minCoinForAmount[amount] value has been updated
 // and we can return it, otherwise we can return -1
+//
+// Concise Strategy:
+// - create a dp array in which dp[n] = min number of coin to return amount of n.
+// - set dp[0] = 0 because 0 is min number of coin to return amount of 0.
+// - fill the dp array with arbitrary large number in every element, such as (amount + 1)
+// - in iteration n of constructing the dp array, loop through the coins, compare dp[n] with (1 + dp[n - coin]), update
+// dp[n] with the minimum value of the comparison.
+// - if dp[n] != amount + 1 return dp[n] else return -1
 
 extension MediumDynamicProgrammingProblems {
     func coinChange(_ coins: [Int], _ amount: Int) -> Int {

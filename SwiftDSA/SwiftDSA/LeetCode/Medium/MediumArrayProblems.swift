@@ -25,6 +25,12 @@ class MediumArrayProblems {
 // decrement rightIndex by 1; if leftHeight == rightHeight, increment leftIndex by 1 and decrement rightIndex by 1;
 // Continue as long as leftIndex < rightIndex. The rationale of this approach is that we are always trying to produce a
 // higher maxArea by pruning the bar with lower height.
+//
+// Concise Strategy:
+// - use three pointer approach: maxArea, leftIndex, and rightIndex.
+// - use the first index as the starting point for leftIndex, and last index as the starting point of rightIndex.
+// - keep trying to produce biger maxArea by moving the leftIndex and rightIndex toward each other, and stop when they
+// are equal to each other.
 
 extension MediumArrayProblems {
     func maxArea(_ height: [Int]) -> Int {
@@ -93,6 +99,12 @@ extension MediumArrayProblems {
 // duplicated combos. For the next iteration of the for loop, make sure sortedNums[i] != sortedNums[i - 1] since we
 // want to avoid repeated elements. Continue the initial for loop until its value is greater than zero, because at that
 // point, both b and c will positive numbers and there will be no more combinations that would sum up to zero.
+//
+// Concise Strategy:
+// - sort the nums
+// - loop through the sorted nums to get the first element of the combo
+// - use left and right pointer to get the second and third element of the combo, do additional logic check to avoid
+// duplicated combo.
 
 extension MediumArrayProblems {
     func threeSum(_ nums: [Int]) -> [[Int]] {

@@ -33,6 +33,12 @@ class EasyRecursionProblems {
 // 1 2 (1)
 // 2 (2)
 // 1 1 (2)
+//
+// Concise Strategy:
+// - Use a dp array, in which dp[n] = number of distinct ways to climb n stairs
+// - dp[0] = 1 since there is only 1 way to climb 0 stairs
+// - dp[1] = 1 since there is only 1 way to climb 1 stairs
+// - dp[n] = dp[n - 1] + dp[n - 2] since we can only climb 1 or 2 steps.
 
 extension EasyRecursionProblems {
     func climbStairs(_ n: Int) -> Int {
