@@ -313,6 +313,15 @@ extension MediumDynamicProgrammingProblems {
 // matching word "co" such that isEntireStrBreakableStartingAtIndex[4] = isEntireStrBreakableStartingAtIndex[4 + 2] =
 // false, which overrode the previous true. Once we finish processing the whole isEntireStrBreakableStartingAtIndex
 // array, we can return isEntireStrBreakableStartingAtIndex[0] as the answer.
+//
+// Concise Strategy:
+// - Create a DP array in which dp[n] = is the first n chars of a word breakable.
+// - dp[0] = true by default
+// - loop through all substring from beginning char to end char from size 1 to size n
+// - for each substr, break them further apart into substr0 and substr1 in which substr0 = substr[0..<j+1] and substr1
+// = substr[j+1..<i]. Notice that we know whether substr[0..<j+1] is breakable by looking at dp[j+1] and we just need
+// to check whether wordDict contains substr[j+1..<i] in order to update dp[i].
+// - return dp[s.count] at the end
 
 extension MediumDynamicProgrammingProblems {
     func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
@@ -475,6 +484,13 @@ extension MediumDynamicProgrammingProblems {
 // LIS[3] = max(1, 1 + LIS[4](if nums[3] < nums[4]), 1 + LIS[5]if nums[3] < nums[5])
 // LIS[4] = max(1, 1 + LIS[5](if nums[4] < nums[5]))
 // LIS[5] = 1
+//
+// Concise Strategy:
+// - Create a dp array in which dp[i] = length of LIS that ends on ith element.
+// - populate the dp array with value = 1
+// - Loop through the indices of nums array, for all indices j before the current index, dp[i] = max(dp[j] + 1) for all
+// j where nums[j] < nums[i] and j < i
+// - After finishing the dp array computation, we can loop through the dp array to get the length of the LIS.
 
 extension MediumDynamicProgrammingProblems {
     func lengthOfLIS(_ nums: [Int]) -> Int {
@@ -512,6 +528,12 @@ extension MediumDynamicProgrammingProblems {
 // n]. Let's try to understand better with an example: nums = [1, 2, 3], target = 4. DP[0] = 1; DP[1] = DP[1 - 1] = 1;
 // DP[2] = DP[2 - 2] + DP[2 - 1] = 2; DP[3] = DP[3 - 1] + DP[3 - 2] + DP[3 - 3] = 4; DP[4] = DP[4 - 1] + DP[4 - 2] +
 // DP[4 - 3] = 7
+//
+// Concise Stategy:
+// - Create a dp array in which dp[n] = number of unique combos that sums up to n.
+// dp[0] = 0 because the number of unique combos that sums up to 0 is 0.
+// dp[n] = dp[n - nums0] + dp[n - nums1] + dp[n - nums2] + ... + dp[n - numsN] for (nums0, ..., numsN) in nums
+// return dp[target] in the end.
 
 extension MediumDynamicProgrammingProblems {
     func combinationSum4(_ nums: [Int], _ target: Int) -> Int {
@@ -574,7 +596,7 @@ extension MediumDynamicProgrammingProblems {
 // match each other, we can skip either one of them and try to maintain the higher LCS. If we skip "E", text1 stays at
 // "EA" and text2 becomes "C" and the LCS of that is 0. If we skip "A", text1 becomes "E" and text2 stays as "CE" and
 // the LCS of that is 1. So by definition of getting the LCS, we need to skip "A" since by doing that, we can have a
-// longer LCS. Hence LCS("EA", "CE") = 1.
+// longer LCS. Hence LCS("EA", "CE") = max(LCS("E", "CE"), LCS("EA", "C")) = 1.
 
 extension MediumDynamicProgrammingProblems {
     func longestCommonSubsequence(_ text1: String, _ text2: String) -> Int {
