@@ -28,6 +28,12 @@ class MediumGraphProblems {}
 // Strategy: Use BFS, use a nodeByValue: [Int: Node] to store the copied node. Use BFS to copy the nodes and query the
 // nodeByValue to update the neighbors on each node. return nodeByValue[firstNodeValue] in the end. Alternatively, we
 // can also use DFS.
+//
+// Concise Strategy:
+// - use a dict nodeByValue: [Int: Node] to store the copied node and make it accessible by value
+// - use BFS or DFS to traverse the graph
+// - update the nodeByValue during the traversal by avoid redundant overwriting.
+// - return nodeByValue[sureNode.val]
 
 extension MediumGraphProblems {
     func cloneGraph(_ node: Node?) -> Node? {
