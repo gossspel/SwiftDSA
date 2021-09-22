@@ -183,6 +183,11 @@ extension MediumGraphProblems {
 // a node, and it will point to each of its prereqs individually, if there is a cycle in the graph, then we know we
 // can't finish all courses for sure. In order to detect the cycle in the graph, we would rely on using a set to check
 // if we are visiting the same node twice
+//
+// Concise Strategy:
+// - Create the graph first by creating a dict called prereqsByCourse: [Int: [Int]]
+// - loop through the graph by a dfsCanFinish method that takes a visitedSet to detect cycle and return false
+// immediately if a cycle is detected. Otherwise return true at the end.
 
 extension MediumGraphProblems {
     func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
