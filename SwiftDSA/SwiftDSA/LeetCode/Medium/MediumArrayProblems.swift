@@ -1425,3 +1425,69 @@ extension MediumArrayProblems {
         return results
     }
 }
+
+protocol NestedInteger: AnyObject {
+    // Return true if this NestedInteger holds a single integer, rather than a nested list.
+    func isInteger() -> Bool
+    
+    // Return the single integer that this NestedInteger holds, if it holds a single integer
+    // The result is undefined if this NestedInteger holds a nested list
+    func getInteger() -> Int
+    
+    // Set this NestedInteger to hold a single integer.
+    func setInteger(value: Int)
+    
+    // Set this NestedInteger to hold a nested list and adds a nested integer to it.
+    func add(elem: NestedInteger)
+    
+    // Return the nested list that this NestedInteger holds, if it holds a nested list
+    // The result is undefined if this NestedInteger holds a single integer
+    func getList() -> [NestedInteger]
+}
+
+// MARK: - 364. Nested List Weight Sum II
+// LINK: https://leetcode.com/problems/nested-list-weight-sum-ii/
+//
+// Description: You are given a nested list of integers nestedList. Each element is either an integer or a list whose
+// elements may also be integers or other lists. The depth of an integer is the number of lists that it is inside of.
+// For example, the nested list [1,[2,2],[[3],2],1] has each integer's value set to its depth. Let maxDepth be the
+// maximum depth of any integer. The weight of an integer is maxDepth - (the depth of the integer) + 1. Return the sum
+// of each integer in nestedList multiplied by its weight.
+//
+// Strategy: Use DFS to create the elementsByDepth: [Int: Int], find maxDepth by getting the max from the keys of
+// elementsByDepth, and then iterate elementsByDepth to get the sum of each integer in nestedList multiplied by its
+// weight.
+
+extension MediumArrayProblems {
+    func depthSumInverse(_ nestedList: [NestedInteger]) -> Int {
+        var elementsByDepth: [Int: [Int]] = [:]
+        
+        for node in nestedList {
+            dfs(elementsByDepth: &elementsByDepth, node: node, currentDepth: 1)
+        }
+        
+        let maxDepth = elementsByDepth.keys.max() ?? 0
+        
+        var sum: Int = 0
+        
+        for (depth, elements) in elementsByDepth {
+            for element in elements {
+                sum += (maxDepth - depth + 1) * element
+            }
+        }
+        
+        return sum
+    }
+    
+    func dfs(elementsByDepth: inout [Int: [Int]], node: NestedInteger, currentDepth: Int) {
+        if node.isInteger() {
+            elementsByDepth[currentDepth] = elementsByDepth[currentDepth] ?? []
+            elementsByDepth[currentDepth]?.append(node.getInteger())
+            return
+        } else {
+            for childNode in node.getList() {
+                dfs(elementsByDepth: &elementsByDepth, node: childNode, currentDepth: currentDepth + 1)
+            }
+        }
+    }
+}
