@@ -168,8 +168,6 @@ extension MediumGraphProblems {
     }
 }
 
-
-
 // MARK: - 207. Course Schedule
 // LINK: https://leetcode.com/problems/course-schedule/
 // VIDEO: https://www.youtube.com/watch?v=EgI5nU9etnU
@@ -233,5 +231,83 @@ extension MediumGraphProblems {
         prereqsByCourse[course] = []
         visitedSet.remove(course)
         return true
+    }
+}
+
+// MARK: - 261. Graph Valid Tree
+// LINK: https://leetcode.com/problems/graph-valid-tree/
+//
+// Description: You have a graph of n nodes labeled from 0 to n - 1. You are given an integer n and a list of edges
+// where edges[i] = [ai, bi] indicates that there is an undirected edge between nodes ai and bi in the graph. Return
+// true if the edges of the given graph make up a valid tree, and false otherwise.
+//
+// Concise Strategy:
+// - A graph is considered a valid tree if every node is fully connected and the graph has no non trivial cycle.
+// - Create adjacency list var neighborsByNode: [Int: [Int]], keep in mind this is an undirected graph
+// - Create a hasCycleByDFS method to detect cycle in the graph by using a parentByVisited dict to avoid trivial cycle
+// by neighbors in an undirected graph
+// - Run hasCycleByDFS on any individual key node on neighborsByNode and return false; otherwise return true if
+// parentByVisited.count == n because a valid tree can traverse all its node by start at any node
+
+extension MediumTreeProblems {
+    func validTree(_ n: Int, _ edges: [[Int]]) -> Bool {
+        guard n > 1 else {
+            return true
+        }
+        
+        var neighborsByNode: [Int: [Int]] = [:]
+        for edge in edges {
+            neighborsByNode[edge[0]] = neighborsByNode[edge[0]] ?? []
+            neighborsByNode[edge[0]]?.append(edge[1])
+            neighborsByNode[edge[1]] = neighborsByNode[edge[1]] ?? []
+            neighborsByNode[edge[1]]?.append(edge[0])
+        }
+        var parentByVisited: [Int: Int] = [:]
+        
+        guard let firstKeyValue = neighborsByNode.first else {
+            return false
+        }
+        
+        // NOTE: a valid tree can traverse all its node by start at any node
+        if hasCycleByDFS(parentNode: -1,
+                         node: firstKeyValue.key,
+                         neighborsByNode: neighborsByNode,
+                         parentByVisited: &parentByVisited)
+        {
+            return false
+        }
+        
+        return parentByVisited.count == n
+    }
+    
+    func hasCycleByDFS(parentNode: Int,
+                       node: Int,
+                       neighborsByNode: [Int: [Int]],
+                       parentByVisited: inout [Int: Int]) -> Bool
+    {
+        // NOTE: Cycle detected if the node already has been visited and it wasn't visited from a neighborNode
+        if (parentByVisited[node] != nil) && (parentByVisited[parentNode] != node) {
+            return true
+        }
+        
+        parentByVisited[node] = parentNode
+        
+        let neighbors = neighborsByNode[node] ?? []
+        
+        for neighbor in neighbors {
+            if neighbor == parentNode {
+                continue
+            }
+            
+            if hasCycleByDFS(parentNode: node,
+                             node: neighbor,
+                             neighborsByNode: neighborsByNode,
+                             parentByVisited: &parentByVisited)
+            {
+                return true
+            }
+        }
+        
+        return false
     }
 }
