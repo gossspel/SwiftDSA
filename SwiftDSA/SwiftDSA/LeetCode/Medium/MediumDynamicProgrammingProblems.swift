@@ -255,6 +255,13 @@ extension MediumDynamicProgrammingProblems {
 // least dp[n - 1] ways of decoding. Now we need to consider if the last 2 characters can be decoded properly, if they
 // can, then it would have at least another dp[n - 2] ways of decoding.
 //
+// Concise Strategy:
+// - Create a dp array that denotes the number of ways to decode first n characters
+// - dp[0] = 1 because there is only 1 way to decode empty str, because empty str yields nothing.
+// - dp[1] = 0 if the first char of s is 0, otherwise  dp[1] = 1 because if the first char of s is within (1,9), it
+// will always be decoded to a specific alphabet
+// - dp[n] = ((lastDigitValue is valid) ? dp[n - 1] : 0)  + ((lastTwoDigitValues is valid) ? dp[n - 2] : 0)
+//
 // Example: "1226"
 // "6" is decodable:
 // - (1)(2)(2)(6)
@@ -375,6 +382,14 @@ extension MediumDynamicProgrammingProblems {
 // can only rob $0 from 0 house. dp[1] = nums[0] because if there is only one house, the max amount you can rob is the
 // money stashed in that only house. dp[n] = max(dp[n - 1], dp[n - 2] + nums[n - 1]) because you can either steal from
 // the last house or second to last house without triggering the alarm.
+//
+// Concise Strategy:
+// - Create a dp array in which dp[n] is the max amount that can be robbed by n houses.
+// - dp[0] = 0 because you can only rob $0 if there is no house for you to rob
+// - dp[1] = nums[0] because you can only the first house if there is only one house for you to rob
+// - dp[n] = max(dp[n - 1], dp[n - 2] + nums[n - 1]) because you can only steal from thes last or second to last house
+// without triggering the alarm.
+// - return dp[nums.count]
 
 extension MediumDynamicProgrammingProblems {
     func rob(_ nums: [Int]) -> Int {
@@ -403,6 +418,16 @@ extension MediumDynamicProgrammingProblems {
 // Strategy: Notice that since the houses are lined up in a circle, it really means that we can either rob the first or
 // last house but not both. As a result, we can easily reuse the house robber I solution on both the
 // numsWithoutFirstHouse and numsWithoutLastHouse and return the max from them if nums >= 2.
+//
+// Concise Strategy:
+// - Create a dp array in which dp[n] is the max amount that can be robbed by n houses.
+// - dp[0] = 0 because you can only rob $0 if there is no house for you to rob
+// - dp[1] = nums[0] because you can only the first house if there is only one house for you to rob
+// - dp[n] = max(dp[n - 1], dp[n - 2] + nums[n - 1]) because you can only steal from thes last or second to last house
+// without triggering the alarm.
+// - Notice that the houses are line up in a circle, what it means is that we can either rob the first or last house
+// but not both. So we can put this dp array into a util method, and create numsA = Array(nums[1...]), numsB =
+// Array(nums[0..<(nums.count - 1)]) and return the max amount by comparing both of them in the util method.
 
 extension MediumDynamicProgrammingProblems {
     func rob2(_ nums: [Int]) -> Int {
