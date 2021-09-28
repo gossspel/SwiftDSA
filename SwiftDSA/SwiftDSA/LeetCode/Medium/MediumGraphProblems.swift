@@ -311,3 +311,66 @@ extension MediumTreeProblems {
         return false
     }
 }
+
+// MARK: - 323. Number of Connected Components in an Undirected Graph
+// LINK: https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/
+//
+// Description: You have a graph of n nodes. You are given an integer n and an array edges where edges[i] = [ai, bi]
+// indicates that there is an edge between ai and bi in the graph. Return the number of connected components in the
+// graph.
+//
+// Concise Strategy:
+// - Create adjacency list var neighborsByNode: [Int: [Int]], keep in mind this is an undirected graph
+// - Pick the first node from the adjacency list, fill up a visited set by traversing it. For each node in the visited
+// set, remove its entry on the adjacency list, decrement remainingNodes by 1. After processing the whole visited set,
+// increment numberOfConnectedComponents by 1.
+// - Continue the above process until the adjacency list is empty, add the remainingNodes to numberOfConnectedComponents
+// - return numberOfConnectedComponents.
+
+extension MediumGraphProblems {
+    func countComponents(_ n: Int, _ edges: [[Int]]) -> Int {
+        var neighborsByNode: [Int: [Int]] = [:]
+        
+        for edge in edges {
+            neighborsByNode[edge[0]] = neighborsByNode[edge[0]] ?? []
+            neighborsByNode[edge[0]]?.append(edge[1])
+            neighborsByNode[edge[1]] = neighborsByNode[edge[1]] ?? []
+            neighborsByNode[edge[1]]?.append(edge[0])
+        }
+        
+        var visted: Set<Int> = []
+        var numberOfConnectedComponents: Int = 0
+        var remainingNodes: Int = n
+        
+        while !neighborsByNode.isEmpty {
+            guard let nodeToExplore = neighborsByNode.first?.key else {
+                break
+            }
+            
+            dfsTraverse(node: nodeToExplore, neighborsByNode: neighborsByNode, visted: &visted)
+            for visitedNode in visted {
+                neighborsByNode[visitedNode] = nil
+                remainingNodes -= 1
+            }
+            numberOfConnectedComponents += 1
+            visted = []
+        }
+        
+        numberOfConnectedComponents += remainingNodes
+        return numberOfConnectedComponents
+    }
+    
+    func dfsTraverse(node: Int, neighborsByNode: [Int: [Int]], visted: inout Set<Int>) {
+        visted.insert(node)
+
+        guard let neighbors = neighborsByNode[node] else {
+            return
+        }
+        
+        for neighbor in neighbors {
+            if !visted.contains(neighbor) {
+                dfsTraverse(node: neighbor, neighborsByNode: neighborsByNode, visted: &visted)
+            }
+        }
+    }
+}
