@@ -269,3 +269,32 @@ extension EasyArrayProblems {
         return nums.count != setNums.count
     }
 }
+
+// MARK: - 252. Meeting Rooms
+// LINK: https://leetcode.com/problems/meeting-rooms/
+//
+// Description: Given an array of meeting time intervals where intervals[i] = [starti, endi], determine if a person
+// could attend all meetings.
+//
+// Concise Strategy:
+// - sort all intervals by the beginning (first value)
+// - loop through the sortedIntervals, and use a lastEnding pointer, if the beginning of an interval is less than the
+// lastEnding pointer, return false, else update the lastEnding pointer
+// - return true after finishing the loop
+
+extension EasyArrayProblems {
+    func canAttendMeetings(_ intervals: [[Int]]) -> Bool {
+        let sortedIntervals: [[Int]] = intervals.sorted { $0[0] < $1[0] }
+        var lastEnding: Int = 0
+        
+        for interval in sortedIntervals {
+            if interval[0] < lastEnding {
+                return false
+            }
+            
+            lastEnding = interval[1]
+        }
+        
+        return true
+    }
+}
