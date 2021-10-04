@@ -1376,6 +1376,51 @@ extension MediumArrayProblems {
     }
 }
 
+// MARK: - 253. Meeting Rooms II
+// LINK: https://leetcode.com/problems/meeting-rooms-ii/
+// VIDEO: https://www.youtube.com/watch?v=PWgFnSygweI
+//
+// Description: Given an array of meeting time intervals intervals where intervals[i] = [starti, endi], return the
+// minimum number of conference rooms required.
+//
+// Concise Strategy:
+// - sort all intervals by the beginning (first value)
+// - use a priority queue to keep track of meeting by earliest ending time, but since we don't have a priority queue in
+// swift, we have to keep track of the roomsWithEndingTime ourselves.
+// - loop through the sorted array to check if there the meeting can be fitted into a room from roomsWithEndingTime, if
+// yes, update the ending time of that room, otherwise, append the ending time to roomsWithEndingTime.
+// - return the size of the roomsWithEndingTime as the answer.
+
+extension MediumArrayProblems {
+    func minMeetingRooms(_ intervals: [[Int]]) -> Int {
+        guard intervals.count > 1 else {
+            return 1
+        }
+        
+        let sortedIntervals: [[Int]] = intervals.sorted { $0[0] < $1[0] }
+        var roomsWithEndingTime: [Int] = []
+        
+        for interval in sortedIntervals {
+            let beginningTime = interval[0]
+            var hasFoundMeetingRoom: Bool = false
+            
+            for (roomIndex, endingTime) in roomsWithEndingTime.enumerated() {
+                if beginningTime >= endingTime {
+                    roomsWithEndingTime[roomIndex] = interval[1]
+                    hasFoundMeetingRoom = true
+                    break
+                }
+            }
+            
+            if !hasFoundMeetingRoom {
+                roomsWithEndingTime.append(interval[1])
+            }
+        }
+        
+        return roomsWithEndingTime.count
+    }
+}
+
 // MARK: - 347. Top K Frequent Elements
 // LINK: https://leetcode.com/problems/top-k-frequent-elements/
 //
