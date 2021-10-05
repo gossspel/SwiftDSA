@@ -14,6 +14,7 @@ class MediumDynamicProgrammingProblems {
 
 // MARK: - 55 Jump Game
 // LINK: https://leetcode.com/problems/jump-game/
+// VIDEO: https://www.youtube.com/watch?v=Zb4eRjuPHbM
 //
 // Description: You are given an integer array nums. You are initially positioned at the array's first index, and each
 // element in the array represents your maximum jump length at that position. Return true if you can reach the last
@@ -26,7 +27,21 @@ class MediumDynamicProgrammingProblems {
 // time complexity for this DP array approach would be O(n^2). However, there is a ways for us to optimize this to be
 // O(n). We don't need to check every element before dp[n], we can keep track of the maxReach from nums and only check
 // the last x = maxReach elements before dp[n], because any element earlier than that is guaranteed to not reach the
-// index of nums[n - 1]. As a result the time complexity would be improved to O(n * maxReach) = O(n).
+// index of nums[n - 1]. As a result the time complexity would be improved to O(n * maxReach) = O(n * m).
+//
+// Concise Strategy (DP):
+// - Create a dp array in which dp[n] = whether you can reach the lastIndex from nums of size n.
+// - dp[0] = true because the array is of size 0 and its non existent last index is already reached.
+// - dp[1] = true because we start at the last index
+// - dp[n] = look at the indices of last (n = maxReach) element before nums[n - 1] and update dp[n] to be true if
+// anyone of them can get to the last index.
+// return dp[nums.count]
+//
+// Concise Strategy (Greedy):
+// - create a variable lastGoodIndexPosition: Int and set it as the last index
+// - loop through the nums backward, update lastGoodIndexPosition if i + nums[i] >= lastGoodIndexPosition
+// - by doing that, we will have an updated and smaller lastGoodIndexPosition that can reach the last index.
+// - by the end of processing the loop, if lastGoodIndexPosition is 0, we know we can reach the last index.
 
 extension MediumDynamicProgrammingProblems {
     func canJump(_ nums: [Int]) -> Bool {
@@ -102,6 +117,13 @@ extension MediumDynamicProgrammingProblems {
 // DP[rowIndex][columnIndex - 1]
 //
 // In the end, we will return DP[rowIndex][columnIndex] as the answer.
+//
+// Concise Strategy:
+// - Create a dp array in which dp[m - 1][n - 1] = number of ways to reach the bottom-right in a m x n array.
+// - dp[0][columnIndex] or dp[rowIndex][0] = 1 because the robot can only go down or right
+// - dp[rowIndex][columnIndex] = dp[rowIndex - 1] + dp[columnIndex - 1]
+// - loop through the the dp array and construct row by row.
+// - return dp[m - 1][n - 1]
 
 extension MediumDynamicProgrammingProblems {
     func uniquePaths(_ m: Int, _ n: Int) -> Int {
