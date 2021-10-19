@@ -1176,6 +1176,12 @@ extension MediumArrayProblems {
 // Strategy: Init the nums with a Set to get rid of all the duplicated elements and make checking whether an element
 // exists to have O(1) complexity. After that, only start counting streak from local minimums (element with no left
 // neigbor) and return the longest streak in the end.
+//
+// Concise Strategy:
+// - Init the nums with a Set to get rid of all the duplicated elements
+// - loop through all elements from the set and try to record the longest consecutive sequence for each element that
+// doesn't have an immediate left neighbor (!numSet.contains(num - 1)), update the max streak after that
+// - return the max streak
 
 extension MediumArrayProblems {
     func longestConsecutive(_ nums: [Int]) -> Int {

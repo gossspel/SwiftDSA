@@ -123,6 +123,12 @@ extension MediumGraphProblems {
 //
 // Strategy: We want to loop through the 2D array, identify each island, and remove the island from the array and
 // repeat until we reach the end of the 2D array.
+//
+// Concise Strategy:
+// - We want to loop through the 2D array.
+// - identify each island by recursively visiting the neighbors of a "1" node and mark all of them to be "0" to sink it
+// from the map. Increment the islandCount by 1 after sinking all the "1" nodes of an island
+// - return the islandCount.
 
 extension MediumGraphProblems {
     func numIslands(_ grid: [[Character]]) -> Int {
@@ -246,8 +252,8 @@ extension MediumGraphProblems {
 // - Create adjacency list var neighborsByNode: [Int: [Int]], keep in mind this is an undirected graph
 // - Create a hasCycleByDFS method to detect cycle in the graph by using a parentByVisited dict to avoid trivial cycle
 // by neighbors in an undirected graph
-// - Run hasCycleByDFS on any individual key node on neighborsByNode and return false; otherwise return true if
-// parentByVisited.count == n because a valid tree can traverse all its node by start at any node
+// - Run hasCycleByDFS on any individual key node on neighborsByNode and return false if a cycle is detected; otherwise
+// return true if parentByVisited.count == n because a valid tree can traverse all its node by start at any node
 
 extension MediumTreeProblems {
     func validTree(_ n: Int, _ edges: [[Int]]) -> Bool {
